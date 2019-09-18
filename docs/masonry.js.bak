@@ -201,7 +201,7 @@
               $j('.brick').remove(":contains('" + ele.Headline + "')");
               container.masonry('reload');
             }
-            container.imagesLoaded()
+            container.imagesLoaded(
             .progress( function( instance, image ) {
     					var result = image.isLoaded ? 'loaded' : 'broken';
     					console.log( 'image is ' + result + ' for ' + image.img.src );
