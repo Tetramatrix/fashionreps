@@ -393,8 +393,11 @@
     });
 
     // First time, Reload, Tab closed, Browser, Close, Cookie deleted, PHPSESSIONID deleted
-    $j.getJSON($j("#tx-charbeitsbeispiele-pi1 #menu li:first").find("a").attr('href'), function(response)
+    $j.getJSON($j("#tx-charbeitsbeispiele-pi1 #menu li:first").find("a").attr('href'), 
+    	function(response,status, xhr)
     {
+    	console.log(xhr.getAllResponseHeaders());
+    	console.log(xhr.getResponseHeader("Last-Modified"));
     	//console.log(JSON.stringify(response));
       // Start masonry animated
       if (response && response.length)
@@ -409,6 +412,9 @@
         counter = 0;
         $j.each(response.reverse(), function(idx, ele)
         {
+        	var lu = $j("#tx-charbeitsbeispiele-pi1 #date");
+        	lu.text("Last updated: "+ele.date);
+        	 
           if (ele.Isimage == "true")
           {
             container.prepend($j("#brickTemplate").tmpl(ele)).masonry('reload');  
@@ -554,5 +560,15 @@ $(document).ready(function() {
 	}
 
 	window.addEventListener('scroll', stickyNavigation);
+	
+	$('.lazy').Lazy({
+        // your configuration goes here
+        scrollDirection: 'vertical',
+        effect: 'fadeIn',
+        visibleOnly: true,
+        onError: function(element) {
+            console.log('error loading ' + element.data('src'));
+        }
+   });
 
 });
