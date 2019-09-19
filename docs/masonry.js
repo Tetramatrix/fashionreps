@@ -127,11 +127,20 @@
       "left" : "140px"
     }, 900, function()
       {
+      
+      //$('#singleview').load("https://cors-anywhere.herokuapp.com/"+url);
       // Animation complete.
-      $j.getJSON(url, function(json)
+
+      $j.ajax({url: "https://cors-anywhere.herokuapp.com/"+url,
+      				type: 'GET',
+      				dataType: 'html',
+      			 success: function(json)
       {
         if (json)
         {
+        	 s.html(json);
+        	 
+        	/*
           s.css({
             "position": "absolute",
             "top": "-600px",
@@ -147,9 +156,11 @@
           }).append($j("#singleviewTemplate").tmpl(json).css({
             "visibility": "visible",
             "position": "relative"
-          }));  
+          }));
+          */  
         }        
-      });      
+      }});
+            
     });
   }
   
@@ -415,10 +426,16 @@
         });
         boxCount = response.length;
         counter = 0;
+        var d = 0;
         $j.each(response.reverse(), function(idx, ele)
         {
-        	var lu = $j("#tx-charbeitsbeispiele-pi1 #date");
-        	lu.text("Last updated: "+ele.date);
+        	var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
+        	
+        	if (d<new Date(ele.date)) {
+        			d = new Date(ele.date);
+		        	console.log(d);
+		        	upd.text("Last updated: "+ele.date);
+        	}
         	 
           if (ele.Isimage == "true")
           {
