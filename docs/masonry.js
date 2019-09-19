@@ -434,7 +434,7 @@
         	if (d<new Date(ele.date)) {
         			d = new Date(ele.date);
 		        	console.log(d);
-		        	upd.text("Last updated: "+ele.date);
+		        	upd.text("Last update: "+ele.date);
         	}
         	 
           if (ele.Isimage == "true")
