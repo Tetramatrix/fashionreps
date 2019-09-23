@@ -256,8 +256,10 @@
 	                    height: height
 	                  }); 
 	                }
-	                $j(this).mousemove(function()
+	                $j(this).bind('touchstart mousemove', function()
 	                {
+	                	console.log("mousemove");
+	                	
 	                  var content = $j(this).find(">div");
 	                  var summary = $j(this).find(".teaser");
 	                  var height = $j(this).find("img").attr("height");
@@ -289,7 +291,7 @@
 	                    }
 	                  }
 	                });
-	                $j(this).mouseleave(function() {
+	                $j(this).bind('touchend mouseleave', function() {
 	                  hide_summary(brick_stack.pop());
 	                });
 	              });
@@ -387,12 +389,8 @@
 		        $j(ele).find('a').attr("href", theHref + "?toggle=off");
 		      }
 		    });
-		   	$j(this).trigger('mouseleave');	
-      	
-      	
+		   	$j(this).trigger('mouseleave touchend');	
       }
-    
-      
     },
     
     function() {
@@ -435,7 +433,7 @@
           }
         });
       }
-      $j(this).trigger('mouseleave');
+      $j(this).trigger('mouseleave touchend');
     });
 
     // First time, Reload, Tab closed, Browser, Close, Cookie deleted, PHPSESSIONID deleted
@@ -503,8 +501,10 @@
                 // bricks fade in
                 $j(this).delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
                 // Bind Mousemove
-                $j(this).mousemove(function()
+                $j(this).bind('touchstart mousemove', function()
                 {
+                	console.log("mousemove");
+                	
                   var content = $j(this).find(">div");
                   var summary = $j(this).find(".teaser");
                   var height = $j(this).find("img").attr("height");
@@ -531,7 +531,7 @@
                   }
                 });
                 // Bind mouseleave
-                $j(this).mouseleave(function()
+                $j(this).bind('touchend mouseleave', function()
                 {
                   hide_summary(brick_stack.pop());
                 });
