@@ -178,6 +178,8 @@
 				 console.log(self.url_stack());
 				 if (self.url_stack().length==0) 
 				 {
+				 		// this changes the scrolling behavior to "smooth"
+						window.scrollTo({ top: 0, behavior: 'smooth' });
 				 		var toggle = $("#tx-charbeitsbeispiele-pi1 #menu li")[1];
 						$(toggle).removeClass('ref_no').addClass('ref_act');
 						var theHref = $(toggle).find('a').attr("href").replace(/\?toggle=.*/g, '');		
@@ -368,25 +370,29 @@
 	          }
 	        });
       	}
+      	
+      	var params = "?toggle=on";
+    
+		    $j.each(menu, function(idx, ele) {
+		      if ($j(ele).find('a').text() == n) {
+		       params += "&but="+n;
+		        $j(ele).removeClass('ref_no').addClass('ref_act');
+		        var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
+		        $j(ele).find('a').attr("href", theHref + params);
+		  
+		      } else if ($j(ele).find('a').text() == root_but && n != about_but && $j(ele).hasClass('ref_act')) {
+		        params += "&screen=clear";
+		        $j(ele).removeClass('ref_act').addClass('ref_no');
+		        var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
+		        $j(ele).find('a').attr("href", theHref + "?toggle=off");
+		      }
+		    });
+		   	$j(this).trigger('mouseleave');	
+      	
+      	
       }
     
-      var params = "?toggle=on";
-    
-      $j.each(menu, function(idx, ele) {
-        if ($j(ele).find('a').text() == n) {
-         params += "&but="+n;
-          $j(ele).removeClass('ref_no').addClass('ref_act');
-          var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
-          $j(ele).find('a').attr("href", theHref + params);
-    
-        } else if ($j(ele).find('a').text() == root_but && n != about_but && $j(ele).hasClass('ref_act')) {
-          params += "&screen=clear";
-          $j(ele).removeClass('ref_act').addClass('ref_no');
-          var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
-          $j(ele).find('a').attr("href", theHref + "?toggle=off");
-        }
-      });
-      $j(this).trigger('mouseleave');
+      
     },
     
     function() {
