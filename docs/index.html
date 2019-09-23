@@ -69,10 +69,10 @@
     </div>    
 </script>
 <script id="singleviewTemplate" type="text/html">
-    <div style="float:left;margin-top:-10px">
+    <div style="float:left;margin-top:0px">
         <p>{{html bodytext}}</p>
     </div>
-    <div style="float:right;align:right"><a class="bb" href="javascript:return false;" onClick="maxmedia.gridview();return false;">[<b>X</b>] back</a></div>
+    <div style="float:right;align:right"><a id="bbut" class="bb" href="javascript:void(0);" OnClick="maxmedia.bbut();return false;">[<b>X</b>] back</a></div>
 </script>
 
 
@@ -80,10 +80,11 @@
 		  <div class="wrapper">
 		    <div  id="navigation" style="float:left;padding:0px;margin:0px;">
 		    	<div class="fixed-nav">	
-		    			<h1 class="headline">Taobao</h1>
-		    			<h2 class="headline">Live-Feed</h2>
+		    			<h1 class="headline">:: Taobao</h1>
+		    			<h3 class="headline">Live-Feed ::</h3>
 				    	<ul class="menu shadow" id="menu">
 						    <li class="ref_no"><a href="home.json" class="refid">Home</a></li>
+						    <li class="ref_no"><a href="about.json" class="refid">About Us</a></li>
 						    <li class="ref_no"><a href="A_F.json" class="refid">A-F</a></li>
 						    <li class="ref_no"><a href="G_L.json" class="refid">G-L</a></li>
 						    <li class="ref_no"><a href="M_R.json" class="refid">M-R</a></li>
@@ -91,6 +92,7 @@
 						    <li class="ref_no"><a href="Y_T.json" class="refid">Y-Z</a></li>
 						    <li class="ref_no"><a href="other.json" class="refid">Other</a></li>
 						</ul>
+						<p id="date"></p>
 						<p>
 							<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 							<!-- bbrb -->
@@ -113,13 +115,12 @@
 							(adsbygoogle = window.adsbygoogle || []).push({});
 							</script>
 					</p>						
-					</div>					   		
+					</div>		   		
 		  </div><!-- google_ad_section_start -->	    
     <div id="singleview" style="top:-800px" class="singleview"></div>
 		<div id="container"></div>
 		<!-- google_ad_section_end -->
 	</div>
-	<div id="date"></div>
 </div>
 <div class="fixed-nav ads-right" style="float:left;">
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
