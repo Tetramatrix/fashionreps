@@ -212,30 +212,136 @@
 	            {
 	              if (ele.Additem == "Append" && ele.Isimage == "true" )
 	              {
-	                container.append($j("#brickTemplate").tmpl(ele).css({
+	              	var brick = $j("#brickTemplate").tmpl(ele).css({
 	                "display": "block"
-	                })).masonry('reload');  
+	                });
+	                container.append(brick).masonry('reload');  
+	                
 	              } else if (ele.Additem == "Append")
 	              {
-	                container.append($j("#defaultTemplate").tmpl(ele).css({
+	              	var brick = $j("#defaultTemplate").tmpl(ele).css({
 	                "display": "block"
-	                })).masonry('reload');
+	                });
+	                container.append(brick).masonry('reload');
+	                
 	              } else if (ele.Additem == "Prepend" && ele.Isimage == "true" )
 	              {
-	                container.prepend($j("#brickTemplate").tmpl(ele).css({
-	                  "display": "block"
-	                })).masonry('reload');  
+	              	var brick = $j("#brickTemplate").tmpl(ele).css({
+	                	"display": "block"
+	                });
+	                container.prepend(brick).masonry('reload'); 
+	                 
 	              } else
 	              {
-	                container.prepend($j("#defaultTemplate").tmpl(ele).css({
-	                  "display": "block"
-	                })).masonry('reload');
+	              	var brick = $j("#defaultTemplate").tmpl(ele).css({
+	                	"display": "block"
+	                });
+	                container.prepend(brick).masonry('reload');
+	                
 	              }
+	              
+	              console.log(brick);
+	              container.prepend(brick).masonry('reload');    
+	              
+				      	var content = brick.find(">div");
+				        //console.log(content);
+				        var height = brick.find("img").attr("height");
+				        if ( height == undefined )
+				        {
+				          content.css({
+				            height: "300px"
+				          }); 
+				         } else {
+				          content.css({
+				            height: height
+				          }); 
+				        }
+				        
+				        // bricks fade in
+				        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+				        
+				        /*
+				        brick.imagesLoaded(function(){
+				        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+				        });        
+				        */
+				        
+				        brick.imagesLoaded().done(function(){
+				        	brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+				        });
+				        
+				        //console.log(brick.find("a"));  
+				        var touchtime = 0;
+								brick.find("a").click(function() {
+								    if (touchtime == 0) {
+								        // set first click
+								        touchtime = new Date().getTime();
+								        if (mobile==false) {
+								        		var href = $(this).attr("href");
+														window.open(href);
+								        }								        
+								    } else {
+								        // compare first click to this click and see if they occurred within double click threshold
+								        if (((new Date().getTime()) - touchtime) < 800) {
+								            // double click occurred
+								            console.log("double clicked");
+								            if (mobile==true) {
+								            	touchtime = 0;
+								            	var href = $(this).attr("href");
+															window.open(href);
+														}
+								        } else {
+								            // not a double click so set as a new first click
+								            touchtime = new Date().getTime();
+								        }
+								    }
+								    return false;
+								});
+								
+				        // Bind Mousemove
+				        brick.bind('touchstart mousemove', function()
+				        {
+				        	//console.log("mousemove");
+				        	
+				          var content = brick.find(">div");
+				          var summary = brick.find(".teaser");
+				          var height = brick.find("img").attr("height");
+				          if ( height == undefined )
+				          {
+				            height: "300px"
+				          }
+				          if (!content.is(":animated") && summary.is(":not(:visible)"))
+				          {
+				            content.css({
+				              height: height,
+				              position: "relative",
+				              top: -35 - summary.height()
+				            });
+				            summary.show();
+				            brick_stack.unshift(this);
+				            content.animate({
+				              top: 0
+				            });
+				            while (brick_stack.length > 1)
+				            {
+				              hide_summary(brick_stack.pop());
+				            }
+				          }
+				        });
+				        
+				        // Bind mouseleave
+				        brick.bind('touchend mouseleave', function()
+				        {
+				          hide_summary(brick_stack.pop());
+				        });
+	              
+	              
 	            } else
 	            {
 	              $j('.brick').remove(":contains('" + ele.Headline + "')");
 	              container.masonry('reload');
 	            }
+	            
 	            container.imagesLoaded()
 	            .progress( function( instance, image ) {
 	    					var result = image.isLoaded ? 'loaded' : 'broken';
@@ -243,6 +349,7 @@
 	  					})
 	            .done(function()
 	            {
+	            	/*
 	              // bricks correct height
 	              $j("#tx-charbeitsbeispiele-pi1 #container .brick").each(function()
 	              {
@@ -325,6 +432,8 @@
 	                  hide_summary(brick_stack.pop());
 	                });
 	              });
+	              */
+	              
 	            });
 	          });
 	        } else
@@ -504,9 +613,9 @@
           	var brick = $j("#defaultTemplate").tmpl(ele);
           }
         
+        	console.log(brick);
 	        container.prepend(brick).masonry('reload');    
-	        
-	        console.log(brick);
+	        	        
 	      	var content = brick.find(">div");
 	        //console.log(content);
 	        var height = brick.find("img").attr("height");
@@ -794,8 +903,6 @@ $("#spinner").bind("ajaxSend", function() { $(this).show(); })
 $("#spinner").bind("ajaxStop", function() { $(this).hide(); })
 $("#spinner").bind("ajaxError", function() { $(this).hide(); });
 */
-
-
 
 
 var maxmedia;
