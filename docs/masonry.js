@@ -15,6 +15,7 @@
   var url_back = [];
   var root_but = "Home";
   var about_but = "About Us";
+  var mobile = false;
     
   function gridview ()
   {
@@ -256,9 +257,38 @@
 	                    height: height
 	                  }); 
 	                }
+	              
+  							//console.log($j(this).find("a"));  
+	              var touchtime = 0;
+								$j(this).find("a").click(function() {
+								    if (touchtime == 0) {
+								        // set first click
+								        touchtime = new Date().getTime();
+								        if (mobile==false) {
+								        		var href = $(this).attr("href");
+    												window.open(href);
+								        }								        
+								    } else {
+								        // compare first click to this click and see if they occurred within double click threshold
+								        if (((new Date().getTime()) - touchtime) < 800) {
+								            // double click occurred
+								            console.log("double clicked");
+								            if (mobile==true) {
+								            	touchtime = 0;
+								            	var href = $(this).attr("href");
+    													window.open(href);
+    												}
+								        } else {
+								            // not a double click so set as a new first click
+								            touchtime = new Date().getTime();
+								        }
+								    }
+								    return false;
+								});
+								
 	                $j(this).bind('touchstart mousemove', function()
 	                {
-	                	console.log("mousemove");
+	                	//console.log("mousemove");
 	                	
 	                  var content = $j(this).find(">div");
 	                  var summary = $j(this).find(".teaser");
@@ -436,9 +466,11 @@
       $j(this).trigger('mouseleave touchend');
     });
 
-    // First time, Reload, Tab closed, Browser, Close, Cookie deleted, PHPSESSIONID deleted
-    $j.getJSON($j("#tx-charbeitsbeispiele-pi1 #menu li:first").find("a").attr('href'), 
-    	function(response,status, xhr)
+     // First time, Reload, Tab closed, Browser, Close, Cookie deleted, PHPSESSIONID deleted
+     $j.getJSON($j("#tx-charbeitsbeispiele-pi1 #menu li:first").find("a").attr('href'), xcallback);
+  	}
+	  
+	  function xcallback (response,status, xhr)
     {
     	console.log(xhr.getAllResponseHeaders());
     	console.log(xhr.getResponseHeader("Last-Modified"));
@@ -471,6 +503,7 @@
           } else {
             container.prepend($j("#defaultTemplate").tmpl(ele)).masonry('reload');
           }
+          
           container.imagesLoaded()
           .progress(function( instance, image ) {
     					var result = image.isLoaded ? 'loaded' : 'broken';
@@ -478,15 +511,21 @@
   					})
           .done(function()
           {
+          	//console.log($j(this));
+          	
+          	
+          	console.log(counter);
             ++counter;
             if (counter >= boxCount)
-            {
+            {                        	
               // Menu slidedown
               $j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');
-              // bricks correct height  
+              
+              // bricks correct height
               $j("#tx-charbeitsbeispiele-pi1 #container .brick").each(function()
-              {
-                var content = $j(this).find(">div");
+              {              	
+              	var content = $j(this).find(">div");
+                //console.log(content);
                 var height = $j(this).find("img").attr("height");
                 if ( height == undefined )
                 {
@@ -500,10 +539,39 @@
                 }
                 // bricks fade in
                 $j(this).delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+                                
+	              //console.log($j(this).find("a"));  
+	              var touchtime = 0;
+								$j(this).find("a").click(function() {
+								    if (touchtime == 0) {
+								        // set first click
+								        touchtime = new Date().getTime();
+								        if (mobile==false) {
+								        		var href = $(this).attr("href");
+    												window.open(href);
+								        }								        
+								    } else {
+								        // compare first click to this click and see if they occurred within double click threshold
+								        if (((new Date().getTime()) - touchtime) < 800) {
+								            // double click occurred
+								            console.log("double clicked");
+								            if (mobile==true) {
+								            	touchtime = 0;
+								            	var href = $(this).attr("href");
+    													window.open(href);
+    												}
+								        } else {
+								            // not a double click so set as a new first click
+								            touchtime = new Date().getTime();
+								        }
+								    }
+								    return false;
+								});
+								
                 // Bind Mousemove
                 $j(this).bind('touchstart mousemove', function()
                 {
-                	console.log("mousemove");
+                	//console.log("mousemove");
                 	
                   var content = $j(this).find(">div");
                   var summary = $j(this).find(".teaser");
@@ -535,18 +603,18 @@
                 {
                   hide_summary(brick_stack.pop());
                 });
-              });
-            }
+              }); // each
+            } // if
           }); // ImagesLoadead
         }); // each
+          
         var reloadLink = $j("#tx-charbeitsbeispiele-pi1 #menu li:first");
         reloadLink.removeClass('ref_no').addClass('ref_act');
         var theHref = reloadLink.find('a').attr("href").replace(/\?toggle=.*/g, '');
         reloadLink.find('a').attr("href", theHref + "?toggle=off");  
       }
-    });
-  }
-
+   }
+    
   function bbut () {  	
   	var toggle = $("#tx-charbeitsbeispiele-pi1 #menu li")[1];
 		//toggle.attr("unchecked", !toggle.attr("unchecked")).button("refresh");
@@ -604,6 +672,10 @@
     
   function Arbeitsbeispiele (anonymous)
   {
+  	if (/Mobi|Android/i.test(navigator.userAgent)) {
+    	// mobile!
+    	mobile = true;
+		}
     $j = anonymous;
     return true;
   }
@@ -648,6 +720,7 @@ $(document).ready(function() {
 			maxmedia.gridview();
 	});
 	*/
+	
 	$('.lazy').Lazy({
         // your configuration goes here
         scrollDirection: 'vertical',
