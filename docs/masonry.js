@@ -405,8 +405,8 @@
               $j(ele).find('a').attr("href", theHref + params);
             }
           }
-          // Alle-Button Active
-          if ($j(ele).hasClass('ref_act') && $j(ele).find('a').text() == root_but) {
+          // Home-Button Active
+          if ($j(ele).hasClass('ref_act') && $j(ele).find('a').text() == root_but && n != about_but) {
             // Clear Screen
             params += "&screen=clear";
             $j(ele).removeClass('ref_act').addClass('ref_no');
