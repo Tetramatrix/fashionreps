@@ -206,11 +206,15 @@
 		      {
 		        if (json && json.length)
 		        {
+		        	$j('#footer').remove();
+		        	 
 		          var container = $j('#tx-charbeitsbeispiele-pi1 #container');
 		          container.masonry();
 		          var toggle = this.url.match(/toggle=on/g);
 		          var clrscreen = this.url.match(/screen=clear/g);
-		          
+		          boxCount = json.length;
+        			counter = 0;
+        
 		          if (clrscreen) {
 		          	container.empty();
 		          }
@@ -272,6 +276,7 @@
 						        
 						        brick.imagesLoaded().done(function(){
 						        	brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+						        	++counter;
 						        });
 						        
 						        //console.log(brick.find("a"));  
@@ -339,13 +344,7 @@
 						          hide_summary(brick_stack.pop());
 						        });
 						    }); // getJson	    
-
-									 $j('#footer').remove();
- 										if ($j('#container').outerHeight()>0) {
-	            	 		 $j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
-  							 		$j('#footer').css({'top' : $j('#container').outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
-	            	 		}
-    							           
+	           
 	            } else //toggle 
 	            {
 	              $j.each(json.reverse(), function(idx, ele)
@@ -362,33 +361,43 @@
 									}).remove();
 
 		            });
-		            container.masonry('reload');
-		            
-	            	 $j('#footer').remove();
-	            	 
-	            	 if ($j('#container').outerHeight()>0) {
-	            	 		 $j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
-  							 		$j('#footer').css({'top' : $j('#container').outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
-	            	 }
+		            container.masonry('reload');           
+   	 
+	            	
 	            }
 	            
 	            container.imagesLoaded()
 		            .progress( function( instance, image ) {
-		    					var result = image.isLoaded ? 'loaded' : 'broken';
+		    					var result = image.isLoaded ? 'loaded'	: 'broken';
 		    					console.log( 'image is ' + result + ' for ' + image.img.src );
-		  					})
-		            .done(function()
+		    				
+		  					}).done(function()
 		            {
-		            	 console.log("loaded");    
-		            	 //container.masonry('reload');
-    
+		            	console.log(counter);
+		            	
+            			if (counter >= boxCount)
+            			{            				
+		            	 	console.log("loaded");    
+		            	 	//container.masonry('reload');
+		            	 	
+	            	 		//if ($j('#container').outerHeight()>0) {
+					      	 		 //$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+									 		//$j('#footer').css({'top' : $j('#container').outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
+									 		//$j('#footer').css({'top' : ((Math.ceil(($j('#container .brick').length+3)/3))*300)+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
+									 		
+						        //}
+		            	} 
+		            	   
 	          		}); // imagesLoaded
+	          		
 		        } else //getJson
 		        {
 		          return false; // don't follow the link!
 		        } // else
 		      });
       		
+      	
+	            	  
     	} //else
     });
   }
@@ -664,8 +673,7 @@
     					console.log( 'image is ' + result + ' for ' + image.img.src );
   					})
           .done(function()
-          {
-          			
+          {          			
           	console.log(counter);
             ++counter;
             
