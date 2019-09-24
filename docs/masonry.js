@@ -26,7 +26,7 @@
     btn.data('running', true);
     var s = $j('#tx-charbeitsbeispiele-pi1 #singleview');
     var c = $j('#container');
-     
+    
     if ( url_stack.length > 1 || url_back.length > 0 )
     {
       if ( url_stack.length > 1 )
@@ -91,6 +91,10 @@
         });
       });
     }
+    
+    c.after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+    $j('#footer').css({'top' : c.outerHeight()+5 + 'px','position' : 'absolute', 'margin-left':'170px'});
+    
   }
   
   function singleview (url)
@@ -99,8 +103,10 @@
     if (btn.data('running'))
       return;
     
-    var c = $('#container');
+    var c = $j('#container');
     var s = $j('#tx-charbeitsbeispiele-pi1 #singleview');
+    
+    $j('#footer').remove();
     
     s.empty();
     btn.data('running', true);
