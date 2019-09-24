@@ -92,9 +92,10 @@
       });
     }
     
-    c.after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
-    $j('#footer').css({'top' : c.outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
-    
+    if (c.outerHeight()>0) {
+    	  c.after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+    		$j('#footer').css({'top' : c.outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
+    }
   }
   
   function singleview (url)
@@ -337,7 +338,14 @@
 						        {
 						          hide_summary(brick_stack.pop());
 						        });
-						    }); // getJson	              
+						    }); // getJson	    
+
+									 $j('#footer').remove();
+ 										if ($j('#container').outerHeight()>0) {
+	            	 		 $j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+  							 		$j('#footer').css({'top' : $j('#container').outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
+	            	 		}
+    							           
 	            } else //toggle 
 	            {
 	              $j.each(json.reverse(), function(idx, ele)
@@ -355,6 +363,13 @@
 
 		            });
 		            container.masonry('reload');
+		            
+	            	 $j('#footer').remove();
+	            	 
+	            	 if ($j('#container').outerHeight()>0) {
+	            	 		 $j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+  							 		$j('#footer').css({'top' : $j('#container').outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
+	            	 }
 	            }
 	            
 	            container.imagesLoaded()
@@ -366,9 +381,6 @@
 		            {
 		            	 console.log("loaded");    
 		            	 //container.masonry('reload');
-		            	 
-		            	 c.after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
-    							 $j('#footer').css({'top' : c.outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
     
 	          		}); // imagesLoaded
 		        } else //getJson
