@@ -210,7 +210,7 @@
 	            {			          
 			          $j.each(json.reverse(), function(idx, ele)
 			          {
-			          	  ele.Headline = ele.Headline.replace(/([()])/g, "");
+			          	  //ele.Headline = ele.Headline.replace(/([()])/g, " ");
 			          	  
 			              if (ele.Additem == "Append" && ele.Isimage == "true" )
 			              {
@@ -336,7 +336,15 @@
 			          {
 			          	//var str = ele.Headline; 
 			          	//str = str.replace(/(['"])/g, "\\\\$1");
-		              $j('.brick').remove(":contains(\"" + ele.Headline.replace(/([()])/g, "") + "\")");
+			          	//console.log($j(".brick :contains('"+ele.Headline.replace(/([()])/g, " ")+"')"));
+		              //$j('.brick').remove(":contains(\"" + ele.Headline.replace(/([()])/g, " ") + "\")");
+		              
+		              $j(".brick").filter(function () {
+    									//return $j.trim($j(this).text()) == ele.Headline;
+    									//console.log($j(this).find("h3")[0]["textContent"]);
+    									return $j(this).find("h3")[0]["textContent"] == ele.Headline;
+									}).remove();
+
 		            });
 		            container.masonry('reload');
 	            }
@@ -516,7 +524,7 @@
         {
         	var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
         	
-        	ele.Headline = ele.Headline.replace(/([()])/g, "");
+        	//ele.Headline = ele.Headline.replace(/([()])/g, " ");
         	
         	if (d<new Date(ele.date)) {
         			d = new Date(ele.date);
