@@ -361,9 +361,14 @@
 									}).remove();
 
 		            });
+		            
 		            container.masonry('reload');           
-   	 
-	            	
+		      	 		
+		      	 		/*
+		      	 		$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+								var boxc = $j('#container .brick').length;
+								$j('#footer').css({'top' : (((boxc/3)+boxc%3)*(300+10))+7 + 'px','position' : 'absolute', 'margin-left':'170px'});	
+	            	*/
 	            }
 	            
 	            container.imagesLoaded()
@@ -378,14 +383,11 @@
             			if (counter >= boxCount)
             			{            				
 		            	 	console.log("loaded");    
-		            	 	//container.masonry('reload');
-		            	 	
-	            	 		//if ($j('#container').outerHeight()>0) {
-					      	 		 //$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
-									 		//$j('#footer').css({'top' : $j('#container').outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
-									 		//$j('#footer').css({'top' : ((Math.ceil(($j('#container .brick').length+3)/3))*300)+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
-									 		
-						        //}
+		            	 	//container.masonry('reload');		            	 	
+				      	 		/*
+				      	 		$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+				      	 		var boxc = $j('#container .brick').length;
+										$j('#footer').css({'top' : (((boxc/3)+boxc%3)*(300+10))+7 + 'px','position' : 'absolute', 'margin-left':'170px'});	*/							 		
 		            	} 
 		            	   
 	          		}); // imagesLoaded
