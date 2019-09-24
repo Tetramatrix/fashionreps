@@ -192,257 +192,173 @@
     		return false;
     		
     	} else {
+    		
     			$j.getJSON($j(this).find('a').attr('href'), function(json)
-	      {
-	        if (json && json.length)
-	        {
-	          var container = $j('#tx-charbeitsbeispiele-pi1 #container');
-	          container.masonry();
-	          var toggle = this.url.match(/toggle=on/g);
-	          var clrscreen = this.url.match(/screen=clear/g);
-	          
-	          if (clrscreen) {
-	          	container.empty();
-	          }
-	          
-	          $j.each(json.reverse(), function(idx, ele)
-	          {
-	            //if (ele.toggle == "on")
+		      {
+		        if (json && json.length)
+		        {
+		          var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+		          container.masonry();
+		          var toggle = this.url.match(/toggle=on/g);
+		          var clrscreen = this.url.match(/screen=clear/g);
+		          
+		          if (clrscreen) {
+		          	container.empty();
+		          }
+
 	            if (toggle)
+	            {			          
+			          $j.each(json.reverse(), function(idx, ele)
+			          {
+			          	  ele.Headline = ele.Headline.replace(/([()])/g, "");
+			          	  
+			              if (ele.Additem == "Append" && ele.Isimage == "true" )
+			              {
+			              	var templ = "#brickTemplate";
+			                
+			              } else if (ele.Additem == "Append")
+			              {
+			              	var templ = "#defaultTemplate";
+
+			                
+			              } else if (ele.Additem == "Prepend" && ele.Isimage == "true" )
+			              {
+			              	var templ = "#brickTemplate";
+			                 
+			              } else
+			              {
+			              	var templ = "#defaultTemplate";		                
+			              }
+			              
+			              var brick = $j(templ).tmpl(ele).css({
+			                "display": "block"
+			                });
+			                
+			              //console.log(brick);
+			              container.prepend(brick).masonry('reload');
+			              //container.prepend(brick);      
+			              
+						      	var content = brick.find(">div");
+						        //console.log(content);
+						        var height = brick.find("img").attr("height");
+						        if ( height == undefined )
+						        {
+						          content.css({
+						            height: "300px"
+						          }); 
+						         } else {
+						          content.css({
+						            height: height
+						          }); 
+						        }
+						        
+						        // bricks fade in
+						        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+						        
+						        /*
+						        brick.imagesLoaded(function(){
+						        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+						        });        
+						        */
+						        
+						        brick.imagesLoaded().done(function(){
+						        	brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+						        });
+						        
+						        //console.log(brick.find("a"));  
+						        var touchtime = 0;
+										brick.find("a").click(function() {
+										    if (touchtime == 0) {
+										        // set first click
+										        touchtime = new Date().getTime();
+										        if (mobile==false) {
+										        		var href = $(this).attr("href");
+																window.open(href);
+										        }								        
+										    } else {
+										        // compare first click to this click and see if they occurred within double click threshold
+										        if (((new Date().getTime()) - touchtime) < 800) {
+										            // double click occurred
+										            console.log("double clicked");
+										            if (mobile==true) {
+										            	touchtime = 0;
+										            	var href = $(this).attr("href");
+																	window.open(href);
+																}
+										        } else {
+										            // not a double click so set as a new first click
+										            touchtime = new Date().getTime();
+										        }
+										    }
+										    return false;
+										});
+										
+						        // Bind Mousemove
+						        brick.bind('touchstart mousemove', function()
+						        {
+						        	//console.log("mousemove");
+						        	
+						          var content = brick.find(">div");
+						          var summary = brick.find(".teaser");
+						          var height = brick.find("img").attr("height");
+						          if ( height == undefined )
+						          {
+						            height: "300px"
+						          }
+						          if (!content.is(":animated") && summary.is(":not(:visible)"))
+						          {
+						            content.css({
+						              height: height,
+						              position: "relative",
+						              top: -35 - summary.height()
+						            });
+						            summary.show();
+						            brick_stack.unshift(this);
+						            content.animate({
+						              top: 0
+						            });
+						            while (brick_stack.length > 1)
+						            {
+						              hide_summary(brick_stack.pop());
+						            }
+						          }
+						        });
+						        
+						        // Bind mouseleave
+						        brick.bind('touchend mouseleave', function()
+						        {
+						          hide_summary(brick_stack.pop());
+						        });
+						    }); // getJson	              
+	            } else //toggle 
 	            {
-	              if (ele.Additem == "Append" && ele.Isimage == "true" )
-	              {
-	              	var brick = $j("#brickTemplate").tmpl(ele).css({
-	                "display": "block"
-	                });
-	                container.append(brick).masonry('reload');  
-	                
-	              } else if (ele.Additem == "Append")
-	              {
-	              	var brick = $j("#defaultTemplate").tmpl(ele).css({
-	                "display": "block"
-	                });
-	                container.append(brick).masonry('reload');
-	                
-	              } else if (ele.Additem == "Prepend" && ele.Isimage == "true" )
-	              {
-	              	var brick = $j("#brickTemplate").tmpl(ele).css({
-	                	"display": "block"
-	                });
-	                container.prepend(brick).masonry('reload'); 
-	                 
-	              } else
-	              {
-	              	var brick = $j("#defaultTemplate").tmpl(ele).css({
-	                	"display": "block"
-	                });
-	                container.prepend(brick).masonry('reload');
-	                
-	              }
-	              
-	              console.log(brick);
-	              container.prepend(brick).masonry('reload');    
-	              
-				      	var content = brick.find(">div");
-				        //console.log(content);
-				        var height = brick.find("img").attr("height");
-				        if ( height == undefined )
-				        {
-				          content.css({
-				            height: "300px"
-				          }); 
-				         } else {
-				          content.css({
-				            height: height
-				          }); 
-				        }
-				        
-				        // bricks fade in
-				        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-				        
-				        /*
-				        brick.imagesLoaded(function(){
-				        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-				        });        
-				        */
-				        
-				        brick.imagesLoaded().done(function(){
-				        	brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-				        });
-				        
-				        //console.log(brick.find("a"));  
-				        var touchtime = 0;
-								brick.find("a").click(function() {
-								    if (touchtime == 0) {
-								        // set first click
-								        touchtime = new Date().getTime();
-								        if (mobile==false) {
-								        		var href = $(this).attr("href");
-														window.open(href);
-								        }								        
-								    } else {
-								        // compare first click to this click and see if they occurred within double click threshold
-								        if (((new Date().getTime()) - touchtime) < 800) {
-								            // double click occurred
-								            console.log("double clicked");
-								            if (mobile==true) {
-								            	touchtime = 0;
-								            	var href = $(this).attr("href");
-															window.open(href);
-														}
-								        } else {
-								            // not a double click so set as a new first click
-								            touchtime = new Date().getTime();
-								        }
-								    }
-								    return false;
-								});
-								
-				        // Bind Mousemove
-				        brick.bind('touchstart mousemove', function()
-				        {
-				        	//console.log("mousemove");
-				        	
-				          var content = brick.find(">div");
-				          var summary = brick.find(".teaser");
-				          var height = brick.find("img").attr("height");
-				          if ( height == undefined )
-				          {
-				            height: "300px"
-				          }
-				          if (!content.is(":animated") && summary.is(":not(:visible)"))
-				          {
-				            content.css({
-				              height: height,
-				              position: "relative",
-				              top: -35 - summary.height()
-				            });
-				            summary.show();
-				            brick_stack.unshift(this);
-				            content.animate({
-				              top: 0
-				            });
-				            while (brick_stack.length > 1)
-				            {
-				              hide_summary(brick_stack.pop());
-				            }
-				          }
-				        });
-				        
-				        // Bind mouseleave
-				        brick.bind('touchend mouseleave', function()
-				        {
-				          hide_summary(brick_stack.pop());
-				        });
-	              
-	              
-	            } else
-	            {
-	              $j('.brick').remove(":contains('" + ele.Headline + "')");
-	              container.masonry('reload');
+	              $j.each(json.reverse(), function(idx, ele)
+			          {
+			          	//var str = ele.Headline; 
+			          	//str = str.replace(/(['"])/g, "\\\\$1");
+		              $j('.brick').remove(":contains(\"" + ele.Headline.replace(/([()])/g, "") + "\")");
+		            });
+		            container.masonry('reload');
 	            }
 	            
 	            container.imagesLoaded()
-	            .progress( function( instance, image ) {
-	    					var result = image.isLoaded ? 'loaded' : 'broken';
-	    					console.log( 'image is ' + result + ' for ' + image.img.src );
-	  					})
-	            .done(function()
-	            {
-	            	/*
-	              // bricks correct height
-	              $j("#tx-charbeitsbeispiele-pi1 #container .brick").each(function()
-	              {
-	                var height = $j(this).find("img").attr("height");
-	                if ( height == undefined )
-	                {
-	                  $j(this).find(">div").css({
-	                    height: "300px"
-	                  }); 
-	                } else {
-	                  $j(this).find(">div").css({
-	                    height: height
-	                  }); 
-	                }
-	              
-  							//console.log($j(this).find("a"));  
-	              var touchtime = 0;
-								$j(this).find("a").click(function() {
-								    if (touchtime == 0) {
-								        // set first click
-								        touchtime = new Date().getTime();
-								        if (mobile==false) {
-								        		var href = $(this).attr("href");
-    												window.open(href);
-								        }								        
-								    } else {
-								        // compare first click to this click and see if they occurred within double click threshold
-								        if (((new Date().getTime()) - touchtime) < 800) {
-								            // double click occurred
-								            console.log("double clicked");
-								            if (mobile==true) {
-								            	touchtime = 0;
-								            	var href = $(this).attr("href");
-    													window.open(href);
-    												}
-								        } else {
-								            // not a double click so set as a new first click
-								            touchtime = new Date().getTime();
-								        }
-								    }
-								    return false;
-								});
-								
-	                $j(this).bind('touchstart mousemove', function()
-	                {
-	                	//console.log("mousemove");
-	                	
-	                  var content = $j(this).find(">div");
-	                  var summary = $j(this).find(".teaser");
-	                  var height = $j(this).find("img").attr("height");
-	                  if ( height == undefined )
-	                  {
-	                    content.css({
-	                      height: "300px"
-	                    }); 
-	                  } else {
-	                    content.css({
-	                      height: height
-	                    }); 
-	                   }
-	                  if (!content.is(":animated") && summary.is(":not(:visible)"))
-	                  {
-	                    content.css({
-	                      height: height,
-	                      position: "relative",
-	                      top: -35 - summary.height()
-	                    });
-	                    summary.show();
-	                    brick_stack.unshift(this);
-	                    content.animate({
-	                      top: 0
-	                    });
-	                    while (brick_stack.length > 1)
-	                    {
-	                      hide_summary(brick_stack.pop());
-	                    }
-	                  }
-	                });
-	                $j(this).bind('touchend mouseleave', function() {
-	                  hide_summary(brick_stack.pop());
-	                });
-	              });
-	              */
-	              
-	            });
-	          });
-	        } else
-	        {
-	          return false; // don't follow the link!
-	        }
-	      });
-      return false; // don't follow the link!
-    	}
+		            .progress( function( instance, image ) {
+		    					var result = image.isLoaded ? 'loaded' : 'broken';
+		    					console.log( 'image is ' + result + ' for ' + image.img.src );
+		  					})
+		            .done(function()
+		            {
+		            	 console.log("loaded");    
+		            	 //container.masonry('reload');
+		            	 
+	          		}); // imagesLoaded
+		        } else //getJson
+		        {
+		          return false; // don't follow the link!
+		        } // else
+		      });
+      		
+    	} //else
     });
   }
   
@@ -600,6 +516,8 @@
         {
         	var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
         	
+        	ele.Headline = ele.Headline.replace(/([()])/g, "");
+        	
         	if (d<new Date(ele.date)) {
         			d = new Date(ele.date);
 		        	console.log(d);
@@ -613,9 +531,10 @@
           	var brick = $j("#defaultTemplate").tmpl(ele);
           }
         
-        	console.log(brick);
+        	//console.log(brick);
 	        container.prepend(brick).masonry('reload');    
-	        	        
+	        //container.prepend(brick);  
+	        
 	      	var content = brick.find(">div");
 	        //console.log(content);
 	        var height = brick.find("img").attr("height");
@@ -715,15 +634,6 @@
   					})
           .done(function()
           {
-          	//console.log($j(this));
-          	//$j(".brick").delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-          	
-          	/*	
-        		$j(".brick").each(function()
-            {           
-            	$j(this).delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-            });
-          	*/
           			
           	console.log(counter);
             ++counter;
@@ -732,94 +642,8 @@
             {                        	
               // Menu slidedown
               $j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');
-              
-              /*
-              // bricks correct height
-              $j("#tx-charbeitsbeispiele-pi1 #container .brick").each(function()
-              {              	
-              	console.log($j(this));
-              	var content = $j(this).find(">div");
-                //console.log(content);
-                var height = $j(this).find("img").attr("height");
-                if ( height == undefined )
-                {
-                  content.css({
-                    height: "300px"
-                  }); 
-                 } else {
-                  content.css({
-                    height: height
-                  }); 
-                }
-                // bricks fade in
-                $j(this).delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-                                
-	              //console.log($j(this).find("a"));  
-	              var touchtime = 0;
-								$j(this).find("a").click(function() {
-								    if (touchtime == 0) {
-								        // set first click
-								        touchtime = new Date().getTime();
-								        if (mobile==false) {
-								        		var href = $(this).attr("href");
-    												window.open(href);
-								        }								        
-								    } else {
-								        // compare first click to this click and see if they occurred within double click threshold
-								        if (((new Date().getTime()) - touchtime) < 800) {
-								            // double click occurred
-								            console.log("double clicked");
-								            if (mobile==true) {
-								            	touchtime = 0;
-								            	var href = $(this).attr("href");
-    													window.open(href);
-    												}
-								        } else {
-								            // not a double click so set as a new first click
-								            touchtime = new Date().getTime();
-								        }
-								    }
-								    return false;
-								});
-								
-                // Bind Mousemove
-                $j(this).bind('touchstart mousemove', function()
-                {
-                	//console.log("mousemove");
-                	
-                  var content = $j(this).find(">div");
-                  var summary = $j(this).find(".teaser");
-                  var height = $j(this).find("img").attr("height");
-                  if ( height == undefined )
-                  {
-                    height: "300px"
-                  }
-                  if (!content.is(":animated") && summary.is(":not(:visible)"))
-                  {
-                    content.css({
-                      height: height,
-                      position: "relative",
-                      top: -35 - summary.height()
-                    });
-                    summary.show();
-                    brick_stack.unshift(this);
-                    content.animate({
-                      top: 0
-                    });
-                    while (brick_stack.length > 1)
-                    {
-                      hide_summary(brick_stack.pop());
-                    }
-                  }
-                });
-                // Bind mouseleave
-                $j(this).bind('touchend mouseleave', function()
-                {
-                  hide_summary(brick_stack.pop());
-                });
-              }); // each
-              */
-              
+              //container.masonry('reload');
+               
             } // if
           }); // ImagesLoadead
         }); // each
@@ -922,19 +746,9 @@ $(document).ready(function() {
   	console.log('scrollY = ' + window.scrollY);
 	}
 		
-	window.addEventListener('scroll', stickyNavigation);
-	
-	*/
-	
-	/*
-	$("#bbut").click(function() {
-			var toggle = $("#tx-charbeitsbeispiele-pi1 #menu li")[1].trigger("click");
-			//$toggle.attr("checked", !$toggle.attr("checked")).button("refresh");
-			toggle.trigger("click");
-			maxmedia.gridview();
-	});
-	*/
-	
+	window.addEventListener('scroll', stickyNavigation);	
+	*/	
+
 	$('.lazy').Lazy({
         // your configuration goes here
         scrollDirection: 'vertical',
