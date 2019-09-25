@@ -180,7 +180,8 @@
     $j("#tx-charbeitsbeispiele-pi1 #menu li").click(function()
     {
     	var n = $j(this).find('a').text();
-    	console.log(n);    	
+    	console.log(n);
+    		// about button    	
     	if (n == about_but || self.url_stack().length>0) {
     		
 				 console.log(self.url_stack());
@@ -220,7 +221,11 @@
 		          }
 
 	            if (toggle)
-	            {			          
+	            {	
+	            	
+	            	// this changes the scrolling behavior to "smooth"
+								window.scrollTo({ top: 0, behavior: 'smooth' });
+								          
 			          $j.each(json.reverse(), function(idx, ele)
 			          {
 			          	  //ele.Headline = ele.Headline.replace(/([()])/g, " ");
@@ -397,9 +402,7 @@
 		          return false; // don't follow the link!
 		        } // else
 		      });
-      		
-      	
-	            	  
+      		    	  
     	} //else
     });
   }
