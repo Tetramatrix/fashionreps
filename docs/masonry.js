@@ -42,6 +42,7 @@
         url_back = [];
       }
       s.css({
+      	"opacity": "0.0",
         "position": "absolute",
         "top": "-600px",
         "height": "600px",
@@ -80,7 +81,7 @@
           c.css({
             "opacity": "0.0"
           }).animate({
-              "opacity": "100.0",
+              "opacity": "1.0",
               "left" : "0px",
               "top": "10px"
           }, 900, function()
