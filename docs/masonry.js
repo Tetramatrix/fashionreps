@@ -77,7 +77,7 @@
         }, 900, function()
         {
           // Animation complete.
-          s.empty();
+          //s.empty();
           c.css({
             "opacity": "0.0"
           }).animate({
@@ -281,7 +281,7 @@
 						        */
 						        
 						        brick.imagesLoaded().done(function(){
-						        	brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+						        	brick.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
 						        	++counter;
 						        });
 						        
