@@ -16,13 +16,7 @@
   var root_but = "Home";
   var about_but = "About Us";
   var mobile = false;
-  
-  function getAllLocalStorage() {
-		return Object.keys(localStorage)
-		    .reduce((obj, k) => {
-		        return { ...obj, [k]: localStorage.getItem(k)}}, {});
-	}
-        
+    
   function gridview ()
   {
     var btn = $(this);
@@ -182,172 +176,6 @@
     });
   }
   
-  function addBricks(data, tmpl) {
-  	
-  		var container = $j('#tx-charbeitsbeispiele-pi1 #container');
-		  var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
-		  
-		   boxCount = data.length;
-       counter = 0;
-       var d = 0;
-        
-  	  $j.each(data.reverse(), function(idx, ele)
-	    { 	
-        	//ele.Headline = ele.Headline.replace(/([()])/g, " ");
-        	
-        	if (d<new Date(ele.date)) {
-        			d = new Date(ele.date);
-		        	console.log(d);
-		        	upd.text("Last update: "+ele.date);
-        	}
-        	
-	    	  //ele.Headline = ele.Headline.replace(/([()])/g, " ");
-	    	  
-	        if (ele.Additem == "Append" && ele.Isimage == "true" )
-	        {	        	
-	          var templ = tmpl === void 0 ? "#addBrickTemplate" : templ;
-	          
-	        } else if (ele.Additem == "Append")
-	        {
-	        	var templ = "#defaultTemplate";
-	          
-	        } else if (ele.Additem == "Prepend" && ele.Isimage == "true" )
-	        {
-	        	var templ = tmpl === void 0 ? "#addBrickTemplate" : tmpl;
-	           
-	        } else
-	        {
-	        	var templ = "#defaultTemplate";		                
-	        }
-	        
-	        var brick = $j(templ).tmpl(ele).css({
-	          "display": "block"
-	          });
-	          
-	        //console.log(brick);
-	        container.prepend(brick).masonry('reload');
-	        //container.prepend(brick);      
-	        
-	      	var content = brick.find(">div");
-	        //console.log(content);
-	        var height = brick.find("img").attr("height");
-	        if ( height == undefined )
-	        {
-	          content.css({
-	            height: "300px"
-	          }); 
-	         } else {
-	          content.css({
-	            height: height
-	          }); 
-	        }
-	        
-	        // bricks fade in
-	        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-	        
-	        /*
-	        brick.imagesLoaded(function(){
-	        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-	        });        
-	        */
-	        
-	        brick.imagesLoaded().done(function(){
-	        	brick.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
-	        	++counter;
-	        });
-	        
-	        var touchtime = 0;
-
-	         // Bind link (a href)
-	        brick.find("a").click({param1: ele}, function(e) {
-	        	  e.stopPropagation();
-							//this == the link that was clicked
-							//var href = $(this).attr("href");
-							//console.log(href);
-														
-							if (this.innerText == "+") {
-								localStorage.setItem(e.data.param1.uid, JSON.stringify(e.data.param1));
-							} else if (this.innerText == "-") {
-								localStorage.removeItem(e.data.param1.uid);
-								
-							 	$j(".brick").filter(function () {
-									//return $j.trim($j(this).text()) == ele.Headline;
-									//console.log($j(this).find("h3")[0]["textContent"]);
-									return $j(this).find("h3")[0]["textContent"] == e.data.param1.Headline;
-								}).remove()
-								container.masonry();
-							}							
-					});
-										
-	        // Bind Mouseclick
-	        brick.find("div").click(function(e) {
-	        	  e.stopPropagation();
-					    if (touchtime == 0) {
-					        // set first click
-					        touchtime = new Date().getTime();
-					        if (mobile==false) {
-					        		touchtime = 0;
-					        		//var href = $(this).attr("href");
-											window.open(ele.Link);
-					        }								        
-					    } else {
-					        // compare first click to this click and see if they occurred within double click threshold
-					        if (((new Date().getTime()) - touchtime) < 800) {
-					            // double click occurred
-					            console.log("double clicked");
-					            if (mobile==true) {
-					            	touchtime = 0;
-					            	//var href = $(this).attr("href");
-												window.open(ele.Link);
-											}
-					        } else {
-					            // not a double click so set as a new first click
-					            touchtime = new Date().getTime();
-					        }
-					    }
-					    return false;
-					});
-					
-	        // Bind Mousemove
-	        brick.bind('touchstart mousemove', function()
-	        {
-	        	//console.log("mousemove");
-	        	
-	          var content = brick.find(">div");
-	          var summary = brick.find(".teaser");
-	          var height = brick.find("img").attr("height");
-	          if ( height == undefined )
-	          {
-	            height: "300px"
-	          }
-	          content.css('cursor', 'pointer');
-	          if (!content.is(":animated") && summary.is(":not(:visible)"))
-	          {
-	            content.css({
-	              height: height,
-	              position: "relative",
-	              top: -35 - summary.height()
-	            });
-	            summary.show();
-	            brick_stack.unshift(this);
-	            content.animate({
-	              top: 0
-	            });
-	            while (brick_stack.length > 1)
-	            {
-	              hide_summary(brick_stack.pop());
-	            }
-	          }
-	        });
-	        
-	        // Bind mouseleave
-	        brick.bind('touchend mouseleave', function()
-	        {
-	          hide_summary(brick_stack.pop());
-	        });
-	    }); // each
-  }
-  
   function ajax (self) {
     // Menu ajax script
     $j("#tx-charbeitsbeispiele-pi1 #menu li").click(function()
@@ -374,65 +202,6 @@
 				 }
     		return false;
     		
-    	} else if (n == "My haul") {
-    		 
-    		 var json=getAllLocalStorage();    		 
-    		 //console.log(json);
-    		 
-    		 arr=[];
-    		 Object.keys(json).forEach((key)=> {
- 						//console.log(key +' -> '+ json[key]);
- 						arr.push(JSON.parse(json[key]));
-					});
-					//console.log(arr);
-    		 
-    		 $j('#footer').remove();
-		        	 
-		      var container = $j('#tx-charbeitsbeispiele-pi1 #container');
-		      container.masonry();
-		      var toggle = this.innerHTML.match(/toggle=on/g);
-		      var clrscreen = this.innerHTML.match(/screen=clear/g);
-		      boxCount = json.length;
-					counter = 0;
-					
-					if (clrscreen) {
-		          container.empty();
-          }
-
-          if (toggle)
-          {	
-          	
-          	// this changes the scrolling behavior to "smooth"
-						window.scrollTo({ top: 0, behavior: 'smooth' });
-						          
-	          addBricks(arr, "#minusBrickTemplate");	    
-         
-          } else //toggle 
-          {
-            $j.each(arr.reverse(), function(idx, ele)
-	          {
-	          	//var str = ele.Headline; 
-	          	//str = str.replace(/(['"])/g, "\\\\$1");
-	          	//console.log($j(".brick :contains('"+ele.Headline.replace(/([()])/g, " ")+"')"));
-              //$j('.brick').remove(":contains(\"" + ele.Headline.replace(/([()])/g, " ") + "\")");
-              
-              $j(".brick").filter(function () {
-									//return $j.trim($j(this).text()) == ele.Headline;
-									//console.log($j(this).find("h3")[0]["textContent"]);
-									return $j(this).find("h3")[0]["textContent"] == ele.Headline;
-							}).remove();
-
-            });
-            
-            container.masonry('reload');           
-      	 		
-      	 		/*
-      	 		$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
-						var boxc = $j('#container .brick').length;
-						$j('#footer').css({'top' : (((boxc/3)+boxc%3)*(300+10))+7 + 'px','position' : 'absolute', 'margin-left':'170px'});	
-          	*/
-          }
-    		 
     	} else {
     		
     			$j.getJSON($j(this).find('a').attr('href'), function(json)
@@ -458,7 +227,129 @@
 	            	// this changes the scrolling behavior to "smooth"
 								window.scrollTo({ top: 0, behavior: 'smooth' });
 								          
-			          addBricks(json);	    
+			          $j.each(json.reverse(), function(idx, ele)
+			          {
+			          	  //ele.Headline = ele.Headline.replace(/([()])/g, " ");
+			          	  
+			              if (ele.Additem == "Append" && ele.Isimage == "true" )
+			              {
+			              	var templ = "#brickTemplate";
+			                
+			              } else if (ele.Additem == "Append")
+			              {
+			              	var templ = "#defaultTemplate";
+
+			                
+			              } else if (ele.Additem == "Prepend" && ele.Isimage == "true" )
+			              {
+			              	var templ = "#brickTemplate";
+			                 
+			              } else
+			              {
+			              	var templ = "#defaultTemplate";		                
+			              }
+			              
+			              var brick = $j(templ).tmpl(ele).css({
+			                "display": "block"
+			                });
+			                
+			              //console.log(brick);
+			              container.prepend(brick).masonry('reload');
+			              //container.prepend(brick);      
+			              
+						      	var content = brick.find(">div");
+						        //console.log(content);
+						        var height = brick.find("img").attr("height");
+						        if ( height == undefined )
+						        {
+						          content.css({
+						            height: "300px"
+						          }); 
+						         } else {
+						          content.css({
+						            height: height
+						          }); 
+						        }
+						        
+						        // bricks fade in
+						        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+						        
+						        /*
+						        brick.imagesLoaded(function(){
+						        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+						        });        
+						        */
+						        
+						        brick.imagesLoaded().done(function(){
+						        	brick.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+						        	++counter;
+						        });
+						        
+						        //console.log(brick.find("a"));  
+						        var touchtime = 0;
+										brick.find("a").click(function() {
+										    if (touchtime == 0) {
+										        // set first click
+										        touchtime = new Date().getTime();
+										        if (mobile==false) {
+										        		var href = $(this).attr("href");
+																window.open(href);
+										        }								        
+										    } else {
+										        // compare first click to this click and see if they occurred within double click threshold
+										        if (((new Date().getTime()) - touchtime) < 800) {
+										            // double click occurred
+										            console.log("double clicked");
+										            if (mobile==true) {
+										            	touchtime = 0;
+										            	var href = $(this).attr("href");
+																	window.open(href);
+																}
+										        } else {
+										            // not a double click so set as a new first click
+										            touchtime = new Date().getTime();
+										        }
+										    }
+										    return false;
+										});
+										
+						        // Bind Mousemove
+						        brick.bind('touchstart mousemove', function()
+						        {
+						        	//console.log("mousemove");
+						        	
+						          var content = brick.find(">div");
+						          var summary = brick.find(".teaser");
+						          var height = brick.find("img").attr("height");
+						          if ( height == undefined )
+						          {
+						            height: "300px"
+						          }
+						          if (!content.is(":animated") && summary.is(":not(:visible)"))
+						          {
+						            content.css({
+						              height: height,
+						              position: "relative",
+						              top: -35 - summary.height()
+						            });
+						            summary.show();
+						            brick_stack.unshift(this);
+						            content.animate({
+						              top: 0
+						            });
+						            while (brick_stack.length > 1)
+						            {
+						              hide_summary(brick_stack.pop());
+						            }
+						          }
+						        });
+						        
+						        // Bind mouseleave
+						        brick.bind('touchend mouseleave', function()
+						        {
+						          hide_summary(brick_stack.pop());
+						        });
+						    }); // getJson	    
 	           
 	            } else //toggle 
 	            {
@@ -489,7 +380,7 @@
 	            container.imagesLoaded()
 		            .progress( function( instance, image ) {
 		    					var result = image.isLoaded ? 'loaded'	: 'broken';
-		    					//console.log( 'image is ' + result + ' for ' + image.img.src );
+		    					console.log( 'image is ' + result + ' for ' + image.img.src );
 		    				
 		  					}).done(function()
 		            {
@@ -664,17 +555,128 @@
           columnWidth: 390,
           isAnimated: !Modernizr.csstransitions
         });
-       
         boxCount = response.length;
-       	counter = 0;
-       		var d = 0;
-       
-				addBricks(response);        
+        counter = 0;
+        var d = 0;
+        $j.each(response.reverse(), function(idx, ele)
+        {
+        	var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
+        	
+        	//ele.Headline = ele.Headline.replace(/([()])/g, " ");
+        	
+        	if (d<new Date(ele.date)) {
+        			d = new Date(ele.date);
+		        	console.log(d);
+		        	upd.text("Last update: "+ele.date);
+        	}
+        	 
+          if (ele.Isimage == "true")
+          {
+          	var brick = $j("#brickTemplate").tmpl(ele);
+          } else {
+          	var brick = $j("#defaultTemplate").tmpl(ele);
+          }
         
-        container.imagesLoaded()
+        	//console.log(brick);
+	        container.prepend(brick).masonry('reload');    
+	        //container.prepend(brick);  
+	        
+	      	var content = brick.find(">div");
+	        //console.log(content);
+	        var height = brick.find("img").attr("height");
+	        if ( height == undefined )
+	        {
+	          content.css({
+	            height: "300px"
+	          }); 
+	         } else {
+	          content.css({
+	            height: height
+	          }); 
+	        }
+	        
+	        // bricks fade in
+	        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+	        
+	        /*
+	        brick.imagesLoaded(function(){
+	        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+	        });        
+	        */
+	        
+	        brick.imagesLoaded().done(function(){
+	        	brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+	        });
+	        
+	        //console.log(brick.find("a"));  
+	        var touchtime = 0;
+					brick.find("a").click(function() {
+					    if (touchtime == 0) {
+					        // set first click
+					        touchtime = new Date().getTime();
+					        if (mobile==false) {
+					        		var href = $(this).attr("href");
+											window.open(href);
+					        }								        
+					    } else {
+					        // compare first click to this click and see if they occurred within double click threshold
+					        if (((new Date().getTime()) - touchtime) < 800) {
+					            // double click occurred
+					            console.log("double clicked");
+					            if (mobile==true) {
+					            	touchtime = 0;
+					            	var href = $(this).attr("href");
+												window.open(href);
+											}
+					        } else {
+					            // not a double click so set as a new first click
+					            touchtime = new Date().getTime();
+					        }
+					    }
+					    return false;
+					});
+					
+	        // Bind Mousemove
+	        brick.bind('touchstart mousemove', function()
+	        {
+	        	//console.log("mousemove");
+	        	
+	          var content = brick.find(">div");
+	          var summary = brick.find(".teaser");
+	          var height = brick.find("img").attr("height");
+	          if ( height == undefined )
+	          {
+	            height: "300px"
+	          }
+	          if (!content.is(":animated") && summary.is(":not(:visible)"))
+	          {
+	            content.css({
+	              height: height,
+	              position: "relative",
+	              top: -35 - summary.height()
+	            });
+	            summary.show();
+	            brick_stack.unshift(this);
+	            content.animate({
+	              top: 0
+	            });
+	            while (brick_stack.length > 1)
+	            {
+	              hide_summary(brick_stack.pop());
+	            }
+	          }
+	        });
+	        
+	        // Bind mouseleave
+	        brick.bind('touchend mouseleave', function()
+	        {
+	          hide_summary(brick_stack.pop());
+	        });
+        
+          container.imagesLoaded()
           .progress(function( instance, image ) {
     					var result = image.isLoaded ? 'loaded' : 'broken';
-    					//console.log( 'image is ' + result + ' for ' + image.img.src );
+    					console.log( 'image is ' + result + ' for ' + image.img.src );
   					})
           .done(function()
           {          			
@@ -689,6 +691,7 @@
                
             } // if
           }); // ImagesLoadead
+        }); // each
           
         var reloadLink = $j("#tx-charbeitsbeispiele-pi1 #menu li:first");
         reloadLink.removeClass('ref_no').addClass('ref_act');
