@@ -382,7 +382,9 @@
     		 arr=[];
     		 Object.keys(json).forEach((key)=> {
  						//console.log(key +' -> '+ json[key]);
- 						arr.push(JSON.parse(json[key]));
+ 						if (!key.startsWith("Google")) {
+ 							arr.push(JSON.parse(json[key]));
+ 						} 						
 					});
 					//console.log(arr);
     		 
