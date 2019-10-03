@@ -275,7 +275,7 @@
 									//console.log($j(this).find("h3")[0]["textContent"]);
 									return $j(this).find("h3")[0]["textContent"] == e.data.param1.Headline;
 								}).remove()
-								container.masonry();
+								 container.masonry('reload');  
 							}							
 					});
 										
@@ -661,18 +661,24 @@
       if (response && response.length)
       {
         var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+        
         container.masonry({
           itemSelector: '.brick',
           columnWidth: 390,
-          isAnimated: !Modernizr.csstransitions
+          isAnimated: !Modernizr.csstransitions,
+           animationOptions: {
+		        duration: 500,
+		        easing: 'linear',
+		        queue: false
+		      }
         });
        
         boxCount = response.length;
        	counter = 0;
-       		var d = 0;
-       
+       	var d = 0;
+              
 				addBricks(response);        
-        
+       
         container.imagesLoaded()
           .progress(function( instance, image ) {
     					var result = image.isLoaded ? 'loaded' : 'broken';
@@ -691,7 +697,7 @@
                
             } // if
           }); // ImagesLoadead
-          
+             
         var reloadLink = $j("#tx-charbeitsbeispiele-pi1 #menu li:first");
         reloadLink.removeClass('ref_no').addClass('ref_act');
         var theHref = reloadLink.find('a').attr("href").replace(/\?toggle=.*/g, '');
