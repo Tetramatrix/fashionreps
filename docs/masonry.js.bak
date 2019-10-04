@@ -17,6 +17,7 @@
   var about_but = "About Us";
   var haul_but = "My haul";
   var mobile = false;
+  var appuid = "TLF";
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -225,40 +226,7 @@
 	        
 	        var brick = $j(templ).tmpl(ele).css({
 	          "display": "block"
-	          });
-	          
-	        //console.log(brick);
-	        container.prepend(brick).masonry('reload');
-	        //container.prepend(brick);      
-	        
-	      	var content = brick.find(">div");
-	        //console.log(content);
-	        var height = brick.find("img").attr("height");
-	        if ( height == undefined )
-	        {
-	          content.css({
-	            height: "300px"
-	          }); 
-	         } else {
-	          content.css({
-	            height: height
-	          }); 
-	        }
-	        
-	        // bricks fade in
-	        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-	        
-	        /*
-	        brick.imagesLoaded(function(){
-	        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-	        });        
-	       
-	        
-	        brick.imagesLoaded().done(function(){
-	        	brick.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
-	        	++counter;
 	        });
-	        */
 	        
 	         brick.find("img").lazy({
 							scrollDirection: 'vertical',
@@ -274,8 +242,7 @@
 		            // called after an element was successfully handled
 		            console.log("lazy after");
 		         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
-		         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);
-		         		
+		         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);		         		
 		         		++counter;
 		         		if (counter > 14) {
 		         			// Menu slidedown
@@ -286,7 +253,25 @@
 				    		console.log("lazy loaded");		  		
 							}
 				   });
-   
+				     
+	        //console.log(brick);
+	        container.prepend(brick).masonry('reload');
+	        //container.prepend(brick);      
+	        
+	      	var content = brick.find(">div");
+	        //console.log(content);
+	        var height = brick.find("img").attr("height");
+	        if (height == undefined)
+	        {
+	          content.css({
+	            height: "300px"
+	          }); 
+	         } else {
+	          content.css({
+	            height: height
+	          }); 
+	        }
+	           
 	        var touchtime = 0;
 
 	         // Bind link (a href)
@@ -297,7 +282,7 @@
 							//console.log(href);
 														
 							if (this.innerText == "+") {
-								localStorage.setItem(e.data.param1.uid, JSON.stringify(e.data.param1));
+								localStorage.setItem(appuid+e.data.param1.uid, JSON.stringify(e.data.param1));
 							} else if (this.innerText == "-") {
 								localStorage.removeItem(e.data.param1.uid);
 								
@@ -419,7 +404,7 @@
 					});
 					//console.log(arr);
     		 
-    		 $j('#footer').remove();
+    		  $j('#footer').remove();
 		        	 
 		      var container = $j('#tx-charbeitsbeispiele-pi1 #container');
 		      container.masonry();
@@ -660,44 +645,44 @@
 
      // First time, Reload, Tab closed, Browser, Close, Cookie deleted, PHPSESSIONID deleted
      $j.getJSON($j("#tx-charbeitsbeispiele-pi1 #menu li:first").find("a").attr('href'), xcallback);
-  	}
+  }
 	  
-	  function xcallback (response,status, xhr)
+  function xcallback (response,status, xhr)
+  {
+  	console.log(xhr.getAllResponseHeaders());
+  	console.log(xhr.getResponseHeader("Last-Modified"));
+  	//console.log(JSON.stringify(response));
+    // Start masonry animated
+    if (response && response.length)
     {
-    	console.log(xhr.getAllResponseHeaders());
-    	console.log(xhr.getResponseHeader("Last-Modified"));
-    	//console.log(JSON.stringify(response));
-      // Start masonry animated
-      if (response && response.length)
-      {
-      	// this changes the scrolling behavior to "smooth"
-				window.scrollTo({ top: 0, behavior: 'smooth' });
-								
-        var container = $j('#tx-charbeitsbeispiele-pi1 #container');
-        
-        container.masonry({
-          itemSelector: '.brick',
-          columnWidth: 390,
-          isAnimated: !Modernizr.csstransitions,
-           animationOptions: {
-		        duration: 500,
-		        easing: 'linear',
-		        queue: false
-		      }
-        });
-       
-        boxCount = response.length;
-       	counter = 0;
-       	var d = 0;
-              
-				addBricks(response);        
-        
-        var reloadLink = $j("#tx-charbeitsbeispiele-pi1 #menu li:first");
-        reloadLink.removeClass('ref_no').addClass('ref_act');
-        var theHref = reloadLink.find('a').attr("href").replace(/\?toggle=.*/g, '');
-        reloadLink.find('a').attr("href", theHref + "?toggle=off");  
-      }
-   }
+    	// this changes the scrolling behavior to "smooth"
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+							
+      var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+      
+      container.masonry({
+        itemSelector: '.brick',
+        columnWidth: 390,
+        isAnimated: !Modernizr.csstransitions,
+         animationOptions: {
+	        duration: 500,
+	        easing: 'linear',
+	        queue: false
+	      }
+      });
+     
+      boxCount = response.length;
+     	counter = 0;
+     	var d = 0;
+            
+			addBricks(response);        
+      
+      var reloadLink = $j("#tx-charbeitsbeispiele-pi1 #menu li:first");
+      reloadLink.removeClass('ref_no').addClass('ref_act');
+      var theHref = reloadLink.find('a').attr("href").replace(/\?toggle=.*/g, '');
+      reloadLink.find('a').attr("href", theHref + "?toggle=off");  
+    }
+  }
     
   function bbut () {  	
   	var toggle = $("#tx-charbeitsbeispiele-pi1 #menu li")[1];
