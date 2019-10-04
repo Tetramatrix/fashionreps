@@ -63,7 +63,7 @@
             "visibility": "visible",
             "position": "relative"
           })).animate({
-            "opacity": "100.0",
+            "opacity": "1.0",
             "top": "0px",
             "left": "0px"
           }, 900, function() {
@@ -169,7 +169,7 @@
             "height": "600px",
             "left" : "170px"
           }).animate({
-            "opacity": "100.0",
+            "opacity": "1.0",
             "top": "10px",
             "left" : "170px"
           }, 900, function() {
@@ -505,7 +505,8 @@
 								 },afterLoad: function(element) {
 				            // called after an element was successfully handled
 				            console.log("lazy after");
-				         		element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+				         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+				         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);
 				         },onFinishedAll: function() {
 						    		// called once all elements was handled
 						    		console.log("lazy loaded");		  		
@@ -720,10 +721,14 @@
 				 },afterLoad: function(element) {
             // called after an element was successfully handled
             console.log("lazy after");
-         		element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},1600);
+         		
          		++counter;
-         		// Menu slidedown
-            $j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  		
+         		if (counter > 14) {
+         			// Menu slidedown
+            	$j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  	
+         		}
          },onFinishedAll: function() {
 		    		// called once all elements was handled
 		    		console.log("lazy loaded");
