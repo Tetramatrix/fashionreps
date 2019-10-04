@@ -87,7 +87,7 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 <script type="text/javascript" src="jquery.tmpl.min.js" defer ></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" defer></script> 
 <script type="text/javascript" src="jquery.masonry.min.js" defer></script>
-<script type="text/javascript" src="masonry_b7180373f6967713a312bbf90a819d51.js" defer></script>
+<script type="text/javascript" src="masonry.js" defer></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js" defer></script>   
 <script src="https://unpkg.com/imagesloaded@4.1.4/imagesloaded.pkgd.min.js" defer></script>
 
@@ -109,18 +109,29 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
 </head>
 <body>
-<script id="brickTemplate" type="text/html">
+<script id="addBrickTemplate" type="text/html">
     <div style="width:${Width};height:${Height}" class="brick">
         <div style="width:${Width};height:${Height}" class="background">
-            <a class="arrow" href="${Link}" onClick="${OnClick}" target="${Target}">
             <div class="teaser">
                 <h3>${Headline}</h3>
                 <p class="subheadline">${Subheadline}</p>
                 <hr class="divider">
-                <p>${Text}</p>
+                <p>${Text}</p><a class="arrow" style="text-align:right" href="javascript:void(0);">+</a>
             </div>
             <img class="img" src="${Image}" width="${Width}" height="${Height}"/>
-            </a>
+        </div>
+    </div>    
+</script>
+<script id="minusBrickTemplate" type="text/html">
+    <div style="width:${Width};height:${Height}" class="brick">
+        <div style="width:${Width};height:${Height}" class="background">
+            <div class="teaser">
+                <h3>${Headline}</h3>
+                <p class="subheadline">${Subheadline}</p>
+                <hr class="divider">
+                <p>${Text}</p><a class="arrow" style="text-align:right" href="javascript:void(0);">-</a>
+            </div>
+            <img class="img" src="${Image}" width="${Width}" height="${Height}"/>
         </div>
     </div>    
 </script>
@@ -161,6 +172,7 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 						    <li class="ref_no"><a href="Y_Z.json" class="refid">Y-Z</a></li>
 						    <li class="ref_no"><a href="other.json" class="refid">Other</a></li>
 						    <li class="ref_no"><a href="links.json" class="refid">Links</a></li>
+						    <li class="ref_no"><a href="javascript:void(0);" class="refid">My haul</a></li>
 						</ul>
 						<p id="date"></p>
 						<p>

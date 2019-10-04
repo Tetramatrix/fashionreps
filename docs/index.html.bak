@@ -131,7 +131,7 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <hr class="divider">
                 <p>${Text}</p><a class="arrow" style="text-align:right" href="javascript:void(0);">-</a>
             </div>
-            <img class="img" data-src="${Image}" width="${Width}" height="${Height}"/>
+            <img class="img" src="${Image}" width="${Width}" height="${Height}"/>
         </div>
     </div>    
 </script>

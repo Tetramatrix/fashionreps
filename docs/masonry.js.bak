@@ -1,7 +1,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2019 Chi Hoang <info@chihoang.de>
+ *  (c) 2011-2019 Chi Hoang <rebrobates@gmail.com>
  *  All rights reserved
  *
  ***************************************************************/
@@ -13,8 +13,17 @@
   var brick_stack = [];
   var url_stack = [];
   var url_back = [];
-  var root_button = "Home"
-    
+  var root_but = "Home";
+  var about_but = "About Us";
+  var haul_but = "My haul";
+  var mobile = false;
+  
+  function getAllLocalStorage() {
+		return Object.keys(localStorage)
+		    .reduce((obj, k) => {
+		        return { ...obj, [k]: localStorage.getItem(k)}}, {});
+	}
+        
   function gridview ()
   {
     var btn = $(this);
@@ -24,7 +33,7 @@
     btn.data('running', true);
     var s = $j('#tx-charbeitsbeispiele-pi1 #singleview');
     var c = $j('#container');
-     
+    
     if ( url_stack.length > 1 || url_back.length > 0 )
     {
       if ( url_stack.length > 1 )
@@ -40,10 +49,11 @@
         url_back = [];
       }
       s.css({
+      	"opacity": "0.0",
         "position": "absolute",
         "top": "-600px",
         "height": "600px",
-        "left" : "140px"
+        "left" : "0px"
       })
       $j.getJSON(url, function(json)
       {    
@@ -55,7 +65,7 @@
           })).animate({
             "opacity": "100.0",
             "top": "0px",
-            "left": "140px"
+            "left": "0px"
           }, 900, function() {
             // Unset it here, this lets the button be clickable again
             btn.data('running', false);
@@ -74,12 +84,12 @@
         }, 900, function()
         {
           // Animation complete.
-          s.empty();
+          //s.empty();
           c.css({
             "opacity": "0.0"
           }).animate({
-              "opacity": "100.0",
-              "left" : "140px",
+              "opacity": "1.0",
+              "left" : "0px",
               "top": "10px"
           }, 900, function()
             {
@@ -89,6 +99,13 @@
         });
       });
     }
+    
+    /*
+    if (c.outerHeight()>0) {
+    	  c.after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+    		$j('#footer').css({'top' : c.outerHeight()+7 + 'px','position' : 'absolute', 'margin-left':'170px'});
+    }
+    */
   }
   
   function singleview (url)
@@ -97,8 +114,10 @@
     if (btn.data('running'))
       return;
     
-    var c = $('#container');
+    var c = $j('#container');
     var s = $j('#tx-charbeitsbeispiele-pi1 #singleview');
+    
+    $j('#footer').remove();
     
     s.empty();
     btn.data('running', true);
@@ -114,163 +133,418 @@
     } else
     {
       url_stack.push(url);  
+      console.log(url_stack);
     }
     c.css({
       "z-index" : "-35",
       "position": "absolute",
-      "left" : "140px",
-      "top" : "0px"
+      "left" : "0px",
+      "top" : "10px"
     }).animate({
       "position": "relative",
       "opacity": "0.0",
       "top": "+=600px",
-      "left" : "140px"
+      "left" : "0px"
     }, 900, function()
       {
+      
+      //$('#singleview').load("https://cors-anywhere.herokuapp.com/"+url);
       // Animation complete.
-      $j.getJSON(url, function(json)
+      /*
+      $j.ajax({url: "https://cors-anywhere.herokuapp.com/"+url,
+      				type: 'GET',
+      				dataType: 'html',
+      			 success: function(json)
       {
+      */
+      
+      $j.getJSON(url,function(json) {      
         if (json)
         {
+        	 /* s.html(json); */
+
           s.css({
             "position": "absolute",
             "top": "-600px",
             "height": "600px",
-            "left" : "140px"
+            "left" : "170px"
           }).animate({
             "opacity": "100.0",
             "top": "10px",
-            "left" : "140px"
+            "left" : "170px"
           }, 900, function() {
             // Unset it here, this lets the button be clickable again
             btn.data('running', false);
           }).append($j("#singleviewTemplate").tmpl(json).css({
             "visibility": "visible",
             "position": "relative"
-          }));  
+          }));
         }        
-      });      
+      });
+            
     });
   }
   
-  function ajax () {
+  function addBricks(data, tmpl) {
+  	
+  		var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+		  var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
+		  
+		   boxCount = data.length;
+       counter = 0;
+       var d = 0;
+        
+  	  $j.each(data.reverse(), function(idx, ele)
+	    { 	
+        	//ele.Headline = ele.Headline.replace(/([()])/g, " ");
+        	
+        	if (d<new Date(ele.date)) {
+        			d = new Date(ele.date);
+		        	console.log(d);
+		        	upd.text("Last update: "+ele.date);
+        	}
+        	
+	    	  //ele.Headline = ele.Headline.replace(/([()])/g, " ");
+	    	  
+	        if (ele.Additem == "Append" && ele.Isimage == "true" )
+	        {	        	
+	          var templ = tmpl === void 0 ? "#addBrickTemplate" : templ;
+	          
+	        } else if (ele.Additem == "Append")
+	        {
+	        	var templ = "#defaultTemplate";
+	          
+	        } else if (ele.Additem == "Prepend" && ele.Isimage == "true" )
+	        {
+	        	var templ = tmpl === void 0 ? "#addBrickTemplate" : tmpl;
+	           
+	        } else
+	        {
+	        	var templ = "#defaultTemplate";		                
+	        }
+	        
+	        var brick = $j(templ).tmpl(ele).css({
+	          "display": "block"
+	          });
+	          
+	        //console.log(brick);
+	        container.prepend(brick).masonry('reload');
+	        //container.prepend(brick);      
+	        
+	      	var content = brick.find(">div");
+	        //console.log(content);
+	        var height = brick.find("img").attr("height");
+	        if ( height == undefined )
+	        {
+	          content.css({
+	            height: "300px"
+	          }); 
+	         } else {
+	          content.css({
+	            height: height
+	          }); 
+	        }
+	        
+	        // bricks fade in
+	        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+	        
+	        /*
+	        brick.imagesLoaded(function(){
+	        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
+	        });        
+	       
+	        
+	        brick.imagesLoaded().done(function(){
+	        	brick.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+	        	++counter;
+	        });
+	        */
+   
+	        var touchtime = 0;
+
+	         // Bind link (a href)
+	        brick.find("a").click({param1: ele}, function(e) {
+	        	  e.stopPropagation();
+							//this == the link that was clicked
+							//var href = $(this).attr("href");
+							//console.log(href);
+														
+							if (this.innerText == "+") {
+								localStorage.setItem(e.data.param1.uid, JSON.stringify(e.data.param1));
+							} else if (this.innerText == "-") {
+								localStorage.removeItem(e.data.param1.uid);
+								
+							 	$j(".brick").filter(function () {
+									//return $j.trim($j(this).text()) == ele.Headline;
+									//console.log($j(this).find("h3")[0]["textContent"]);
+									return $j(this).find("h3")[0]["textContent"] == e.data.param1.Headline;
+								}).remove()
+								 container.masonry('reload');  
+							}							
+					});
+										
+	        // Bind Mouseclick
+	        brick.find("div").click(function(e) {
+	        	  e.stopPropagation();
+					    if (touchtime == 0) {
+					        // set first click
+					        touchtime = new Date().getTime();
+					        if (mobile==false) {
+					        		touchtime = 0;
+					        		//var href = $(this).attr("href");
+											window.open(ele.Link);
+					        }								        
+					    } else {
+					        // compare first click to this click and see if they occurred within double click threshold
+					        if (((new Date().getTime()) - touchtime) < 800) {
+					            // double click occurred
+					            console.log("double clicked");
+					            if (mobile==true) {
+					            	touchtime = 0;
+					            	//var href = $(this).attr("href");
+												window.open(ele.Link);
+											}
+					        } else {
+					            // not a double click so set as a new first click
+					            touchtime = new Date().getTime();
+					        }
+					    }
+					    return false;
+					});
+					
+	        // Bind Mousemove
+	        brick.bind('touchstart mousemove', function()
+	        {
+	        	//console.log("mousemove");
+	        	
+	          var content = brick.find(">div");
+	          var summary = brick.find(".teaser");
+	          var height = brick.find("img").attr("height");
+	          if ( height == undefined )
+	          {
+	            height: "300px"
+	          }
+	          content.css('cursor', 'pointer');
+	          if (!content.is(":animated") && summary.is(":not(:visible)"))
+	          {
+	            content.css({
+	              height: height,
+	              position: "relative",
+	              top: -35 - summary.height()
+	            });
+	            summary.show();
+	            brick_stack.unshift(this);
+	            content.animate({
+	              top: 0
+	            });
+	            while (brick_stack.length > 1)
+	            {
+	              hide_summary(brick_stack.pop());
+	            }
+	          }
+	        });
+	        
+	        // Bind mouseleave
+	        brick.bind('touchend mouseleave', function()
+	        {
+	          hide_summary(brick_stack.pop());
+	        });
+	    }); // each
+  }
+  
+  function ajax (self) {
     // Menu ajax script
     $j("#tx-charbeitsbeispiele-pi1 #menu li").click(function()
     {
-      $j.getJSON($j(this).find('a').attr('href'), function(json)
-      {
-        if (json && json.length)
-        {
-          var container = $j('#tx-charbeitsbeispiele-pi1 #container');
-          container.masonry();
-          var toggle = this.url.match(/toggle=on/g);
-          var clrscreen = this.url.match(/screen=clear/g);
-          
-          if (clrscreen) {
-          	container.empty();
+    	var n = $j(this).find('a').text();
+    	console.log(n);
+    		// about button    	
+    	if (n == about_but || self.url_stack().length>0) {
+    		
+				 console.log(self.url_stack());
+				 if (self.url_stack().length==0) 
+				 {
+				 		// this changes the scrolling behavior to "smooth"
+						window.scrollTo({ top: 0, behavior: 'smooth' });
+				 		var toggle = $("#tx-charbeitsbeispiele-pi1 #menu li")[1];
+						$(toggle).removeClass('ref_no').addClass('ref_act');
+						var theHref = $(toggle).find('a').attr("href").replace(/\?toggle=.*/g, '');		
+						$(toggle).find('a').attr("href", theHref + "?toggle=on");	
+				 		singleview($j(this).find('a').attr('href'));
+				 		
+				 } else {
+				 	
+						bbut (); 	
+				 }
+    		return false;
+    		
+    	} else if (n == "My haul") {
+    		 
+    		 var json=getAllLocalStorage();    		 
+    		 //console.log(json);
+    		 
+    		 arr=[];
+    		 Object.keys(json).forEach((key)=> {
+ 						//console.log(key +' -> '+ json[key]);
+ 						if (!key.startsWith("google")) {
+ 							arr.push(JSON.parse(json[key]));
+ 						} 						
+					});
+					//console.log(arr);
+    		 
+    		 $j('#footer').remove();
+		        	 
+		      var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+		      container.masonry();
+		      var toggle = this.innerHTML.match(/toggle=on/g);
+		      var clrscreen = this.innerHTML.match(/screen=clear/g);
+		      boxCount = json.length;
+					counter = 0;
+					
+					if (clrscreen) {
+		          container.empty();
           }
-          
-          $j.each(json.reverse(), function(idx, ele)
+
+          if (toggle)
+          {	
+          	
+          	// this changes the scrolling behavior to "smooth"
+						window.scrollTo({ top: 0, behavior: 'smooth' });
+						          
+	          addBricks(arr, "#minusBrickTemplate");	    
+         
+          } else //toggle 
           {
-            //if (ele.toggle == "on")
-            if (toggle)
-            {
-              if (ele.Additem == "Append" && ele.Isimage == "true" )
-              {
-                container.append($j("#brickTemplate").tmpl(ele).css({
-                "display": "block"
-                })).masonry('reload');  
-              } else if (ele.Additem == "Append")
-              {
-                container.append($j("#defaultTemplate").tmpl(ele).css({
-                "display": "block"
-                })).masonry('reload');
-              } else if (ele.Additem == "Prepend" && ele.Isimage == "true" )
-              {
-                container.prepend($j("#brickTemplate").tmpl(ele).css({
-                  "display": "block"
-                })).masonry('reload');  
-              } else
-              {
-                container.prepend($j("#defaultTemplate").tmpl(ele).css({
-                  "display": "block"
-                })).masonry('reload');
-              }
-            } else
-            {
-              $j('.brick').remove(":contains('" + ele.Headline + "')");
-              container.masonry('reload');
-            }
-            container.imagesLoaded(
-            .progress( function( instance, image ) {
-    					var result = image.isLoaded ? 'loaded' : 'broken';
-    					console.log( 'image is ' + result + ' for ' + image.img.src );
-  					})
-            .done(function()
-            {
-              // bricks correct height
-              $j("#tx-charbeitsbeispiele-pi1 #container .brick").each(function()
-              {
-                var height = $j(this).find("img").attr("height");
-                if ( height == undefined )
-                {
-                  $j(this).find(">div").css({
-                    height: "300px"
-                  }); 
-                } else {
-                  $j(this).find(">div").css({
-                    height: height
-                  }); 
-                }
-                $j(this).mousemove(function()
-                {
-                  var content = $j(this).find(">div");
-                  var summary = $j(this).find(".teaser");
-                  var height = $j(this).find("img").attr("height");
-                  if ( height == undefined )
-                  {
-                    content.css({
-                      height: "300px"
-                    }); 
-                  } else {
-                    content.css({
-                      height: height
-                    }); 
-                   }
-                  if (!content.is(":animated") && summary.is(":not(:visible)"))
-                  {
-                    content.css({
-                      height: height,
-                      position: "relative",
-                      top: -35 - summary.height()
-                    });
-                    summary.show();
-                    brick_stack.unshift(this);
-                    content.animate({
-                      top: 0
-                    });
-                    while (brick_stack.length > 1)
-                    {
-                      hide_summary(brick_stack.pop());
-                    }
-                  }
-                });
-                $j(this).mouseleave(function() {
-                  hide_summary(brick_stack.pop());
-                });
-              });
+            $j.each(arr.reverse(), function(idx, ele)
+	          {
+	          	//var str = ele.Headline; 
+	          	//str = str.replace(/(['"])/g, "\\\\$1");
+	          	//console.log($j(".brick :contains('"+ele.Headline.replace(/([()])/g, " ")+"')"));
+              //$j('.brick').remove(":contains(\"" + ele.Headline.replace(/([()])/g, " ") + "\")");
+              
+              $j(".brick").filter(function () {
+									//return $j.trim($j(this).text()) == ele.Headline;
+									//console.log($j(this).find("h3")[0]["textContent"]);
+									return $j(this).find("h3")[0]["textContent"] == ele.Headline;
+							}).remove();
+
             });
-          });
-        } else
-        {
-          return false; // don't follow the link!
-        }
-      });
-      return false; // don't follow the link!
+            
+            container.masonry('reload');           
+      	 		
+      	 		/*
+      	 		$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+						var boxc = $j('#container .brick').length;
+						$j('#footer').css({'top' : (((boxc/3)+boxc%3)*(300+10))+7 + 'px','position' : 'absolute', 'margin-left':'170px'});	
+          	*/
+          }
+    		 
+    	} else {
+    		
+    			$j.getJSON($j(this).find('a').attr('href'), function(json)
+		      {
+		        if (json && json.length)
+		        {
+		        	$j('#footer').remove();
+		        	 
+		          var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+		          container.masonry();
+		          var toggle = this.url.match(/toggle=on/g);
+		          var clrscreen = this.url.match(/screen=clear/g);
+		          boxCount = json.length;
+        			counter = 0;
+        
+		          if (clrscreen) {
+		          	container.empty();
+		          }
+
+	            if (toggle)
+	            {	
+	            	
+	            	// this changes the scrolling behavior to "smooth"
+								window.scrollTo({ top: 0, behavior: 'smooth' });
+								          
+			          addBricks(json);	    
+	           
+	            } else //toggle 
+	            {
+	              $j.each(json.reverse(), function(idx, ele)
+			          {
+			          	//var str = ele.Headline; 
+			          	//str = str.replace(/(['"])/g, "\\\\$1");
+			          	//console.log($j(".brick :contains('"+ele.Headline.replace(/([()])/g, " ")+"')"));
+		              //$j('.brick').remove(":contains(\"" + ele.Headline.replace(/([()])/g, " ") + "\")");
+		              
+		              $j(".brick").filter(function () {
+    									//return $j.trim($j(this).text()) == ele.Headline;
+    									//console.log($j(this).find("h3")[0]["textContent"]);
+    									return $j(this).find("h3")[0]["textContent"] == ele.Headline;
+									}).remove();
+
+		            });
+		            
+		            container.masonry('reload');           
+		      	 		
+		      	 		/*
+		      	 		$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+								var boxc = $j('#container .brick').length;
+								$j('#footer').css({'top' : (((boxc/3)+boxc%3)*(300+10))+7 + 'px','position' : 'absolute', 'margin-left':'170px'});	
+	            	*/
+	            }
+	            
+				       $j('#container .img').Lazy({
+									scrollDirection: 'vertical',
+						      effect: 'fadeIn',
+						      visibleOnly: true,
+						      onError: function(element) {
+						          console.log('error loading ' + element.data('src'));
+						      },
+						       beforeLoad: function(element) {
+						  			// called before an elements gets handled
+						  			console.log("lazy before");
+								 },afterLoad: function(element) {
+				            // called after an element was successfully handled
+				            console.log("lazy after");
+				         		element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+				         },onFinishedAll: function() {
+						    		// called once all elements was handled
+						    		console.log("lazy loaded");		  		
+									}
+						   });
+			   	
+			   	    /*
+	            container.imagesLoaded()
+		            .progress( function( instance, image ) {
+		    					var result = image.isLoaded ? 'loaded'	: 'broken';
+		    					//console.log( 'image is ' + result + ' for ' + image.img.src );
+		    				
+		  					}).done(function()
+		            {
+		            	console.log(counter);
+		            	
+            			if (counter >= boxCount)
+            			{            				
+		            	 	console.log("imagesloaded loaded");    
+		            	 	//container.masonry('reload');		            	 	
+				      	 		/*
+				      	 		$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
+				      	 		var boxc = $j('#container .brick').length;
+										$j('#footer').css({'top' : (((boxc/3)+boxc%3)*(300+10))+7 + 'px','position' : 'absolute', 'margin-left':'170px'});						 		
+		            	} 
+		            	   
+	          		}); // imagesLoaded
+	          		*/
+		        } else //getJson
+		        {
+		          return false; // don't follow the link!
+		        } // else
+		      });
+      		    	  
+    	} //else
     });
   }
   
-  function reload ()
+  function reload (self)
   {
     $j(window).unload(function()
     {
@@ -314,49 +588,51 @@
     // Menu toggle script
     menu.toggle(
       function() {
-        var n = $j(this).find('a').text();
-        // Klick "Alle"-Button
-        if (n == root_button) {
-        	var container = $j('#tx-charbeitsbeispiele-pi1 #container');
-        	container.empty();
-          $j.each(menu, function(idx, ele)
-          {
-          // Alle anderen buttons off
-          if ($j(ele).find('a').text() != root_button) {
-            $j(ele).removeClass('ref_act').addClass('ref_no');
-            var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
-            $j(ele).find('a').attr("href", theHref + "?toggle=off");
-          } else {
-            // Alle buttons on
-            $j(ele).removeClass('ref_no').addClass('ref_act');
-            var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
-            $j(ele).find('a').attr("href", theHref + "?toggle=on");
-          }
-        });
+      	if (self.url_stack().length==0) {
+      		var n = $j(this).find('a').text();
+	        // Klick "Alle"-Button
+	        if (n == root_but) {
+	        	var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+	        	container.empty();
+	          $j.each(menu, function(idx, ele)
+	          {
+	          // Alle anderen buttons off
+	          if ($j(ele).find('a').text() != root_but) {
+	            $j(ele).removeClass('ref_act').addClass('ref_no');
+	            var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
+	            $j(ele).find('a').attr("href", theHref + "?toggle=off");
+	          } else {
+	            // Alle buttons on
+	            $j(ele).removeClass('ref_no').addClass('ref_act');
+	            var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
+	            $j(ele).find('a').attr("href", theHref + "?toggle=on");
+	          }
+	        });
+      	}
+      	
+      	var params = "?toggle=on";
+    
+		    $j.each(menu, function(idx, ele) {
+		      if ($j(ele).find('a').text() == n) {
+		       params += "&but="+n;
+		        $j(ele).removeClass('ref_no').addClass('ref_act');
+		        var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
+		        $j(ele).find('a').attr("href", theHref + params);
+		  
+		      } else if ($j(ele).find('a').text() == root_but && n != about_but && $j(ele).hasClass('ref_act')) {
+		        params += "&screen=clear";
+		        $j(ele).removeClass('ref_act').addClass('ref_no');
+		        var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
+		        $j(ele).find('a').attr("href", theHref + "?toggle=off");
+		      }
+		    });
+		   	$j(this).trigger('mouseleave touchend');	
       }
-    
-      var params = "?toggle=on";
-    
-      $j.each(menu, function(idx, ele) {
-        if ($j(ele).find('a').text() == n) {
-         params += "&but="+n;
-          $j(ele).removeClass('ref_no').addClass('ref_act');
-          var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
-          $j(ele).find('a').attr("href", theHref + params);
-    
-        } else if ($j(ele).find('a').text() == root_button && $j(ele).hasClass('ref_act')) {
-          params += "&screen=clear";
-          $j(ele).removeClass('ref_act').addClass('ref_no');
-          var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
-          $j(ele).find('a').attr("href", theHref + "?toggle=off");
-        }
-      });
-      $j(this).trigger('mouseleave');
     },
     
     function() {
       var n = $j(this).find('a').text();
-      if (n != root_button) {
+      if (n != root_but) {
         var params = "?toggle=off";
         $j.each(menu, function(idx, ele) {
           if ($j(ele).find('a').text() == n) {
@@ -370,8 +646,8 @@
               $j(ele).find('a').attr("href", theHref + params);
             }
           }
-          // Alle-Button Active
-          if ($j(ele).hasClass('ref_act') && $j(ele).find('a').text() == root_button) {
+          // Home-Button Active
+          if ($j(ele).hasClass('ref_act') && $j(ele).find('a').text() == root_but && n != haul_but && n != about_but) {
             // Clear Screen
             params += "&screen=clear";
             $j(ele).removeClass('ref_act').addClass('ref_no');
@@ -380,26 +656,28 @@
     
           }
         });
-      } else if (n == root_button) {
+      } else if (n == root_but) {
         $j.each(menu, function(idx, ele) {
-          if ($j(ele).find('a').text() == root_button) {
+          if ($j(ele).find('a').text() == root_but) {
             $j(this).removeClass('ref_no').addClass('ref_act');
             var theHref = $j(this).find('a').attr("href").replace(/\?toggle=.*/g, '');
             $j(this).find('a').attr("href", theHref + "?toggle=on");
     
-          } else if ($j(ele).find('a').text() != root_button) {
+          } else if ($j(ele).find('a').text() != root_but) {
             $j(ele).removeClass('ref_act').addClass('ref_no');
             var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
             $j(ele).find('a').attr("href", theHref + "?toggle=off");
           }
         });
       }
-      $j(this).trigger('mouseleave');
+      $j(this).trigger('mouseleave touchend');
     });
 
-    // First time, Reload, Tab closed, Browser, Close, Cookie deleted, PHPSESSIONID deleted
-    $j.getJSON($j("#tx-charbeitsbeispiele-pi1 #menu li:first").find("a").attr('href'), 
-    	function(response,status, xhr)
+     // First time, Reload, Tab closed, Browser, Close, Cookie deleted, PHPSESSIONID deleted
+     $j.getJSON($j("#tx-charbeitsbeispiele-pi1 #menu li:first").find("a").attr('href'), xcallback);
+  	}
+	  
+	  function xcallback (response,status, xhr)
     {
     	console.log(xhr.getAllResponseHeaders());
     	console.log(xhr.getResponseHeader("Last-Modified"));
@@ -407,99 +685,88 @@
       // Start masonry animated
       if (response && response.length)
       {
+      	// this changes the scrolling behavior to "smooth"
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+								
         var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+        
         container.masonry({
           itemSelector: '.brick',
           columnWidth: 390,
-          isAnimated: !Modernizr.csstransitions
+          isAnimated: !Modernizr.csstransitions,
+           animationOptions: {
+		        duration: 500,
+		        easing: 'linear',
+		        queue: false
+		      }
         });
+       
         boxCount = response.length;
-        counter = 0;
-        $j.each(response.reverse(), function(idx, ele)
-        {
-        	var lu = $j("#tx-charbeitsbeispiele-pi1 #date");
-        	lu.text("Last updated: "+ele.date);
-        	 
-          if (ele.Isimage == "true")
-          {
-            container.prepend($j("#brickTemplate").tmpl(ele)).masonry('reload');  
-          } else {
-            container.prepend($j("#defaultTemplate").tmpl(ele)).masonry('reload');
-          }
-          container.imagesLoaded()
+       	counter = 0;
+       	var d = 0;
+              
+				addBricks(response);        
+       
+       $('#container .img').Lazy({
+					scrollDirection: 'vertical',
+		      effect: 'fadeIn',
+		      visibleOnly: true,
+		      onError: function(element) {
+		          console.log('error loading ' + element.data('src'));
+		      },
+		       beforeLoad: function(element) {
+		  			// called before an elements gets handled
+		  			console.log("lazy before");
+				 },afterLoad: function(element) {
+            // called after an element was successfully handled
+            console.log("lazy after");
+         		element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+         		++counter;
+         		// Menu slidedown
+            $j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  		
+         },onFinishedAll: function() {
+		    		// called once all elements was handled
+		    		console.log("lazy loaded");
+					}
+		   });
+   
+       /*
+        container.imagesLoaded()
           .progress(function( instance, image ) {
     					var result = image.isLoaded ? 'loaded' : 'broken';
-    					console.log( 'image is ' + result + ' for ' + image.img.src );
+    					//console.log( 'image is ' + result + ' for ' + image.img.src );
   					})
           .done(function()
-          {
+          {          			
+          	console.log(counter);
             ++counter;
+            
             if (counter >= boxCount)
-            {
+            {                        	
               // Menu slidedown
               $j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');
-              // bricks correct height  
-              $j("#tx-charbeitsbeispiele-pi1 #container .brick").each(function()
-              {
-                var content = $j(this).find(">div");
-                var height = $j(this).find("img").attr("height");
-                if ( height == undefined )
-                {
-                  content.css({
-                    height: "300px"
-                  }); 
-                 } else {
-                  content.css({
-                    height: height
-                  }); 
-                }
-                // bricks fade in
-                $j(this).delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-                // Bind Mousemove
-                $j(this).mousemove(function()
-                {
-                  var content = $j(this).find(">div");
-                  var summary = $j(this).find(".teaser");
-                  var height = $j(this).find("img").attr("height");
-                  if ( height == undefined )
-                  {
-                    height: "300px"
-                  }
-                  if (!content.is(":animated") && summary.is(":not(:visible)"))
-                  {
-                    content.css({
-                      height: height,
-                      position: "relative",
-                      top: -35 - summary.height()
-                    });
-                    summary.show();
-                    brick_stack.unshift(this);
-                    content.animate({
-                      top: 0
-                    });
-                    while (brick_stack.length > 1)
-                    {
-                      hide_summary(brick_stack.pop());
-                    }
-                  }
-                });
-                // Bind mouseleave
-                $j(this).mouseleave(function()
-                {
-                  hide_summary(brick_stack.pop());
-                });
-              });
-            }
+              //container.masonry('reload');
+               
+            } // if
           }); // ImagesLoadead
-        }); // each
+        */
+        
         var reloadLink = $j("#tx-charbeitsbeispiele-pi1 #menu li:first");
         reloadLink.removeClass('ref_no').addClass('ref_act');
         var theHref = reloadLink.find('a').attr("href").replace(/\?toggle=.*/g, '');
         reloadLink.find('a').attr("href", theHref + "?toggle=off");  
       }
-    });
+   }
+    
+  function bbut () {  	
+  	var toggle = $("#tx-charbeitsbeispiele-pi1 #menu li")[1];
+		//toggle.attr("unchecked", !toggle.attr("unchecked")).button("refresh");
+		$(toggle).removeClass('ref_act').addClass('ref_no');
+		var theHref = $(toggle).find('a').attr("href").replace(/\?toggle=.*/g, '');		
+		$(toggle).find('a').attr("href", theHref + "?toggle=off");
+  	maxmedia.gridview();
   }
-
+  
   // Privat function
   function hide_summary(ele)
   {
@@ -526,18 +793,32 @@
     return gridview ( );
   }
   
-  Arbeitsbeispiele.prototype.ajax = function ()
+  Arbeitsbeispiele.prototype.ajax = function (self)
   {
-    return ajax();
+    return ajax(self);
   }
   
-  Arbeitsbeispiele.prototype.reload = function ()
+  Arbeitsbeispiele.prototype.reload = function (self)
   {
-    return reload();
+    return reload(self);
   }
 
+  Arbeitsbeispiele.prototype.bbut = function ()
+  {
+    return bbut();
+  }
+
+  Arbeitsbeispiele.prototype.url_stack = function ()
+  {
+    return url_stack;
+  }
+    
   function Arbeitsbeispiele (anonymous)
   {
+  	if (/Mobi|Android/i.test(navigator.userAgent)) {
+    	// mobile!
+    	mobile = true;
+		}
     $j = anonymous;
     return true;
   }
@@ -551,34 +832,23 @@ $("#spinner").bind("ajaxError", function() { $(this).hide(); });
 */
 
 
-
-
 var maxmedia;
 var $ = jQuery.noConflict();
 $(document).ready(function() {
   $("#container").draggable({zIndex:-35});
   maxmedia = new Arbeitsbeispiele($);
-  maxmedia.reload();
-  maxmedia.ajax();
+  maxmedia.reload(maxmedia);
+  maxmedia.ajax(maxmedia);
   
   const nav = document.querySelector('#navigation');
 	const navTop = nav.offsetTop;
 
+   /*
 	function stickyNavigation() {
   	console.log('navTop = ' + navTop);
   	console.log('scrollY = ' + window.scrollY);
 	}
-
-	window.addEventListener('scroll', stickyNavigation);
-	
-	$('.lazy').Lazy({
-        // your configuration goes here
-        scrollDirection: 'vertical',
-        effect: 'fadeIn',
-        visibleOnly: true,
-        onError: function(element) {
-            console.log('error loading ' + element.data('src'));
-        }
-   });
-
+		
+	window.addEventListener('scroll', stickyNavigation);	
+	*/	
 });
