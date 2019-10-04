@@ -15,6 +15,7 @@
   var url_back = [];
   var root_but = "Home";
   var about_but = "About Us";
+  var haul_but = "My haul";
   var mobile = false;
   
   function getAllLocalStorage() {
@@ -622,7 +623,7 @@
             }
           }
           // Home-Button Active
-          if ($j(ele).hasClass('ref_act') && $j(ele).find('a').text() == root_but && n != about_but) {
+          if ($j(ele).hasClass('ref_act') && $j(ele).find('a').text() == root_but && n != haul_but && n != about_but) {
             // Clear Screen
             params += "&screen=clear";
             $j(ele).removeClass('ref_act').addClass('ref_no');
