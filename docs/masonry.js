@@ -245,20 +245,32 @@
 	          }); 
 	        }
 	        
-	        // bricks fade in
-	        //brick.delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-	        
-	        /*
-	        brick.imagesLoaded(function(){
-	        	$j(this).find('.brick').delay(Math.floor(Math.random() * 1600)).fadeIn('slow');
-	        });        
-	       
-	        
-	        brick.imagesLoaded().done(function(){
-	        	brick.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
-	        	++counter;
-	        });
-	        */
+	         brick.find("img").lazy({
+							scrollDirection: 'vertical',
+				      effect: 'fadeIn',
+				      visibleOnly: true,
+				      onError: function(element) {
+				          console.log('error loading ' + element.data('src'));
+				      },
+				       beforeLoad: function(element) {
+				  			// called before an elements gets handled
+				  			console.log("lazy before");
+						 },afterLoad: function(element) {
+		            // called after an element was successfully handled
+		            console.log("lazy after");
+		         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+		         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);
+		         		
+		         		++counter;
+		         		if (counter > 14) {
+		         			// Menu slidedown
+		            	$j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  	
+		         		}
+		         },onFinishedAll: function() {
+				    		// called once all elements was handled
+				    		console.log("lazy loaded");		  		
+							}
+				   });
    
 	        var touchtime = 0;
 
@@ -378,7 +390,7 @@
 				 }
     		return false;
     		
-    	} else if (n == "My haul") {
+    	} else if (n == haul_but) {
     		 
     		 var json=getAllLocalStorage();    		 
     		 //console.log(json);
@@ -492,49 +504,6 @@
 	            	*/
 	            }
 	            
-				       $j('#container .img').Lazy({
-									scrollDirection: 'vertical',
-						      effect: 'fadeIn',
-						      visibleOnly: true,
-						      onError: function(element) {
-						          console.log('error loading ' + element.data('src'));
-						      },
-						       beforeLoad: function(element) {
-						  			// called before an elements gets handled
-						  			console.log("lazy before");
-								 },afterLoad: function(element) {
-				            // called after an element was successfully handled
-				            console.log("lazy after");
-				         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
-				         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);
-				         },onFinishedAll: function() {
-						    		// called once all elements was handled
-						    		console.log("lazy loaded");		  		
-									}
-						   });
-			   	
-			   	    /*
-	            container.imagesLoaded()
-		            .progress( function( instance, image ) {
-		    					var result = image.isLoaded ? 'loaded'	: 'broken';
-		    					//console.log( 'image is ' + result + ' for ' + image.img.src );
-		    				
-		  					}).done(function()
-		            {
-		            	console.log(counter);
-		            	
-            			if (counter >= boxCount)
-            			{            				
-		            	 	console.log("imagesloaded loaded");    
-		            	 	//container.masonry('reload');		            	 	
-				      	 		/*
-				      	 		$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
-				      	 		var boxc = $j('#container .brick').length;
-										$j('#footer').css({'top' : (((boxc/3)+boxc%3)*(300+10))+7 + 'px','position' : 'absolute', 'margin-left':'170px'});						 		
-		            	} 
-		            	   
-	          		}); // imagesLoaded
-	          		*/
 		        } else //getJson
 		        {
 		          return false; // don't follow the link!
@@ -707,54 +676,6 @@
        	var d = 0;
               
 				addBricks(response);        
-       
-       $('#container .img').Lazy({
-					scrollDirection: 'vertical',
-		      effect: 'fadeIn',
-		      visibleOnly: true,
-		      onError: function(element) {
-		          console.log('error loading ' + element.data('src'));
-		      },
-		       beforeLoad: function(element) {
-		  			// called before an elements gets handled
-		  			console.log("lazy before");
-				 },afterLoad: function(element) {
-            // called after an element was successfully handled
-            console.log("lazy after");
-         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
-         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);
-         		
-         		++counter;
-         		if (counter > 14) {
-         			// Menu slidedown
-            	$j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  	
-         		}
-         },onFinishedAll: function() {
-		    		// called once all elements was handled
-		    		console.log("lazy loaded");
-					}
-		   });
-   
-       /*
-        container.imagesLoaded()
-          .progress(function( instance, image ) {
-    					var result = image.isLoaded ? 'loaded' : 'broken';
-    					//console.log( 'image is ' + result + ' for ' + image.img.src );
-  					})
-          .done(function()
-          {          			
-          	console.log(counter);
-            ++counter;
-            
-            if (counter >= boxCount)
-            {                        	
-              // Menu slidedown
-              $j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');
-              //container.masonry('reload');
-               
-            } // if
-          }); // ImagesLoadead
-        */
         
         var reloadLink = $j("#tx-charbeitsbeispiele-pi1 #menu li:first");
         reloadLink.removeClass('ref_no').addClass('ref_act');
