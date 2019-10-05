@@ -291,9 +291,10 @@
 							//console.log(href);
 														
 							if (this.innerText == "+") {
+								e.data.param1.Headline+=" ";
 								localStorage.setItem(appuid+e.data.param1.uid, JSON.stringify(e.data.param1));
 							} else if (this.innerText == "-") {
-								localStorage.removeItem(e.data.param1.uid);
+								localStorage.removeItem(appuid+e.data.param1.uid);
 								
 							 	$j(".brick").filter(function () {
 									//return $j.trim($j(this).text()) == ele.Headline;
