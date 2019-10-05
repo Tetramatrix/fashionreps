@@ -17,9 +17,10 @@
   var about_but = "About Us";
   var haul_but = "My haul";
   var mobile = false;
-  var appuid = "TLF";
+  var appuid = "TLF!";
   var cw = 310;
   var imgh = 300;
+  var loadmenu = 4;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -89,12 +90,11 @@
           // Animation complete.
           //s.empty();
           c.css({
-          	"position": "relative",
             "opacity": "0.0"
           }).animate({
               "opacity": "1.0",
               "left" : "0px",
-              "top": "10px"
+              "top": "0px"
           }, 900, function()
             {
               url_stack = [];
@@ -139,12 +139,15 @@
       url_stack.push(url);  
       console.log(url_stack);
     }
+    /*
     c.css({
       "z-index" : "-35",
       "position": "absolute",
       "left" : "0px",
-      "top" : "10px"
-    }).animate({
+      "top" : "0px"
+    }).
+    */
+    c.animate({
       "position": "relative",
       "opacity": "0.0",
       "top": "+=600px",
@@ -182,10 +185,13 @@
           }).append($j("#singleviewTemplate").tmpl(json).css({
             "visibility": "visible",
             "position": "relative"
-          }));
-        }        
-      });
-            
+          })
+          ).find("a").click(function(e) {
+          		e.stopPropagation();
+          		bbut();
+          	});
+        	}        
+      });            
     });
   }
   
@@ -252,7 +258,7 @@
 		         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
 		         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);		         		
 		         		++counter;
-		         		if (counter > 14) {
+		         		if (counter > loadmenu) {
 		         			// Menu slidedown
 		            	$j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  	
 		         		}
@@ -291,7 +297,7 @@
 							//console.log(href);
 														
 							if (this.innerText == "+") {
-								e.data.param1.Headline+="&nbsp;";
+								e.data.param1.Headline+=" ";
 								localStorage.setItem(appuid+e.data.param1.uid, JSON.stringify(e.data.param1));
 							} else if (this.innerText == "-") {
 								localStorage.removeItem(appuid+e.data.param1.uid);

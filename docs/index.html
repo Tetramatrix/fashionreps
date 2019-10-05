@@ -49,6 +49,9 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 <meta name="referrer" content="origin" />
 <meta name="referrer" content="no-referrer-when-downgrade" />
 <meta name="referrer" content="origin-when-cross-origin" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
 <link rel="stylesheet" type="text/css" href="system.css">
 <!-- 
 
@@ -107,6 +110,13 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 </script>
 
 <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+
+<!--
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+-->
 </head>
 <body>
 <script id="addBrickTemplate" type="text/html">
@@ -153,16 +163,17 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
     <div style="float:left;margin-top:0px">
         <p>{{html bodytext}}</p>
     </div>
-    <div style="float:right;align:right"><a id="bbut" class="bb" href="javascript:void(0);" OnClick="maxmedia.bbut();return false;">[<b>X</b>] back</a></div>
+    <div style="float:right;align:right"><a id="bbut" class="bb" href="javascript:void(0);">[<b>X</b>] back</a></div>
 </script>
 
 
 <div id="tx-charbeitsbeispiele-pi1">
 		  <div class="wrapper">
-		    <div  id="navigation" style="float:left;padding:0px;margin:0px;">
+		    <div id="navigation" style="float:left;padding:0px;margin:0px;">
+       		<!--<a id="nav-toggle" href="#">&#9776;</a>-->
 		    	<div class="fixed-nav">	
-		    			<h1 class="headline">:: Taobao <br/> Live-Feed ::</h1>
-				    	<ul class="menu shadow" id="menu">
+		    			<h1 class="headline">:: Taobao <br/> Live-Feed ::</h1>		    			
+				    	<ul class="nav flex-column menu shadow" id="menu">
 						    <li class="ref_no"><a href="home.json" class="refid">Home</a></li>
 						    <li class="ref_no"><a href="about.json" class="refid">About Us</a></li>
 						    <li class="ref_no"><a href="A_F.json" class="refid">A-F</a></li>

@@ -17,7 +17,7 @@
   var about_but = "About Us";
   var haul_but = "My haul";
   var mobile = false;
-  var appuid = "TLF";
+  var appuid = "TLF!";
   var cw = 310;
   var imgh = 300;
   var loadmenu = 4;
@@ -90,12 +90,11 @@
           // Animation complete.
           //s.empty();
           c.css({
-          	"position": "relative",
             "opacity": "0.0"
           }).animate({
               "opacity": "1.0",
               "left" : "0px",
-              "top": "10px"
+              "top": "0px"
           }, 900, function()
             {
               url_stack = [];
@@ -140,13 +139,16 @@
       url_stack.push(url);  
       console.log(url_stack);
     }
+    /*
     c.css({
       "z-index" : "-35",
       "position": "absolute",
       "left" : "0px",
-      "top" : "10px"
-    }).animate({
-      "position": "relative",
+      "top" : "0px"
+    }).
+    */
+    
+    c.animate({
       "opacity": "0.0",
       "top": "+=600px",
       "left" : "0px"
@@ -183,10 +185,13 @@
           }).append($j("#singleviewTemplate").tmpl(json).css({
             "visibility": "visible",
             "position": "relative"
-          }));
-        }        
-      });
-            
+          })
+          ).find("a").click(function(e) {
+          		e.stopPropagation();
+          		bbut();
+          	});
+        	}        
+      });            
     });
   }
   
