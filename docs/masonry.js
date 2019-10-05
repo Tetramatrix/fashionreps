@@ -18,6 +18,8 @@
   var haul_but = "My haul";
   var mobile = false;
   var appuid = "TLF";
+  var cw = 310;
+  var imgh = 300;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -87,6 +89,7 @@
           // Animation complete.
           //s.empty();
           c.css({
+          	"position": "relative",
             "opacity": "0.0"
           }).animate({
               "opacity": "1.0",
@@ -228,10 +231,15 @@
 	          "display": "block"
 	        });
 	        
+	        
 	         brick.find("img").lazy({
 							scrollDirection: 'vertical',
 				      effect: 'fadeIn',
 				      visibleOnly: true,
+				      threshold: 40,
+				      skip_invisible : false,
+				      autoDestroy: true,
+              chainable: false,
 				      onError: function(element) {
 				          console.log('error loading ' + element.data('src'));
 				      },
@@ -253,7 +261,8 @@
 				    		console.log("lazy loaded");		  		
 							}
 				   });
-				     
+				  
+				  
 	        //console.log(brick);
 	        container.prepend(brick).masonry('reload');
 	        //container.prepend(brick);      
@@ -264,7 +273,7 @@
 	        if (height == undefined)
 	        {
 	          content.css({
-	            height: "300px"
+	            height: imgh+"px"
 	          }); 
 	         } else {
 	          content.css({
@@ -334,7 +343,7 @@
 	          var height = brick.find("img").attr("height");
 	          if ( height == undefined )
 	          {
-	            height: "300px"
+	            height: imgh+"px"
 	          }
 	          content.css('cursor', 'pointer');
 	          if (!content.is(":animated") && summary.is(":not(:visible)"))
@@ -362,6 +371,8 @@
 	          hide_summary(brick_stack.pop());
 	        });
 	    }); // each
+	    
+	    container.trigger("scroll");
   }
   
   function ajax (self) {
@@ -529,7 +540,7 @@
     // Start masonry animated
     $j('#tx-charbeitsbeispiele-pi1 #container').masonry({
       itemSelector: '.brick',
-      columnWidth: 390,
+      columnWidth : cw,
       isAnimated: !Modernizr.csstransitions,
       animationOptions: {
         duration: 500,
@@ -662,7 +673,7 @@
       
       container.masonry({
         itemSelector: '.brick',
-        columnWidth: 390,
+        columnWidth: cw,
         isAnimated: !Modernizr.csstransitions,
          animationOptions: {
 	        duration: 500,
