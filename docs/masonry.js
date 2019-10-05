@@ -20,6 +20,7 @@
   var appuid = "TLF";
   var cw = 310;
   var imgh = 300;
+  var loadmenu = 4;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -252,7 +253,7 @@
 		         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
 		         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);		         		
 		         		++counter;
-		         		if (counter > 14) {
+		         		if (counter > loadmenu) {
 		         			// Menu slidedown
 		            	$j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  	
 		         		}
