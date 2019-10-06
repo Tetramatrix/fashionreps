@@ -166,7 +166,7 @@
       */
       
       if (mobile) {
-      	svw = $(window).width()-100;
+      	svw = $(window).width()-170;
       } 
       
       $j.getJSON(url,function(json) {      
@@ -604,12 +604,12 @@
 				 $j("#nav").animate({
 		      "opacity": "1.0",
 		      "left" : "-190px"
-		     }, 900);
+		     }, 300);
     		
     		 $j("#container").animate({
 		      "opacity": "1.0",
 		      "left" : "0px"
-		    }, 900);
+		    }, 300);
 				    		 
      } else {
      	
@@ -618,12 +618,12 @@
      		$j("#nav").animate({
 		      "opacity": "1.0",
 		      "left" : "-20px"
-		     }, 900);
+		     }, 300);
     		
     		 $j("#container").animate({
 		      "opacity": "1.0",
 		      "left" : "170px"
-		    }, 900);
+		    }, 300);
 		    
 		    // Menu slidedown
 		    $j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow'); 		    
