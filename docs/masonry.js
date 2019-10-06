@@ -23,6 +23,7 @@
   var loadmenu = 4;
   var scrw = 0;
   var brickw = 300;
+  var svw = 550;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -54,6 +55,7 @@
         url = url_back.pop(url);
         url_back = [];
       }
+      
       s.css({
       	"opacity": "0.0",
         "position": "absolute",
@@ -163,6 +165,10 @@
       {
       */
       
+      if (mobile) {
+      	svw = $(window).width()-100;
+      } 
+      
       $j.getJSON(url,function(json) {      
         if (json)
         {
@@ -172,7 +178,8 @@
             "position": "absolute",
             "top": "-600px",
             "height": "600px",
-            "left" : "170px"
+            "left" : "170px",
+            "width" : svw
           }).animate({
             "opacity": "1.0",
             "top": "10px",
