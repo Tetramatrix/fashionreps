@@ -843,13 +843,15 @@
 		if (mobile==true) {
 			scrw = $(window).width()-300;
 			$j("#nav").addClass('mobi_nav');
+			$j("#nav").css({"zIndex": 100, "margin-top":"42px"});
 			$j("#nav_mobi_bar").removeClass('nav_hid');
 			$j("#container").addClass('mobi_container');
-			$j("#container").css({"margin-top":"0px"});
+			$j("#container").css({"margin-top":"42px"});
 			$j("#ads-right").remove();
 			$j("#tx-charbeitsbeispiele-pi1").addClass("mobi_plugin"); 
 			$j("#nav_logo").addClass("nav_hid"); 
 			$j("#footer").css({"margin-left":"0px"});
+			$j("#container").removeClass("ui-draggable");
 		} else {
 			scrw = 0;
 		}
