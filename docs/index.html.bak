@@ -163,17 +163,18 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
     <div style="float:left;margin-top:0px">
         <p>{{html bodytext}}</p>
     </div>
-    <div style="float:right;align:right"><a id="bbut" class="bb" href="javascript:void(0);" OnClick="maxmedia.bbut();return false;">[<b>X</b>] back</a></div>
+    <div style="float:right;align:right"><a id="bbut" class="bb" href="javascript:void(0);">[<b>X</b>] back</a></div>
 </script>
 
 
 <div id="tx-charbeitsbeispiele-pi1">
 		  <div class="wrapper">
-		    <div id="navigation" style="float:left;padding:0px;margin:0px;">
-       		<!--<a id="nav-toggle" href="#">&#9776;</a>-->
+		  	<div id="nav_mobi_bar" class="nav_hid"><a class="nav_mobi_hamburger" href="javascript:void(0);">&#9776;</a><h1 class="nav_logo"> :: Taobao Live-Feed ::</h1>	</div>
+		  	
+		    <div id="nav" style="float:left;padding:0px;margin:0px;">       		
 		    	<div class="fixed-nav">	
-		    			<h1 class="headline">:: Taobao <br/> Live-Feed ::</h1>		    			
-				    	<ul class="nav flex-column menu shadow" id="menu">
+		    			<h1 id="nav_logo" class="nav_logo">:: Taobao <br/> Live-Feed ::</h1>		    			
+				    	<ul class="menu shadow" id="menu">
 						    <li class="ref_no"><a href="home.json" class="refid">Home</a></li>
 						    <li class="ref_no"><a href="about.json" class="refid">About Us</a></li>
 						    <li class="ref_no"><a href="A_F.json" class="refid">A-F</a></li>
@@ -203,9 +204,9 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 		</div>
 	</div>
 </div>
-<div class="ads-right">
+<div id="ads-right" class="ads-right">
 	<div class="fixed-ads">
-		<p>
+		<p style="margin:0px;padding:0px">
 			<!-- bbrb1,1 -->
 			<ins class="adsbygoogle"
 			     style="display:inline-block;width:300px;height:600px"

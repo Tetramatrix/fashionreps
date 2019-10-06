@@ -13,9 +13,9 @@
   var brick_stack = [];
   var url_stack = [];
   var url_back = [];
-  var root_but = "Home";
-  var about_but = "About Us";
-  var haul_but = "My haul";
+  var root_btn = "Home";
+  var about_btn = "About Us";
+  var haul_btn = "My haul";
   var mobile = false;
   var appuid = "TLF!";
   var cw = 310;
@@ -57,7 +57,6 @@
         "position": "absolute",
         "top": "-600px",
         "height": "600px",
-        "left" : "0px"
       })
       $j.getJSON(url, function(json)
       {    
@@ -69,7 +68,6 @@
           })).animate({
             "opacity": "1.0",
             "top": "0px",
-            "left": "0px"
           }, 900, function() {
             // Unset it here, this lets the button be clickable again
             btn.data('running', false);
@@ -93,7 +91,6 @@
             "opacity": "0.0"
           }).animate({
               "opacity": "1.0",
-              "left" : "0px",
               "top": "0px"
           }, 900, function()
             {
@@ -151,7 +148,6 @@
     c.animate({
       "opacity": "0.0",
       "top": "+=600px",
-      "left" : "0px"
     }, 900, function()
       {
       
@@ -188,7 +184,7 @@
           })
           ).find("a").click(function(e) {
           		e.stopPropagation();
-          		bbut();
+          		bbtn();
           	});
         	}        
       });            
@@ -389,7 +385,7 @@
     	var n = $j(this).find('a').text();
     	console.log(n);
     		// about button    	
-    	if (n == about_but || self.url_stack().length>0) {
+    	if (n == about_btn || self.url_stack().length>0) {
     		
 				 console.log(self.url_stack());
 				 if (self.url_stack().length==0) 
@@ -404,11 +400,11 @@
 				 		
 				 } else {
 				 	
-						bbut (); 	
+						bbtn (); 	
 				 }
     		return false;
     		
-    	} else if (n == haul_but) {
+    	} else if (n == haul_btn) {
     		 
     		 var json=getAllLocalStorage();    		 
     		 //console.log(json);
@@ -556,6 +552,43 @@
       }
     });
 
+		 // Mobi menu toggle script
+		$j("#nav_mobi_bar").click(function() {
+    		
+     	if ($j(this).hasClass('nav_toggle')) {
+				
+				 $j(this).removeClass("nav_toggle");
+				
+				 $j("#nav").animate({
+		      "opacity": "1.0",
+		      "left" : "-190px"
+		     }, 900);
+    		
+    		 $j("#container").animate({
+		      "opacity": "1.0",
+		      "left" : "0px"
+		    }, 900);
+				    		 
+     } else {
+     	
+     		$j(this).addClass("nav_toggle");
+     		
+     		$j("#nav").animate({
+		      "opacity": "1.0",
+		      "left" : "-20px"
+		     }, 900);
+    		
+    		 $j("#container").animate({
+		      "opacity": "1.0",
+		      "left" : "170px"
+		    }, 900);
+		    
+		    // Menu slidedown
+		    $j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow'); 		    
+		    
+     }     
+    });
+  
     // Menu hover script
     var menu = $j("#tx-charbeitsbeispiele-pi1 #menu li");
     menu.hover(
@@ -579,13 +612,13 @@
       	if (self.url_stack().length==0) {
       		var n = $j(this).find('a').text();
 	        // Klick "Alle"-Button
-	        if (n == root_but) {
+	        if (n == root_btn) {
 	        	var container = $j('#tx-charbeitsbeispiele-pi1 #container');
 	        	container.empty();
 	          $j.each(menu, function(idx, ele)
 	          {
 	          // Alle anderen buttons off
-	          if ($j(ele).find('a').text() != root_but) {
+	          if ($j(ele).find('a').text() != root_btn) {
 	            $j(ele).removeClass('ref_act').addClass('ref_no');
 	            var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
 	            $j(ele).find('a').attr("href", theHref + "?toggle=off");
@@ -607,7 +640,7 @@
 		        var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
 		        $j(ele).find('a').attr("href", theHref + params);
 		  
-		      } else if ($j(ele).find('a').text() == root_but && n != about_but && $j(ele).hasClass('ref_act')) {
+		      } else if ($j(ele).find('a').text() == root_btn && n != about_btn && $j(ele).hasClass('ref_act')) {
 		        params += "&screen=clear";
 		        $j(ele).removeClass('ref_act').addClass('ref_no');
 		        var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
@@ -620,7 +653,7 @@
     
     function() {
       var n = $j(this).find('a').text();
-      if (n != root_but) {
+      if (n != root_btn) {
         var params = "?toggle=off";
         $j.each(menu, function(idx, ele) {
           if ($j(ele).find('a').text() == n) {
@@ -635,7 +668,7 @@
             }
           }
           // Home-Button Active
-          if ($j(ele).hasClass('ref_act') && $j(ele).find('a').text() == root_but && n != haul_but && n != about_but) {
+          if ($j(ele).hasClass('ref_act') && $j(ele).find('a').text() == root_btn && n != haul_btn && n != about_btn) {
             // Clear Screen
             params += "&screen=clear";
             $j(ele).removeClass('ref_act').addClass('ref_no');
@@ -644,14 +677,14 @@
     
           }
         });
-      } else if (n == root_but) {
+      } else if (n == root_btn) {
         $j.each(menu, function(idx, ele) {
-          if ($j(ele).find('a').text() == root_but) {
+          if ($j(ele).find('a').text() == root_btn) {
             $j(this).removeClass('ref_no').addClass('ref_act');
             var theHref = $j(this).find('a').attr("href").replace(/\?toggle=.*/g, '');
             $j(this).find('a').attr("href", theHref + "?toggle=on");
     
-          } else if ($j(ele).find('a').text() != root_but) {
+          } else if ($j(ele).find('a').text() != root_btn) {
             $j(ele).removeClass('ref_act').addClass('ref_no');
             var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
             $j(ele).find('a').attr("href", theHref + "?toggle=off");
@@ -702,7 +735,7 @@
     }
   }
     
-  function bbut () {  	
+  function bbtn () {  	
   	var toggle = $("#tx-charbeitsbeispiele-pi1 #menu li")[1];
 		//toggle.attr("unchecked", !toggle.attr("unchecked")).button("refresh");
 		$(toggle).removeClass('ref_act').addClass('ref_no');
@@ -747,9 +780,9 @@
     return reload(self);
   }
 
-  Arbeitsbeispiele.prototype.bbut = function ()
+  Arbeitsbeispiele.prototype.bbtn = function ()
   {
-    return bbut();
+    return bbtn();
   }
 
   Arbeitsbeispiele.prototype.url_stack = function ()
@@ -759,11 +792,21 @@
     
   function Arbeitsbeispiele (anonymous)
   {
+  	$j = anonymous;
   	if (/Mobi|Android/i.test(navigator.userAgent)) {
     	// mobile!
     	mobile = true;
 		}
-    $j = anonymous;
+		
+		if (mobile==true) {
+			$j("#nav").addClass('mobi_nav');
+			$j("#nav_mobi_bar").removeClass('nav_hid');
+			$j("#container").addClass('mobi_container');
+			$j("#ads-right").remove();
+			$j("#tx-charbeitsbeispiele-pi1").addClass("mobi_plugin"); 
+			$j("#nav_logo").addClass("nav_hid"); 
+		}
+    
     return true;
   }
   window.Arbeitsbeispiele = Arbeitsbeispiele;
@@ -784,7 +827,7 @@ $(document).ready(function() {
   maxmedia.reload(maxmedia);
   maxmedia.ajax(maxmedia);
   
-  const nav = document.querySelector('#navigation');
+  const nav = document.querySelector('#nav');
 	const navTop = nav.offsetTop;
 
    /*
