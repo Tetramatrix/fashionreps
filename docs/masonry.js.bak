@@ -18,9 +18,11 @@
   var haul_btn = "My haul";
   var mobile = false;
   var appuid = "TLF!";
-  var cw = 310;
+  var colw = 310;
   var imgh = 300;
   var loadmenu = 4;
+  var scrw = 0;
+  var brickw = 300;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -91,7 +93,6 @@
             "opacity": "0.0"
           }).animate({
               "opacity": "1.0",
-              "left" : "0px",
               "top": "0px"
           }, 900, function()
             {
@@ -234,7 +235,6 @@
 	          "display": "block"
 	        });
 	        
-	        
 	         brick.find("img").lazy({
 							scrollDirection: 'vertical',
 				      effect: 'fadeIn',
@@ -272,17 +272,51 @@
 	        
 	      	var content = brick.find(">div");
 	        //console.log(content);
-	        var height = brick.find("img").attr("height");
-	        if (height == undefined)
+	        
+	        
+	        if (!mobile) 
 	        {
-	          content.css({
-	            height: imgh+"px"
-	          }); 
-	         } else {
-	          content.css({
-	            height: height
-	          }); 
-	        }
+	        	  var height = brick.find("img").attr("height");
+			        if (height == undefined)
+			        {
+			          content.css({
+			            height: imgh+"px"
+			          }); 
+			         } else {
+			          content.css({
+			            height: height
+			          }); 
+			        }
+			        
+	        } else {
+	        	
+	        	  brick.width(brick.width()+scrw);
+	        	  brick.height(brick.height()+scrw);
+	        	  
+		         	brick.find(">div").each(function() {
+	    						$(this).width($(this).width()+scrw);
+	    						$(this).height($(this).height()+scrw);
+							});
+							
+							brick.find("di .teaser").each(function() {
+	    						$(this).width($(this).width()+scrw);
+							});
+							
+							brick.find("hr").each(function() {
+	    						$(this).width($(this).width()+scrw);
+							});
+							
+						 	brick.find("p").each(function() {
+						 		  $(this).width($(this).width()+scrw);
+							});
+							
+							brick.find("img").css({
+			            height: brickw+scrw,
+			            width: brickw+scrw
+			         }); 
+							 brick.find("img").height(brickw+scrw).width(brickw+scrw);
+							 container.masonry("reload");
+		        }
 	           
 	        var touchtime = 0;
 
@@ -347,7 +381,7 @@
 	          var height = brick.find("img").attr("height");
 	          if ( height == undefined )
 	          {
-	            height: imgh+"px"
+	            height: imgh+scrw+"px"
 	          }
 	          content.css('cursor', 'pointer');
 	          if (!content.is(":animated") && summary.is(":not(:visible)"))
@@ -544,7 +578,7 @@
     // Start masonry animated
     $j('#tx-charbeitsbeispiele-pi1 #container').masonry({
       itemSelector: '.brick',
-      columnWidth : cw,
+      columnWidth : brickw+scrw+10,
       isAnimated: !Modernizr.csstransitions,
       animationOptions: {
         duration: 500,
@@ -714,7 +748,7 @@
       
       container.masonry({
         itemSelector: '.brick',
-        columnWidth: cw,
+        columnWidth: brickw+scrw+10,
         isAnimated: !Modernizr.csstransitions,
          animationOptions: {
 	        duration: 500,
@@ -800,12 +834,17 @@
 		}
 		
 		if (mobile==true) {
+			scrw = $(window).width()-300;
 			$j("#nav").addClass('mobi_nav');
 			$j("#nav_mobi_bar").removeClass('nav_hid');
 			$j("#container").addClass('mobi_container');
+			$j("#container").css({"margin-top":"0px"});
 			$j("#ads-right").remove();
 			$j("#tx-charbeitsbeispiele-pi1").addClass("mobi_plugin"); 
 			$j("#nav_logo").addClass("nav_hid"); 
+			$j("#footer").css({"margin-left":"0px"});
+		} else {
+			scrw = 0;
 		}
     
     return true;
