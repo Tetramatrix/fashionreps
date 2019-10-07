@@ -50,8 +50,8 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 <meta name="referrer" content="no-referrer-when-downgrade" />
 <meta name="referrer" content="origin-when-cross-origin" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+<meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, shrink-to-fit=no">
+
 <link rel="stylesheet" type="text/css" href="system.css">
 <!-- 
 
@@ -80,7 +80,7 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js" defer ></script> 
 
 -->
- 
+<script data-pace-options="{ "ajax": true }" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js" defer></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" defer></script>
 <script
   src="https://code.jquery.com/ui/1.8.22/jquery-ui.min.js"
@@ -123,7 +123,7 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
     <div style="width:${Width};height:${Height}" class="brick">
         <div style="width:${Width};height:${Height}" class="background">
             <div class="teaser">
-                <h3>${Headline}</h3>
+                <h3 style="">${Headline}</h3>
                 <p class="subheadline">${Subheadline}</p>
                 <hr class="divider">
                 <p>${Text}</p><a class="arrow" style="text-align:right" href="javascript:void(0);">+</a>
