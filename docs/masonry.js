@@ -29,7 +29,8 @@
   var navw = 170;
   var navw_mobi = 20;
   var dbl_click = 900;
-  var dbstart = 2000;
+  var dbstart = 1200;
+  var dbend = 3000;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -418,7 +419,7 @@
 				            content.animate({
 				              top: 0
 				            });				            
-				           	$(this).delay(dbstart).queue( (next) => {
+				           	$(this).delay(dbend).queue( (next) => {
 					            while (brick_stack.length > 1)
 					            {
 					              hide_summary(brick_stack.pop());
