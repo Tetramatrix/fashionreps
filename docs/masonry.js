@@ -205,6 +205,8 @@
   
   function addBricks(data, tmpl) {
   	
+  		Pace.restart(); 
+  	
   		var container = $j('#tx-charbeitsbeispiele-pi1 #container');
 		  var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
 		  
@@ -455,6 +457,7 @@
   }
   
   function ajax (self) {
+  	
     // Menu ajax script
     $j("#tx-charbeitsbeispiele-pi1 #menu li").click(function()
     {
@@ -917,6 +920,13 @@ $(document).ready(function() {
   
   const nav = document.querySelector('#nav');
 	const navTop = nav.offsetTop;
+
+  paceOptions = {
+	  elements: {
+	    trackMethods: ['GET', 'POST', 'PUT', 'DELETE', 'REMOVE'],
+	     restartOnRequestAfter: 5,
+	  }
+	}
 
    /*
 	function stickyNavigation() {

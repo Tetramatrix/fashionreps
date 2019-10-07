@@ -28,8 +28,8 @@
   var svh_mobi = 40;
   var navw = 170;
   var navw_mobi = 20;
-  var dbl_click = 600;
-  var dbstart = 0;
+  var dbl_click = 900;
+  var dbstart = 2500;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -405,43 +405,47 @@
 	        	 // Bind Mousemove
 	        	'touchstart mousemove': function()
 	        	{
-	        		//console.log("mousemove");
+	        			//console.log("mousemove");
 	        	
-	        		$(this).delay(dbstart).queue( (next) => {
-	        	
-		          var content = brick.find(">div");
-		          var summary = brick.find(".teaser");
-		          var height = brick.find("img").attr("height");
-		          if ( height == undefined )
-		          {
-		            height: imgh+scrw+"px"
-		          }
-		          content.css('cursor', 'pointer');
-		          if (!content.is(":animated") && summary.is(":not(:visible)"))
-		          {
-		            content.css({
-		              height: height,
-		              position: "relative",
-		              top: -35 - summary.height()
-		            });
-		            summary.show();
-		            brick_stack.unshift(this);
-		            content.animate({
-		              top: 0
-		            });
-		            while (brick_stack.length > 1)
-		            {
-		              hide_summary(brick_stack.pop());
-		            }
-	          	}
-	          	})
+			          var content = brick.find(">div");
+			          var summary = brick.find(".teaser");
+			          var height = brick.find("img").attr("height");
+			          if ( height == undefined )
+			          {
+			            height: imgh+scrw+"px"
+			          }
+			          content.css('cursor', 'pointer');
+			          if (!content.is(":animated") && summary.is(":not(:visible)"))
+			          {
+			            content.css({
+			              height: height,
+			              position: "relative",
+			              top: -35 - summary.height()
+			            });
+			            summary.show();
+			            brick_stack.unshift(this);
+			            content.animate({
+			              top: 0
+			            });
+			            $(this).delay(dbstart).queue( (next) => {			            	
+				            while (brick_stack.length > 1)
+				            {
+				              hide_summary(brick_stack.pop());
+				            }
+				            next();
+				          });
+		          	}
+	          	
 	          },
 	          // Bind mouseleave
 	          'touchend mouseleave': function()
 		        {
 		        	$(this).delay(dbstart).queue( (next) => {
-		          	hide_summary(brick_stack.pop());
-		          )};
+		        		if ((mobile && brick_stack.length > 1) || !mobile) {
+		        			hide_summary(brick_stack.pop());
+		        		}
+		          	next();
+		          });
 		        }
 	        });
 
@@ -451,6 +455,7 @@
   }
   
   function ajax (self) {
+  	
     // Menu ajax script
     $j("#tx-charbeitsbeispiele-pi1 #menu li").click(function()
     {
@@ -886,10 +891,9 @@
       scrw = $(window).width()-brickw;
   		svw = $(window).width()-(navw+navw_mobi);
      	svh+=svh_mobi;
-			dbstart=300;
-			
 		} else {
 			scrw = 0;
+			dbstart=0;
 		}
     
     return true;
@@ -914,6 +918,13 @@ $(document).ready(function() {
   
   const nav = document.querySelector('#nav');
 	const navTop = nav.offsetTop;
+
+  paceOptions = {
+	  elements: {
+	    trackMethods: ['GET', 'POST', 'PUT', 'DELETE', 'REMOVE'],
+	     restartOnRequestAfter: 5,
+	  }
+	}
 
    /*
 	function stickyNavigation() {
