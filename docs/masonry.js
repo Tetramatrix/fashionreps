@@ -405,35 +405,34 @@
 	        	 // Bind Mousemove
 	        	'touchstart mousemove': function()
 	        	{
-	        		//console.log("mousemove");
+	        			//console.log("mousemove");
 	        	
-	        		$(this).delay(0).queue( (next) => {	        	
-				          var content = brick.find(">div");
-				          var summary = brick.find(".teaser");
-				          var height = brick.find("img").attr("height");
-				          if ( height == undefined )
-				          {
-				            height: imgh+scrw+"px"
-				          }
-				          content.css('cursor', 'pointer');
-				          if (!content.is(":animated") && summary.is(":not(:visible)"))
-				          {
-				            content.css({
-				              height: height,
-				              position: "relative",
-				              top: -35 - summary.height()
-				            });
-				            summary.show();
-				            brick_stack.unshift(this);
-				            content.animate({
-				              top: 0
-				            });
-				            while (brick_stack.length > 1)
-				            {
-				              hide_summary(brick_stack.pop());
-				            }
-			          	}
-	          	})
+			          var content = brick.find(">div");
+			          var summary = brick.find(".teaser");
+			          var height = brick.find("img").attr("height");
+			          if ( height == undefined )
+			          {
+			            height: imgh+scrw+"px"
+			          }
+			          content.css('cursor', 'pointer');
+			          if (!content.is(":animated") && summary.is(":not(:visible)"))
+			          {
+			            content.css({
+			              height: height,
+			              position: "relative",
+			              top: -35 - summary.height()
+			            });
+			            summary.show();
+			            brick_stack.unshift(this);
+			            content.animate({
+			              top: 0
+			            });
+			            while (brick_stack.length > 1)
+			            {
+			              hide_summary(brick_stack.pop());
+			            }
+		          	}
+	          	
 	          },
 	          // Bind mouseleave
 	          'touchend mouseleave': function()
