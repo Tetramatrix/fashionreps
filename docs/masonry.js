@@ -24,6 +24,12 @@
   var scrw = 0;
   var brickw = 300;
   var svw = 550;
+  var svh = 20;
+  var svh_mobi = 40;
+  var navw = 170;
+  var navw_mobi = 20;
+  var dbl_click = 600;
+  var dbstart = 0;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -164,10 +170,7 @@
       			 success: function(json)
       {
       */
-      
-      if (mobile) {
-      	svw = $(window).width()-170;
-      } 
+  
       
       $j.getJSON(url,function(json) {      
         if (json)
@@ -178,12 +181,12 @@
             "position": "absolute",
             "top": "-600px",
             "height": "600px",
-            "left" : "170px",
+            "left" : navw,
             "width" : svw
           }).animate({
             "opacity": "1.0",
-            "top": "10px",
-            "left" : "170px"
+            "top": svh,
+            "left" : navw
           }, 900, function() {
             // Unset it here, this lets the button be clickable again
             btn.data('running', false);
@@ -256,7 +259,7 @@
 				       beforeLoad: function(element) {
 				  			// called before an elements gets handled
 				  			console.log("lazy before");
-						 },afterLoad: function(element) {
+						  },afterLoad: function(element) {
 		            // called after an element was successfully handled
 		            console.log("lazy after");
 		         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
@@ -279,8 +282,7 @@
 	        
 	      	var content = brick.find(">div");
 	        //console.log(content);
-	        
-	        
+	        	        
 	        if (!mobile) 
 	        {
 	        	  var height = brick.find("img").attr("height");
@@ -305,13 +307,19 @@
 	    						$(this).height($(this).height()+scrw);
 							});
 							
-							brick.find("di .teaser").each(function() {
+							brick.find("div .teaser").each(function() {
 	    						$(this).width($(this).width()+scrw);
 							});
+							
+							
+							brick.find("h3").each(function() {
+	    						$(this).width($(this).width()+scrw);
+							});							
 							
 							brick.find("hr").each(function() {
 	    						$(this).width($(this).width()+scrw);
 							});
+							
 							
 						 	brick.find("p").each(function() {
 						 		  $(this).width($(this).width()+scrw);
@@ -359,10 +367,24 @@
 					        		touchtime = 0;
 					        		//var href = $(this).attr("href");
 											window.open(ele.Link);
-					        }								        
+					        }	else if ($j("#nav_mobi_bar").hasClass('nav_toggle')) {
+
+												 $j("#nav_mobi_bar").removeClass("nav_toggle");
+												
+												 $j("#nav").animate({
+										      "opacity": "1.0",
+										      "left" : -(navw+navw_mobi)
+										     }, 300);
+								    		
+								    		 $j("#container").animate({
+										      "opacity": "1.0",
+										      "left" : "0px"
+										    }, 300);
+										}
+					        
 					    } else {
 					        // compare first click to this click and see if they occurred within double click threshold
-					        if (((new Date().getTime()) - touchtime) < 800) {
+					        if (((new Date().getTime()) - touchtime) < dbl_click) {
 					            // double click occurred
 					            console.log("double clicked");
 					            if (mobile==true) {
@@ -377,44 +399,52 @@
 					    }
 					    return false;
 					});
-					
-	        // Bind Mousemove
-	        brick.bind('touchstart mousemove', function()
-	        {
-	        	//console.log("mousemove");
+						       
+	        brick.bind({
+	        		        	
+	        	 // Bind Mousemove
+	        	'touchstart mousemove': function()
+	        	{
+	        		//console.log("mousemove");
 	        	
-	          var content = brick.find(">div");
-	          var summary = brick.find(".teaser");
-	          var height = brick.find("img").attr("height");
-	          if ( height == undefined )
-	          {
-	            height: imgh+scrw+"px"
-	          }
-	          content.css('cursor', 'pointer');
-	          if (!content.is(":animated") && summary.is(":not(:visible)"))
-	          {
-	            content.css({
-	              height: height,
-	              position: "relative",
-	              top: -35 - summary.height()
-	            });
-	            summary.show();
-	            brick_stack.unshift(this);
-	            content.animate({
-	              top: 0
-	            });
-	            while (brick_stack.length > 1)
-	            {
-	              hide_summary(brick_stack.pop());
-	            }
-	          }
+	        		$(this).delay(dbstart).queue( (next) => {
+	        	
+		          var content = brick.find(">div");
+		          var summary = brick.find(".teaser");
+		          var height = brick.find("img").attr("height");
+		          if ( height == undefined )
+		          {
+		            height: imgh+scrw+"px"
+		          }
+		          content.css('cursor', 'pointer');
+		          if (!content.is(":animated") && summary.is(":not(:visible)"))
+		          {
+		            content.css({
+		              height: height,
+		              position: "relative",
+		              top: -35 - summary.height()
+		            });
+		            summary.show();
+		            brick_stack.unshift(this);
+		            content.animate({
+		              top: 0
+		            });
+		            while (brick_stack.length > 1)
+		            {
+		              hide_summary(brick_stack.pop());
+		            }
+	          	}
+	          	})
+	          },
+	          // Bind mouseleave
+	          'touchend mouseleave': function()
+		        {
+		        	$(this).delay(dbstart).queue( (next) => {
+		          	hide_summary(brick_stack.pop());
+		          });
+		        }
 	        });
-	        
-	        // Bind mouseleave
-	        brick.bind('touchend mouseleave', function()
-	        {
-	          hide_summary(brick_stack.pop());
-	        });
+
 	    }); // each
 	    
 	    container.trigger("scroll");
@@ -603,7 +633,7 @@
 				
 				 $j("#nav").animate({
 		      "opacity": "1.0",
-		      "left" : "-190px"
+		      "left" : -(navw+navw_mobi)
 		     }, 300);
     		
     		 $j("#container").animate({
@@ -617,12 +647,12 @@
      		
      		$j("#nav").animate({
 		      "opacity": "1.0",
-		      "left" : "-20px"
+		      "left" : 0
 		     }, 300);
     		
     		 $j("#container").animate({
 		      "opacity": "1.0",
-		      "left" : "170px"
+		      "left" : navw
 		    }, 300);
 		    
 		    // Menu slidedown
@@ -841,7 +871,7 @@
 		}
 		
 		if (mobile==true) {
-			scrw = $(window).width()-300;
+			
 			$j("#nav").addClass('mobi_nav');
 			$j("#nav").css({"zIndex": 100, "margin-top":"42px"});
 			$j("#nav_mobi_bar").removeClass('nav_hid');
@@ -852,6 +882,12 @@
 			$j("#nav_logo").addClass("nav_hid"); 
 			$j("#footer").css({"margin-left":"0px"});
 			$j("#container").removeClass("ui-draggable");
+  	
+      scrw = $(window).width()-brickw;
+  		svw = $(window).width()-(navw+navw_mobi);
+     	svh+=svh_mobi;
+			dbstart=300;
+			
 		} else {
 			scrw = 0;
 		}
