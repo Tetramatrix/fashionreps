@@ -28,8 +28,8 @@
   var svh_mobi = 40;
   var navw = 170;
   var navw_mobi = 20;
-  var dbl_click = 600;
-  var dbstart = 0;
+  var dbl_click = 1400;
+  var dbstart = 2500;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -884,10 +884,9 @@
       scrw = $(window).width()-brickw;
   		svw = $(window).width()-(navw+navw_mobi);
      	svh+=svh_mobi;
-			dbstart=300;
-			
 		} else {
 			scrw = 0;
+			dbstart=0;
 		}
     
     return true;
