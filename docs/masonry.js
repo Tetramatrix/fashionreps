@@ -286,16 +286,7 @@
 	        if (!mobile) 
 	        {
 	        	  var height = img.attr("height");
-			        if (height == undefined)
-			        {
-			          content.css({
-			            height: imgh+scrw+"px"
-			          }); 
-			         } else {
-			          content.css({
-			            height: height
-			          }); 
-			        }
+ 							var tmp = (height == undefined) ? content.css({height: imgh+scrw+"px"}) : content.css({height: height}); 
 			        
 	        } else {
 	        	
@@ -411,6 +402,7 @@
 			          {
 			            height: imgh+scrw+"px"
 			          }
+			          
 			          content.css('cursor', 'pointer');
 			          if (!content.is(":animated") && summary.is(":not(:visible)"))
 			          {
