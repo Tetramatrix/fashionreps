@@ -28,7 +28,7 @@
   var svh_mobi = 40;
   var navw = 170;
   var navw_mobi = 20;
-  var dbl_click = 1400;
+  var dbl_click = 1100;
   var dbstart = 2500;
   
   function getAllLocalStorage() {
@@ -427,10 +427,12 @@
 			            content.animate({
 			              top: 0
 			            });
-			            while (brick_stack.length > 1)
-			            {
-			              hide_summary(brick_stack.pop());
-			            }
+			            $(this).delay(dbstart).queue( (next) => {			            	
+				            while (brick_stack.length > 1)
+				            {
+				              hide_summary(brick_stack.pop());
+				            }
+				          });
 		          	}
 	          	
 	          },
