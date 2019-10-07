@@ -441,7 +441,7 @@
 	          'touchend mouseleave': function()
 		        {
 		        	$(this).delay(dbstart).queue( (next) => {
-		        		if (mobile && brick_stack.length > 1) {
+		        		if ((mobile && brick_stack.length > 1) || !mobile) {
 		        			hide_summary(brick_stack.pop());
 		        		}
 		          	next();
