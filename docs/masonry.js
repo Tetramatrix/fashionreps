@@ -205,8 +205,6 @@
   
   function addBricks(data, tmpl) {
   	
-  		Pace.restart(); 
-  	
   		var container = $j('#tx-charbeitsbeispiele-pi1 #container');
 		  var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
 		  
@@ -267,6 +265,7 @@
 		         		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
 		         		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);		         		
 		         		++counter;
+	        
 		         		if (counter > loadmenu) {
 		         			// Menu slidedown
 		            	$j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  	
@@ -275,26 +274,18 @@
 				    		// called once all elements was handled
 				    		console.log("lazy loaded");		  		
 							}
-				   });
-				  
-				  
-	        //console.log(brick);
-	        container.prepend(brick).masonry('reload');
-	        //container.prepend(brick);      
-	        
-	      	var content = brick.find(">div");
-	        //console.log(content);
+				   });				  
 	        	        
 	        if (!mobile) 
 	        {
 	        	  var height = brick.find("img").attr("height");
 			        if (height == undefined)
 			        {
-			          content.css({
+			          brick.find(">div").css({
 			            height: imgh+scrw+"px"
 			          }); 
 			         } else {
-			          content.css({
+			          brick.find(">div").css({
 			            height: height
 			          }); 
 			        }
@@ -312,8 +303,7 @@
 							brick.find("div .teaser").each(function() {
 	    						$(this).width($(this).width()+scrw);
 							});
-							
-							
+														
 							brick.find("h3").each(function() {
 	    						$(this).width($(this).width()+scrw);
 							});							
@@ -321,8 +311,7 @@
 							brick.find("hr").each(function() {
 	    						$(this).width($(this).width()+scrw);
 							});
-							
-							
+														
 						 	brick.find("p").each(function() {
 						 		  $(this).width($(this).width()+scrw);
 							});
@@ -333,7 +322,7 @@
 			         }); 
 							 brick.find("img").height(brickw+scrw).width(brickw+scrw);
 							 container.masonry("reload");
-		        }
+		      }
 	           
 	        var touchtime = 0;
 
@@ -451,6 +440,10 @@
 		        }
 	        });
 
+					//console.log(brick);
+	        container.prepend(brick).masonry('reload');
+	        //container.prepend(brick);      
+	        
 	    }); // each
 	    
 	    container.trigger("scroll");
@@ -461,6 +454,9 @@
     // Menu ajax script
     $j("#tx-charbeitsbeispiele-pi1 #menu li").click(function()
     {
+    	
+    	Pace.restart(); 
+    		
     	var n = $j(this).find('a').text();
     	console.log(n);
     		// about button    	
@@ -511,7 +507,7 @@
           }
 
           if (toggle)
-          {	
+          {
           	
           	// this changes the scrolling behavior to "smooth"
 						window.scrollTo({ top: 0, behavior: 'smooth' });
