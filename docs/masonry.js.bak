@@ -30,7 +30,7 @@
   var navw_mobi = 20;
   var dbl_click = 900;
   var dbstart = 900;
-  var dbend = 3000;
+  var dbend = 2900;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -913,13 +913,48 @@ $("#spinner").bind("ajaxError", function() { $(this).hide(); });
 var maxmedia;
 var $ = jQuery.noConflict();
 $(document).ready(function() {
+	
   $("#container").draggable({zIndex:-35});
+  
   maxmedia = new Arbeitsbeispiele($);
   maxmedia.reload(maxmedia);
   maxmedia.ajax(maxmedia);
   
-  const nav = document.querySelector('#nav');
-	const navTop = nav.offsetTop;
+   var img = brick.find("img");
+	        var content = brick.find(">div");
+	         
+  img.lazy({
+			scrollDirection: 'vertical',
+      effect: 'fadeIn',
+      visibleOnly: true,
+      threshold: 40,
+      skip_invisible : false,
+      autoDestroy: true,
+      chainable: false,
+      onError: function(element) {
+          console.log('error loading ' + element.data('src'));
+      },
+       beforeLoad: function(element) {
+  			// called before an elements gets handled
+  			console.log("lazy before");
+		  },afterLoad: function(element) {
+        // called after an element was successfully handled
+        console.log("lazy after");
+     		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+     		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);		         		
+     		++counter;
+  
+     		if (counter > loadmenu) {
+     			// Menu slidedown
+        	$j('#tx-charbeitsbeispiele-pi1 #menu').slideDown('slow');  	
+     		}
+     },onFinishedAll: function() {
+    		// called once all elements was handled
+    		console.log("lazy loaded");		  		
+			}
+   });				  
+				   
+
 
   paceOptions = {
 	  elements: {
@@ -929,6 +964,10 @@ $(document).ready(function() {
 	}
 
    /*
+   
+     const nav = document.querySelector('#nav');
+	const navTop = nav.offsetTop;
+	
 	function stickyNavigation() {
   	console.log('navTop = ' + navTop);
   	console.log('scrollY = ' + window.scrollY);

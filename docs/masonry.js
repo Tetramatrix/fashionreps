@@ -913,14 +913,38 @@ $("#spinner").bind("ajaxError", function() { $(this).hide(); });
 var maxmedia;
 var $ = jQuery.noConflict();
 $(document).ready(function() {
+	
   $("#container").draggable({zIndex:-35});
+  
   maxmedia = new Arbeitsbeispiele($);
   maxmedia.reload(maxmedia);
   maxmedia.ajax(maxmedia);
+          
+  $("#footer").find("img").lazy({
+			scrollDirection: 'vertical',
+      effect: 'fadeIn',
+      visibleOnly: true,
+      threshold: 40,
+      skip_invisible : false,
+      autoDestroy: true,
+      chainable: false,
+      onError: function(element) {
+          console.log('error loading ' + element.data('src'));
+      },
+       beforeLoad: function(element) {
+  			// called before an elements gets handled
+  			console.log("lazy before");
+		  },afterLoad: function(element) {
+        // called after an element was successfully handled
+        console.log("lazy after");
+     		//element.delay(Math.floor(Math.random() * 4200)).fadeIn('slow');
+     		element.css({"opacity": "0.0"}).animate({"opacity": "1.0"},900);		         		
+      },onFinishedAll: function() {
+    		// called once all elements was handled
+    		console.log("lazy loaded");		  		
+			}
+  });
   
-  const nav = document.querySelector('#nav');
-	const navTop = nav.offsetTop;
-
   paceOptions = {
 	  elements: {
 	    trackMethods: ['GET', 'POST', 'PUT', 'DELETE', 'REMOVE'],
@@ -929,11 +953,14 @@ $(document).ready(function() {
 	}
 
    /*
-	function stickyNavigation() {
+    const nav = document.querySelector('#nav');
+	  const navTop = nav.offsetTop;
+	
+	 function stickyNavigation() {
   	console.log('navTop = ' + navTop);
   	console.log('scrollY = ' + window.scrollY);
-	}
+	 }
 		
-	window.addEventListener('scroll', stickyNavigation);	
+	 window.addEventListener('scroll', stickyNavigation);	
 	*/	
 });
