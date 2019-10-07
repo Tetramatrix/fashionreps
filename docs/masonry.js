@@ -28,7 +28,7 @@
   var svh_mobi = 40;
   var navw = 170;
   var navw_mobi = 20;
-  var dbl_click = 1100;
+  var dbl_click = 900;
   var dbstart = 2500;
   
   function getAllLocalStorage() {
@@ -432,6 +432,7 @@
 				            {
 				              hide_summary(brick_stack.pop());
 				            }
+				            next();
 				          });
 		          	}
 	          	
@@ -440,7 +441,10 @@
 	          'touchend mouseleave': function()
 		        {
 		        	$(this).delay(dbstart).queue( (next) => {
-		          	hide_summary(brick_stack.pop());
+		        		if (mobile && brick_stack.length > 1) {
+		        			hide_summary(brick_stack.pop());
+		        		}
+		          	next();
 		          });
 		        }
 	        });
