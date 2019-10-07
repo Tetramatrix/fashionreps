@@ -245,7 +245,10 @@
 	          "display": "block"
 	        });
 	        
-	         brick.find("img").lazy({
+	        var img = brick.find("img");
+	        var content = brick.find(">div");
+	         
+	        img.lazy({
 							scrollDirection: 'vertical',
 				      effect: 'fadeIn',
 				      visibleOnly: true,
@@ -277,19 +280,19 @@
 				   });				  
 	        	        
 	        //console.log(brick);
-	        container.prepend(brick).masonry('reload');
+	        container.prepend(brick);
 	        //container.prepend(brick);   
 	        
 	        if (!mobile) 
 	        {
-	        	  var height = brick.find("img").attr("height");
+	        	  var height = img.attr("height");
 			        if (height == undefined)
 			        {
-			          brick.find(">div").css({
+			          content.css({
 			            height: imgh+scrw+"px"
 			          }); 
 			         } else {
-			          brick.find(">div").css({
+			          content.css({
 			            height: height
 			          }); 
 			        }
@@ -299,7 +302,7 @@
 	        	  brick.width(brick.width()+scrw);
 	        	  brick.height(brick.height()+scrw);
 	        	  
-		         	brick.find(">div").each(function() {
+		         	content.each(function() {
 	    						$(this).width($(this).width()+scrw);
 	    						$(this).height($(this).height()+scrw);
 							});
@@ -320,14 +323,14 @@
 						 		  $(this).width($(this).width()+scrw);
 							});
 							
-							brick.find("img").css({
+							img.css({
 			            height: brickw+scrw,
 			            width: brickw+scrw
-			         }); 
-							 brick.find("img").height(brickw+scrw).width(brickw+scrw);
-							 container.masonry("reload");
+			        }); 
+							img.height(brickw+scrw).width(brickw+scrw);
 		      }
 	           
+	        container.masonry("reload");
 	        var touchtime = 0;
 
 	         // Bind link (a href)
@@ -351,9 +354,12 @@
 								 container.masonry('reload');  
 							}							
 					});
-										
-	        // Bind Mouseclick
-	        brick.find("div").click(function(e) {
+					
+						       
+	        brick.bind({
+	        	
+	        	// Bind Mouseclick
+	        	'click' : function(e) {
 	        	  e.stopPropagation();
 					    if (touchtime == 0) {
 					        // set first click
@@ -376,7 +382,6 @@
 										      "left" : "0px"
 										    }, 300);
 										}
-					        
 					    } else {
 					        // compare first click to this click and see if they occurred within double click threshold
 					        if (((new Date().getTime()) - touchtime) < dbl_click) {
@@ -393,16 +398,13 @@
 					        }
 					    }
 					    return false;
-					});
-						       
-	        brick.bind({
-	        		        	
+						},
+	        	
 	        	 // Bind Mousemove
 	        	'touchstart mousemove': function()
 	        	{
 	        			//console.log("mousemove");
 	        	
-			          var content = brick.find(">div");
 			          var summary = brick.find(".teaser");
 			          var height = brick.find("img").attr("height");
 			          if ( height == undefined )
@@ -432,6 +434,7 @@
 		          	}
 	          	
 	          },
+	          
 	          // Bind mouseleave
 	          'touchend mouseleave': function()
 		        {
