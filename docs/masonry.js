@@ -29,8 +29,8 @@
   var navw = 170;
   var navw_mobi = 20;
   var dbl_click = 900;
-  var dbstart = 1200;
-  var dbend = 3000;
+  var dbstart = 900;
+  var dbend = 2900;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -406,8 +406,12 @@
 			          
 			          content.css('cursor', 'pointer');
 			          
+			          var scrollPos = container.scrollTop();
+			          
 			          $(this).delay(dbstart).queue( (next) => {
-				          if (!content.is(":animated") && summary.is(":not(:visible)"))
+				          if ((!content.is(":animated") && summary.is(":not(:visible)") && !mobile) || 
+				          		(!content.is(":animated") && summary.is(":not(:visible)") && mobile && scrollPos == container.scrollTop())
+				          )
 				          {
 				            content.css({
 				              height: height,
@@ -891,6 +895,7 @@
 		} else {
 			scrw = 0;
 			dbstart=0;
+			dbend=0;
 		}
     
     return true;
