@@ -29,7 +29,7 @@
   var navw = 170;
   var navw_mobi = 20;
   var dbl_click = 900;
-  var dbstart = 2500;
+  var dbstart = 2000;
   
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
@@ -372,7 +372,7 @@
 										      "opacity": "1.0",
 										      "left" : "0px"
 										    }, 300);
-										}
+									}
 					    } else {
 					        // compare first click to this click and see if they occurred within double click threshold
 					        if (((new Date().getTime()) - touchtime) < dbl_click) {
@@ -397,34 +397,37 @@
 	        			//console.log("mousemove");
 	        	
 			          var summary = brick.find(".teaser");
-			          var height = brick.find("img").attr("height");
-			          if ( height == undefined )
+			          var height = img.attr("height");
+			          if (height == undefined)
 			          {
 			            height: imgh+scrw+"px"
 			          }
 			          
 			          content.css('cursor', 'pointer');
-			          if (!content.is(":animated") && summary.is(":not(:visible)"))
-			          {
-			            content.css({
-			              height: height,
-			              position: "relative",
-			              top: -35 - summary.height()
-			            });
-			            summary.show();
-			            brick_stack.unshift(this);
-			            content.animate({
-			              top: 0
-			            });
-			            $(this).delay(dbstart).queue( (next) => {			            	
-				            while (brick_stack.length > 1)
-				            {
-				              hide_summary(brick_stack.pop());
-				            }
-				            next();
-				          });
-		          	}
-	          	
+			          
+			          $(this).delay(dbstart).queue( (next) => {
+				          if (!content.is(":animated") && summary.is(":not(:visible)"))
+				          {
+				            content.css({
+				              height: height,
+				              position: "relative",
+				              top: -35 - summary.height()
+				            });
+				            summary.show();
+				            brick_stack.unshift(this);
+				            content.animate({
+				              top: 0
+				            });				            
+				           	$(this).delay(dbstart).queue( (next) => {
+					            while (brick_stack.length > 1)
+					            {
+					              hide_summary(brick_stack.pop());
+					            }
+					            next();
+					          });
+			          	}
+	          		 next();
+					      });
 	          },
 	          
 	          // Bind mouseleave
