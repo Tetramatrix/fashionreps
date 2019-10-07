@@ -276,6 +276,10 @@
 							}
 				   });				  
 	        	        
+	        //console.log(brick);
+	        container.prepend(brick).masonry('reload');
+	        //container.prepend(brick);   
+	        
 	        if (!mobile) 
 	        {
 	        	  var height = brick.find("img").attr("height");
@@ -439,10 +443,6 @@
 		          });
 		        }
 	        });
-
-					//console.log(brick);
-	        container.prepend(brick).masonry('reload');
-	        //container.prepend(brick);      
 	        
 	    }); // each
 	    

@@ -439,10 +439,6 @@
 		          });
 		        }
 	        });
-
-					//console.log(brick);
-	        container.prepend(brick).masonry('reload');
-	        //container.prepend(brick);      
 	        
 	    }); // each
 	    
@@ -561,8 +557,6 @@
 
 	            if (toggle)
 	            {	
-	            	
-	            	Pace.restart(); 
 	            	
 	            	// this changes the scrolling behavior to "smooth"
 								window.scrollTo({ top: 0, behavior: 'smooth' });
