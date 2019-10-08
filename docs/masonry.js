@@ -567,7 +567,7 @@
 							  const ysDiffAbs = Math.abs(ysDown - ysUp);
 							  
 							    // at least <offset> are a swipe
-		  					if (mobile && xsDiffAbs > 100 && ele.morepics.length>1) {
+		  					if (mobile && xsDiffAbs > 60 && ele.morepics.length>1) {
 		  						
 			  						// e.stopPropagation();
 			  						

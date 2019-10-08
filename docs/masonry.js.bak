@@ -264,12 +264,12 @@
 	        	//	img.append('<img data-src="https://'+i+'" />');
 	        	//}	
 						
-	        	 cube.append("<div class=\"right\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\""+brickw+scrw+"px\" height=\""+brickw+scrw+"px\" />");	        	 	        	 
-	        	 cube.append("<div class=\"back\"><img data-src=\"https://"+ele.morepics[1]+"\" width=\""+brickw+scrw+"px\" height=\""+brickw+scrw+"px\" />");
+	        	 cube.append("<div class=\"right\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");	        	 	        	 
+	        	 cube.append("<div class=\"back\"><img data-src=\"https://"+ele.morepics[1]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
 	        	 if (ele.morepics[2]!==undefined) {
-	        	 		cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[2]+"\" width=\""+brickw+scrw+"px\" height=\""+brickw+scrw+"px\" />");
+	        	 		cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[2]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
 	        	 } else {
-	        	 		cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\""+brickw+scrw+"px\" height=\""+brickw+scrw+"px\" />");
+	        	 		cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
 	        	 }
 	        	 	        	 
 	        	 var t =(brickw+scrw)/2+"px";
@@ -567,7 +567,7 @@
 							  const ysDiffAbs = Math.abs(ysDown - ysUp);
 							  
 							    // at least <offset> are a swipe
-		  					if (mobile && xsDiffAbs > 100 && ele.morepics.length>1) {
+		  					if (mobile && xsDiffAbs > 70 && ele.morepics.length>1) {
 		  						
 			  						// e.stopPropagation();
 			  						
