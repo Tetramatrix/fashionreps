@@ -577,65 +577,61 @@
 
 										mycube=brick.find("div .cube");
 										if (mycube.hasClass("rot360")) {
+																						
 											mycube.removeClass("rot90 rot180 rot270 rot360");
+											
+											var summary = brick.find(".teaser");
+						          var height = img.attr("height");
+						          if (height == undefined)
+						          {
+						            height: imgh+scrw+"px"
+						          }
+						          
+						          content.css('cursor', 'pointer');
+						          
+						          var scrollPos = container.scrollTop();
+						          
+						          //$(this).delay(dbstart).queue( (next) => {
+							          if ((!content.is(":animated") && summary.is(":not(:visible)") && !mobile) || 
+							          		(!content.is(":animated") && summary.is(":not(:visible)") && mobile && scrollPos == container.scrollTop())
+							          )
+							          {						          					          	
+							            content.css({
+							              height: height,
+							              position: "relative",
+							              top: -35 - summary.height()
+							            });
+							            summary.show();
+							            brick_stack.unshift(this);
+							            content.animate({
+							              top: 0
+							            });
+							            		
+							            /*				            
+							           	$(this).delay(dbend).queue( (next) => {
+								            while (brick_stack.length > 1)
+								            {
+								             hide_summary(brick_stack.pop());
+								            }
+								            next();
+								          });
+								          */
+						          	}
+					          	
 										}
 										if (!mycube.hasClass("rot90")) {
+											
+											hide_summary(brick_stack.pop());
 											mycube.addClass("rot90");
+											
 			  						} else if (!mycube.hasClass("rot180")) {
 			  							mycube.addClass("rot180");
 			  						} else if (!mycube.hasClass("rot270")) {
 			  							mycube.addClass("rot270");
 			  						} else if (!mycube.hasClass("rot360")) {
 			  							mycube.addClass("rot360");
-			  						}			  						
-			  						
-			  				} else  if ((new Date().getTime() - touchtime) < long_press && mobile==true) {
-					          
-					          // long press
-					          console.log("long press");
-			  					
-			  						hide_summary(brick_stack.pop());
-			  						
-				  					var summary = brick.find(".teaser");
-					          var height = img.attr("height");
-					          if (height == undefined)
-					          {
-					            height: imgh+scrw+"px"
-					          }
-					          
-					          content.css('cursor', 'pointer');
-					          
-					          var scrollPos = container.scrollTop();
-					          
-					          //$(this).delay(dbstart).queue( (next) => {
-						          if ((!content.is(":animated") && summary.is(":not(:visible)") && !mobile) || 
-						          		(!content.is(":animated") && summary.is(":not(:visible)") && mobile && scrollPos == container.scrollTop())
-						          )
-						          {						          					          	
-						            content.css({
-						              height: height,
-						              position: "relative",
-						              top: -35 - summary.height()
-						            });
-						            summary.show();
-						            brick_stack.unshift(this);
-						            content.animate({
-						              top: 0
-						            });
-						            		
-						            /*				            
-						           	$(this).delay(dbend).queue( (next) => {
-							            while (brick_stack.length > 1)
-							            {
-							             /hide_summary(brick_stack.pop());
-							            }
-							            next();
-							          });
-							          */
-					          	}
-			          		 //next();
-							      //});
-			  				}
+			  						}
+			  				} 
 			  					
 		        		$(this).delay(dbstart).queue((next) => {
 		        			if ((mobile && brick_stack.length > 1) || !mobile) {
