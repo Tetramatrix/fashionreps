@@ -31,6 +31,7 @@
   var dbl_click = 900;
   var dbstart = 900;
   var dbend = 2900;
+  var long_press = 4000;
   let xsDown, ysDown, xsUp, ysUp;
   
   function getTouch (e) {
@@ -470,6 +471,7 @@
 					        		touchtime = 0;
 					        		//var href = $(this).attr("href");
 											window.open(ele.Link);
+											
 					        }	else if ($j("#nav_mobi_bar").hasClass('nav_toggle')) {
 
 												 $j("#nav_mobi_bar").removeClass("nav_toggle");
@@ -567,7 +569,7 @@
 							  const ysDiffAbs = Math.abs(ysDown - ysUp);
 							  
 							    // at least <offset> are a swipe
-		  					if (mobile && xsDiffAbs > 60 && ele.morepics.length>1) {
+		  					if (mobile && xsDiffAbs > 100 && ele.morepics.length>1) {
 		  						
 			  						// e.stopPropagation();
 			  						
@@ -586,8 +588,14 @@
 			  						} else if (!mycube.hasClass("rot360")) {
 			  							mycube.addClass("rot360");
 			  						}			  						
-			  				} else {
+			  						
+			  				} else  if ((new Date().getTime() - touchtime) < long_press && mobile==true) {
+					          
+					          // long press
+					          console.log("long press");
 			  					
+			  						hide_summary(brick_stack.pop());
+			  						
 				  					var summary = brick.find(".teaser");
 					          var height = img.attr("height");
 					          if (height == undefined)
@@ -631,9 +639,9 @@
 			  				}
 			  					
 		        		$(this).delay(dbstart).queue((next) => {
-		        			if ((mobile && brick_stack.length > 1) || !mobile) {
+		        			//if ((mobile && brick_stack.length > 1) || !mobile) {
 		        				hide_summary(brick_stack.pop());
-		        			}
+		        			//}
 		          		next();
 		          });
 		        }
