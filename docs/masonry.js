@@ -262,22 +262,26 @@
 	        if (mobile && ele.morepics.length>1) {
 	       		//for (const i of ele.morepics) {
 	        	//	img.append('<img data-src="https://'+i+'" />');
-	        	//}
-	        	
-	        	 cube.append("<div class=\"right\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\"300px\" height=\"300px\" />");
-	        	 cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[1]+"\" width=\"300px\" height=\"300px\" />");
-	        	 cube.append("<div class=\"back\"><img data-src=\"https://"+ele.morepics[2]+"\" width=\"300px\" height=\"300px\" />");
-	        	 
+	        	//}	
+						
+	        	 cube.append("<div class=\"right\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");	        	 	        	 
+	        	 cube.append("<div class=\"back\"><img data-src=\"https://"+ele.morepics[1]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
+	        	 if (ele.morepics[2]!==undefined) {
+	        	 		cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[2]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
+	        	 } else {
+	        	 		cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
+	        	 }
+	        	 	        	 
 	        	 var t =(brickw+scrw)/2+"px";
 							
 							cube.css({
 								  height: brickw+scrw,
 			            width: brickw+scrw,
-			            "transform-origin": t + ' ' +  t + ' 0px',
+			            "transform-origin": t+ ' ' + t+' 0px',
 							});
 							
 							cube.find(".front").css({
-								"transform": "transform: translateZ(" + t + ")",
+								"transform": "transform: translateZ("+t+")",
 							});
 							
 							cube.find(".back").css({
@@ -397,22 +401,22 @@
 					
 						       
 	        brick.bind({
-	        	// Bind mousedown
-	        	/*
+	        	
+	        	// Bind touchstart	   
 	        	'touchstart' : function (e) {
 	        		
-	        		   if (e.originalEvent.changedTouches!==undefined) {
-	
-	  								xsDown = e.originalEvent.changedTouches[0].clientX;
-		  							ysDown = e.originalEvent.changedTouches[0].clientY;  
-									  
-							 	 } else {
-							 	 		
-							 	 		xsDown = e.clientX;
-							 	 		ysDown = e.clientY;
-							 	 }
+	        		  if (e.originalEvent.changedTouches!==undefined) {
+
+									xsDown = e.originalEvent.changedTouches[0].clientX;
+									ysDown = e.originalEvent.changedTouches[0].clientY;  
+
+								} else {
+
+									xsDown = e.clientX;
+									ysDown = e.clientY;
+								}
+							 	 
 	        	},
-	        	*/
 	        	
 	        		// Bind mouseup
 	        	/*
@@ -499,21 +503,10 @@
 						},
 	        	
 	        	 // Bind Mousemove
-	        	'touchstart mousemove': function(e)
+	        	'mousemove': function(e)
 	        	{
 	        			//console.log("mousemove");
 	        	
-	        	     if (e.originalEvent.changedTouches!==undefined) {
-	
-	  								xsDown = e.originalEvent.changedTouches[0].clientX;
-		  							ysDown = e.originalEvent.changedTouches[0].clientY;  
-									  
-							 	 } else {
-							 	 		
-							 	 		xsDown = e.clientX;
-							 	 		ysDown = e.clientY;
-							 	 }
-							 	 
 			          var summary = brick.find(".teaser");
 			          var height = img.attr("height");
 			          if (height == undefined)
@@ -530,7 +523,7 @@
 				          		(!content.is(":animated") && summary.is(":not(:visible)") && mobile && scrollPos == container.scrollTop())
 				          )
 				          {
-				          	
+				          					          	
 				            content.css({
 				              height: height,
 				              position: "relative",
@@ -559,22 +552,23 @@
 	          // Bind mouseleave
 	          'touchend mouseleave': function(e)
 		        {
-		        	 		if (e.originalEvent.changedTouches!==undefined) {
-										
-											xsUp = e.originalEvent.changedTouches[0].clientX;
-		  								ysUp = e.originalEvent.changedTouches[0].clientY;  
-		  							
-								 	 } else {
-								 	 		xsUp = e.clientX;
-								 	 		ysUp = e.clientY;
-								 	 }
-									  
-								  const xsDiffAbs = Math.abs(xsDown - xsUp);
-								  const ysDiffAbs = Math.abs(ysDown - ysUp);
+	        	 		if (e.originalEvent.changedTouches!==undefined) {
+									
+										xsUp = e.originalEvent.changedTouches[0].clientX;
+	  								ysUp = e.originalEvent.changedTouches[0].clientY;  
+	  							
+							 	} else {
+							 		
+							 	 		xsUp = e.clientX;
+							 	 		ysUp = e.clientY;
+							 	}
 								  
-								    // at least <offset> are a swipe
-			  					if (mobile && xsDiffAbs > 100 ) {
-			  						
+							  const xsDiffAbs = Math.abs(xsDown - xsUp);
+							  const ysDiffAbs = Math.abs(ysDown - ysUp);
+							  
+							    // at least <offset> are a swipe
+		  					if (mobile && xsDiffAbs > 100 && ele.morepics.length>1) {
+		  						
 			  						// e.stopPropagation();
 			  						
 			  						console.log("swipe")			  						
@@ -592,13 +586,55 @@
 			  						} else if (!mycube.hasClass("rot360")) {
 			  							mycube.addClass("rot360");
 			  						}			  						
-			  					}
+			  				} else {
 			  					
-		        	$(this).delay(dbstart).queue((next) => {
-		        		if ((mobile && brick_stack.length > 1) || !mobile) {
-		        			hide_summary(brick_stack.pop());
-		        		}
-		          	next();
+				  					var summary = brick.find(".teaser");
+					          var height = img.attr("height");
+					          if (height == undefined)
+					          {
+					            height: imgh+scrw+"px"
+					          }
+					          
+					          content.css('cursor', 'pointer');
+					          
+					          var scrollPos = container.scrollTop();
+					          
+					          $(this).delay(dbstart).queue( (next) => {
+						          if ((!content.is(":animated") && summary.is(":not(:visible)") && !mobile) || 
+						          		(!content.is(":animated") && summary.is(":not(:visible)") && mobile && scrollPos == container.scrollTop())
+						          )
+						          {
+						          					          	
+						            content.css({
+						              height: height,
+						              position: "relative",
+						              top: -35 - summary.height()
+						            });
+						            summary.show();
+						            brick_stack.unshift(this);
+						            content.animate({
+						              top: 0
+						            });
+						            		
+						            /*				            
+						           	$(this).delay(dbend).queue( (next) => {
+							            while (brick_stack.length > 1)
+							            {
+							             /hide_summary(brick_stack.pop());
+							            }
+							            next();
+							          });
+							          */
+					          	}
+			          		 next();
+							      });
+			  				}
+			  					
+		        		$(this).delay(dbstart).queue((next) => {
+		        			if ((mobile && brick_stack.length > 1) || !mobile) {
+		        				hide_summary(brick_stack.pop());
+		        			}
+		          		next();
 		          });
 		        }
 	        });
