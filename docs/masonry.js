@@ -31,7 +31,7 @@
   var dbl_click = 900;
   var dbstart = 900;
   var dbend = 2900;
-  var long_press = 4000;
+  var long_press = 3500;
   let xsDown, ysDown, xsUp, ysUp;
   
   function getTouch (e) {
@@ -569,7 +569,7 @@
 							  const ysDiffAbs = Math.abs(ysDown - ysUp);
 							  
 							    // at least <offset> are a swipe
-		  					if (mobile && xsDiffAbs > 100 && ele.morepics.length>1) {
+		  					if (mobile && xsDiffAbs > 75 && ele.morepics.length>1) {
 		  						
 			  						// e.stopPropagation();
 			  						
@@ -607,7 +607,7 @@
 					          
 					          var scrollPos = container.scrollTop();
 					          
-					          $(this).delay(dbstart).queue( (next) => {
+					          //$(this).delay(dbstart).queue( (next) => {
 						          if ((!content.is(":animated") && summary.is(":not(:visible)") && !mobile) || 
 						          		(!content.is(":animated") && summary.is(":not(:visible)") && mobile && scrollPos == container.scrollTop())
 						          )
@@ -634,14 +634,14 @@
 							          });
 							          */
 					          	}
-			          		 next();
+			          		 //next();
 							      });
 			  				}
 			  					
 		        		$(this).delay(dbstart).queue((next) => {
-		        			//if ((mobile && brick_stack.length > 1) || !mobile) {
+		        			if ((mobile && brick_stack.length > 1) || !mobile) {
 		        				hide_summary(brick_stack.pop());
-		        			//}
+		        			}
 		          		next();
 		          });
 		        }
