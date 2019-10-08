@@ -611,8 +611,7 @@
 						          if ((!content.is(":animated") && summary.is(":not(:visible)") && !mobile) || 
 						          		(!content.is(":animated") && summary.is(":not(:visible)") && mobile && scrollPos == container.scrollTop())
 						          )
-						          {
-						          					          	
+						          {						          					          	
 						            content.css({
 						              height: height,
 						              position: "relative",

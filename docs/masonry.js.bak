@@ -635,7 +635,7 @@
 							          */
 					          	}
 			          		 //next();
-							      });
+							      //});
 			  				}
 			  					
 		        		$(this).delay(dbstart).queue((next) => {
