@@ -31,7 +31,17 @@
   var dbl_click = 900;
   var dbstart = 900;
   var dbend = 2900;
+  let xsDown, ysDown, xsUp, ysUp;
   
+  function getTouch (e) {
+		if (e!==undefined && e.changedTouches!==undefined) {
+			return e.changedTouches[0];	
+		} else if (e!==undefined) {
+				return e;
+		}
+	  return false;
+	}
+
   function getAllLocalStorage() {
 		return Object.keys(localStorage)
 		    .reduce((obj, k) => {
@@ -209,6 +219,7 @@
   		var container = $j('#tx-charbeitsbeispiele-pi1 #container');
 		  var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
 		  
+		   
 		   boxCount = data.length;
        counter = 0;
        var d = 0;
@@ -246,8 +257,45 @@
 	          "display": "block"
 	        });
 	        
+	         cube = brick.find(".cube");
+	         
+	        if (mobile && ele.morepics.length>1) {
+	       		//for (const i of ele.morepics) {
+	        	//	img.append('<img data-src="https://'+i+'" />');
+	        	//}
+	        	
+	        	 cube.append("<div class=\"right\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\"300px\" height=\"300px\" />");
+	        	 cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[1]+"\" width=\"300px\" height=\"300px\" />");
+	        	 cube.append("<div class=\"back\"><img data-src=\"https://"+ele.morepics[2]+"\" width=\"300px\" height=\"300px\" />");
+	        	 
+	        	 var t =(brickw+scrw)/2+"px";
+							
+							cube.css({
+								  height: brickw+scrw,
+			            width: brickw+scrw,
+			            "transform-origin": t + ' ' +  t + ' 0px',
+							});
+							
+							cube.find(".front").css({
+								"transform": "transform: translateZ(" + t + ")",
+							});
+							
+							cube.find(".back").css({
+								transform: "rotateY(180deg) translateZ("+t+")",
+							});
+							
+							cube.find(".right").css({
+								transform: "rotateY(90deg) translateZ("+t+")",
+							});
+							
+							cube.find(".left").css({
+								 transform: "rotateY(-90deg) translateZ("+t+")",   
+							});
+	       	}
+	       	
 	        var img = brick.find("img");
 	        var content = brick.find(">div");
+	        
 	         
 	        img.lazy({
 							scrollDirection: 'vertical',
@@ -319,7 +367,7 @@
 			            height: brickw+scrw,
 			            width: brickw+scrw
 			        }); 
-							img.height(brickw+scrw).width(brickw+scrw);
+							img.height(brickw+scrw).width(brickw+scrw);							
 		      }
 	           
 	        container.masonry("reload");
@@ -349,13 +397,71 @@
 					
 						       
 	        brick.bind({
+	        	// Bind mousedown
+	        	/*
+	        	'touchstart' : function (e) {
+	        		
+	        		   if (e.originalEvent.changedTouches!==undefined) {
+	
+	  								xsDown = e.originalEvent.changedTouches[0].clientX;
+		  							ysDown = e.originalEvent.changedTouches[0].clientY;  
+									  
+							 	 } else {
+							 	 		
+							 	 		xsDown = e.clientX;
+							 	 		ysDown = e.clientY;
+							 	 }
+	        	},
+	        	*/
 	        	
+	        		// Bind mouseup
+	        	/*
+	        	'touchend' : function (e) {
+	        		
+					         if (e.originalEvent.changedTouches!==undefined) {
+										
+											xsUp = e.originalEvent.changedTouches[0].clientX;
+		  								ysUp = e.originalEvent.changedTouches[0].clientY;  
+		  							
+								 	 } else {
+								 	 		xsUp = e.clientX;
+								 	 		ysUp = e.clientY;
+								 	 }
+									  
+								  const xsDiffAbs = Math.abs(xsDown - xsUp);
+								  const ysDiffAbs = Math.abs(ysDown - ysUp);
+								  
+								    // at least <offset> are a swipe
+			  					if (xsDiffAbs > 100 ) {
+			  						
+			  						 e.stopPropagation();
+			  						
+			  						console.log("swipe")			  						
+
+										mycube=brick.find("div .cube");
+										if (mycube.hasClass("rot360")) {
+											mycube.removeClass("rot90 rot180 rot270 rot360");
+										}
+										if (!mycube.hasClass("rot90")) {
+											mycube.addClass("rot90");
+			  						} else if (!mycube.hasClass("rot180")) {
+			  							mycube.addClass("rot180");
+			  						} else if (!mycube.hasClass("rot270")) {
+			  							mycube.addClass("rot270");
+			  						} else if (!mycube.hasClass("rot360")) {
+			  							mycube.addClass("rot360");
+			  						}			  						
+			  					}
+	        	},
+	        	*/
 	        	// Bind Mouseclick
 	        	'click' : function(e) {
 	        	  e.stopPropagation();
 					    if (touchtime == 0) {
+					        
 					        // set first click
 					        touchtime = new Date().getTime();
+					        
 					        if (mobile==false) {
 					        		touchtime = 0;
 					        		//var href = $(this).attr("href");
@@ -393,10 +499,21 @@
 						},
 	        	
 	        	 // Bind Mousemove
-	        	'touchstart mousemove': function()
+	        	'touchstart mousemove': function(e)
 	        	{
 	        			//console.log("mousemove");
 	        	
+	        	     if (e.originalEvent.changedTouches!==undefined) {
+	
+	  								xsDown = e.originalEvent.changedTouches[0].clientX;
+		  							ysDown = e.originalEvent.changedTouches[0].clientY;  
+									  
+							 	 } else {
+							 	 		
+							 	 		xsDown = e.clientX;
+							 	 		ysDown = e.clientY;
+							 	 }
+							 	 
 			          var summary = brick.find(".teaser");
 			          var height = img.attr("height");
 			          if (height == undefined)
@@ -413,6 +530,7 @@
 				          		(!content.is(":animated") && summary.is(":not(:visible)") && mobile && scrollPos == container.scrollTop())
 				          )
 				          {
+				          	
 				            content.css({
 				              height: height,
 				              position: "relative",
@@ -422,23 +540,61 @@
 				            brick_stack.unshift(this);
 				            content.animate({
 				              top: 0
-				            });				            
+				            });
+				            		
+				            /*				            
 				           	$(this).delay(dbend).queue( (next) => {
 					            while (brick_stack.length > 1)
 					            {
-					              hide_summary(brick_stack.pop());
+					             /hide_summary(brick_stack.pop());
 					            }
 					            next();
 					          });
+					          */
 			          	}
 	          		 next();
 					      });
 	          },
 	          
 	          // Bind mouseleave
-	          'touchend mouseleave': function()
+	          'touchend mouseleave': function(e)
 		        {
-		        	$(this).delay(dbstart).queue( (next) => {
+		        	 		if (e.originalEvent.changedTouches!==undefined) {
+										
+											xsUp = e.originalEvent.changedTouches[0].clientX;
+		  								ysUp = e.originalEvent.changedTouches[0].clientY;  
+		  							
+								 	 } else {
+								 	 		xsUp = e.clientX;
+								 	 		ysUp = e.clientY;
+								 	 }
+									  
+								  const xsDiffAbs = Math.abs(xsDown - xsUp);
+								  const ysDiffAbs = Math.abs(ysDown - ysUp);
+								  
+								    // at least <offset> are a swipe
+			  					if (mobile && xsDiffAbs > 100 ) {
+			  						
+			  						// e.stopPropagation();
+			  						
+			  						console.log("swipe")			  						
+
+										mycube=brick.find("div .cube");
+										if (mycube.hasClass("rot360")) {
+											mycube.removeClass("rot90 rot180 rot270 rot360");
+										}
+										if (!mycube.hasClass("rot90")) {
+											mycube.addClass("rot90");
+			  						} else if (!mycube.hasClass("rot180")) {
+			  							mycube.addClass("rot180");
+			  						} else if (!mycube.hasClass("rot270")) {
+			  							mycube.addClass("rot270");
+			  						} else if (!mycube.hasClass("rot360")) {
+			  							mycube.addClass("rot360");
+			  						}			  						
+			  					}
+			  					
+		        	$(this).delay(dbstart).queue((next) => {
 		        		if ((mobile && brick_stack.length > 1) || !mobile) {
 		        			hide_summary(brick_stack.pop());
 		        		}
@@ -563,8 +719,7 @@
 		          }
 
 	            if (toggle)
-	            {	
-	            	
+	            {		            	
 	            	// this changes the scrolling behavior to "smooth"
 								window.scrollTo({ top: 0, behavior: 'smooth' });
 								          
@@ -914,7 +1069,7 @@ var maxmedia;
 var $ = jQuery.noConflict();
 $(document).ready(function() {
 	
-  $("#container").draggable({zIndex:-35});
+  //$("#container").draggable({zIndex:-35});
   
   maxmedia = new Arbeitsbeispiele($);
   maxmedia.reload(maxmedia);
