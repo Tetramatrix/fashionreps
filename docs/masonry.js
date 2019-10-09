@@ -314,14 +314,25 @@
 	        	//	img.append('<img data-src="https://'+i+'" />');
 	        	//}	
 						
-	        	 cube.append("<div class=\"right\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");	        	 	        	 
-	        	 cube.append("<div class=\"back\"><img data-src=\"https://"+ele.morepics[1]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
+						 var p = new Object({"className":"right","pic": "https://"+ele.morepics[0],"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
+
+	        	 cube.append($j("#cubeTemplate").tmpl(p));
+	        	 
+	        	 p = new Object({"className":"back","pic": "https://"+ele.morepics[1],"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
+						 
+						 cube.append($j("#cubeTemplate").tmpl(p));
+						 							
 	        	 if (ele.morepics[2]!==undefined) {
-	        	 		cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[2]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
+	        	 		
+	        	 		 p = new Object({"className":"left","pic":"https://"+ele.morepics[0],"width":(brickw+scrw)+"px","height":(brickw+scrw)+"px"});
+	        	 		 
 	        	 } else {
-	        	 		cube.append("<div class=\"left\"><img data-src=\"https://"+ele.morepics[0]+"\" width=\""+(brickw+scrw)+"px\" height=\""+(brickw+scrw)+"px\" />");
+	        	 	
+	 							 p = new Object({"className":"left", "pic": "https://"+ele.morepics[3],"width":(brickw+scrw)+"px","height":(brickw+scrw)+"px"});
 	        	 }
-	        	 	        	 
+	        	 
+	        	 cube.append($j("#cubeTemplate").tmpl(p));
+	        	     	 
 	        	 var t =(brickw+scrw)/2+"px";
 							
 							cube.css({
