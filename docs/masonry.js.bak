@@ -459,6 +459,11 @@
 						       
 	        brick.bind({
 	        	
+	        	// Bind animationend
+	        	'oanimationend animationend webkitAnimationEnd' : function(e) { 
+   							console.log("animate end");
+								brick).find("div .cube").removeClass("spin");
+						},
 	        	// Bind touchstart	   
 	        	'touchstart mouseenter' :  function (e) {
 	        		
@@ -1072,14 +1077,8 @@
   }
   
   // Privat function
-  
-  
-  
-  
-  
   function hide_summary(ele)
-  {
-  	$j(ele).find("div .cube").removeClass("spin");
+  {  	
     var content = $j(ele).find(">div");
     var summary = $j(ele).find(".teaser");
     content.animate({
