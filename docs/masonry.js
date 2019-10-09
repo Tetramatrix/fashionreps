@@ -73,14 +73,14 @@
          	$(this).delay(dbend).queue( (next) => {
             while (brick_stack.length > 1)
             {
-             hide_summary(brick_stack.pop());
+             hide_summary(brick_stack.pop());             
             }
             next();
-          });
+          }).dequeue();
           
       	}
   		 next();
-      });
+      }).dequeue();
 	}
 		
   function getTouch (e) {
@@ -693,7 +693,7 @@
 		        				hide_summary(brick_stack.pop());
 		        			}
 		          		next();
-		          });
+		          }).dequeue();
 		        }
 	        });
 	        
@@ -1074,6 +1074,7 @@
   // Privat function
   function hide_summary(ele)
   {
+  	$j(ele).find("div .cube").removeClass("spin");
     var content = $j(ele).find(">div");
     var summary = $j(ele).find(".teaser");
     content.animate({
