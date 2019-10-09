@@ -36,7 +36,7 @@
   let xsDown, ysDown, xsUp, ysUp;
   let swipe_threshold = 55; 
   
-  function showinfo(container, brick, img, content, dbend, brick_stack, dspin) {
+  function showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele) {
   	
   	 	var summary = brick.find(".teaser");
       var height = img.attr("height");
@@ -66,10 +66,10 @@
           });
           		
           $(this).delay(dspin, "task").queue("task", (next) => {
-          	brick.find("div .cube").addClass("spin");
-          	next();
-          }).dequeue("task");
-          				            
+          	if (ele.morepics.length !== 0) {		
+          		brick.find("div .cube").addClass("spin");
+          			next();
+          	}}).dequeue("task");
          	$(this).delay(dbend).queue( (next) => {
             while (brick_stack.length > 1)
             {
@@ -480,10 +480,10 @@
 									ysDown = e.clientY;
 								}
 								
-								if (mobile && ele.morepics.length == undefined) {									
-									showinfo(container, brick, img, content, dbend, brick_stack, dspin);
+								if (mobile && ele.morepics.length === 0) {									
+									showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele);
 								} else if (!mobile) {
-									showinfo(container, brick, img, content, dbend, brick_stack, dspin);
+									showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele);
 								}
 							 	 
 	        	},
@@ -578,7 +578,7 @@
 	        	'mousemove': function(e)
 	        	{
 	        			//console.log("mousemove");	        	
-			         	showinfo(container, brick, img, content, dbend, brick_stack, dspin);
+			         	showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele);
 	          },
 	          */
 	          
@@ -611,7 +611,7 @@
 										if (mycube.hasClass("rot360r")) {
 																						
 											mycube.removeClass("rot90r rot180r rot270r rot360r");											
-											showinfo(container, brick, img, content, dbend, brick_stack, dspin);
+											showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele);
 										}
 										
 										if (mycube.hasClass("rot360l")) {
@@ -679,7 +679,7 @@
 			  							
 			  						} else if (!mycube.hasClass("rot90l")) {
 											
-											  showinfo(container, brick, img, content, dbend, brick_stack, dspin);						          												
+											  showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele);						          												
 												mycube.addClass("rot90l");
 											
 			  						} else if (!mycube.hasClass("rot180l")) {
