@@ -325,6 +325,7 @@
 	        	 if (ele.morepics[2]!==undefined) {
 	        	 		
 	        	 		 p = new Object({"className":"left","pic":"https://"+ele.morepics[0],"width":(brickw+scrw)+"px","height":(brickw+scrw)+"px"});
+	        	 		 
 	        	 } else {
 	        	 	
 	 							 p = new Object({"className":"left", "pic": "https://"+ele.morepics[3],"width":(brickw+scrw)+"px","height":(brickw+scrw)+"px"});
