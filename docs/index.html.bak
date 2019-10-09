@@ -3,14 +3,14 @@
 <head>
 <title>:: Taobao Live-Feed ::</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="description" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises from the Reddit servers.">
-<meta name="abstract" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises from the Reddit servers.">
-<meta name="keywords" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises from the Reddit servers.">
-<meta name="keywords" lang="de" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises from the Reddit servers.">
-<meta name="keywords" lang="en-us" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises from the Reddit servers.">
-<meta name="keywords" lang="en" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises from the Reddit servers.">
-<meta name="keywords" lang="fr" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises from the Reddit servers.">
-<meta name="keyphrases" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises from the Reddit servers.">
+<meta name="description" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises pulled straight from the Reddit servers.">
+<meta name="abstract" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises pulled straight from the Reddit servers.">
+<meta name="keywords" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises pulled straight from the Reddit servers.">
+<meta name="keywords" lang="de" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises pulled straight from the Reddit servers.">
+<meta name="keywords" lang="en-us" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises pulled straight from the Reddit servers.">
+<meta name="keywords" lang="en" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises pulled straight from the Reddit servers.">
+<meta name="keywords" lang="fr" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises pulled straight from the Reddit servers.">
+<meta name="keyphrases" content="Taobao Live-Feed is a fashion live-feed with the top hundred Taobao's merchandises pulled straight from the Reddit servers.">
 <meta name="author" content="Chi Hoang">
 <meta name="copyright" content="Chi Hoang">
 <meta name="publisher" Content="Chi Hoang">
@@ -82,10 +82,10 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js" defer></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" defer></script>
-<script
+<!--<script
   src="https://code.jquery.com/ui/1.8.22/jquery-ui.min.js"
   integrity="sha256-IweqZ0GTprm8faY28hYpMzqSmyoZtvJg253RQAXYFFs="
-  crossorigin="anonymous" defer></script>
+  crossorigin="anonymous" defer></script>-->
 
 <script type="text/javascript" src="jquery.tmpl.min.js" defer ></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" defer></script> 
@@ -128,7 +128,9 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <hr class="divider">
                 <p>${Text}</p><a class="arrow" style="text-align:right" href="javascript:void(0);">+</a>
             </div>
-            <img class="img" data-src="${Image}" width="${Width}" height="${Height}"/>
+            <div class="cube">
+           	 <div class="front"><img class="img" data-src="${Image}" width="${Width}" height="${Height}"/></div>            
+        		</div>  
         </div>
     </div>    
 </script>
@@ -141,7 +143,9 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <hr class="divider">
                 <p>${Text}</p><a class="arrow" style="text-align:right" href="javascript:void(0);">-</a>
             </div>
-            <img class="img" data-src="${Image}" width="${Width}" height="${Height}"/>
+            <div class="cube">
+           	 <div class="front"><img class="img cube front" data-src="${Image}" width="${Width}" height="${Height}"/></div>
+           </div>	 
         </div>
     </div>    
 </script>
@@ -163,7 +167,7 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
     <div style="float:left;margin-top:0px">
         <p>{{html bodytext}}</p>
     </div>
-    <div style="float:right;align:right"><a id="bbut" class="bb" href="javascript:void(0);">[<b>X</b>] back</a></div>
+    <div style="float:right;align:right"><a id="bbtn" class="bb" href="javascript:void(0);">[<b>X</b>] back</a></div>
 </script>
 
 
@@ -214,11 +218,11 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 			     data-ad-slot="1118485950"></ins>
 			</p>
 			<p style="padding-top:5px;">
-						<!-- bbrb 1.5 -->
-						<ins class="adsbygoogle"
-						     style="display:inline-block;width:160px;height:600px"
-						     data-ad-client="ca-pub-6449563648591184"
-						     data-ad-slot="4431879155"></ins>
+				<!-- bbrb 1.5 -->
+				<ins class="adsbygoogle"
+				     style="display:inline-block;width:160px;height:600px"
+				     data-ad-client="ca-pub-6449563648591184"
+				     data-ad-slot="4431879155"></ins>
 			</p>
 	</div>
 </div>
