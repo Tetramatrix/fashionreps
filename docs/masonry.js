@@ -41,6 +41,22 @@
   const page = 24;
   var currentpage = startsWithBricks+1; 
   
+  //infiniteScroll function
+	function infiniteScroll() {
+	    if($j(window).scrollTop() >= $j(document).height() - $j(window).height()-10 && ($j(window).scrollTop()>10)) {
+	        console.log("Add something at the end of the page");
+	        console.log($j(window).scrollTop());
+	    		console.log($j(document).height() - $(window).height() - 10);	
+	        
+	        if (restjson.length>0) {  		
+			  		addBricks (restjson.slice(currentpage,currentpage+page), "#addBrickTemplate", "append");
+			  		currentpage+=page+1;
+			  		restjson=restjson.slice(currentpage,restjson.length);
+			  		currentpage=0;
+			  	}
+	    }
+	}
+  
   function showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele) {
   	
   	 	var summary = brick.find(".teaser");
@@ -1100,7 +1116,7 @@
 		$(toggle).removeClass('ref_act').addClass('ref_no');
 		var theHref = $(toggle).find('a').attr("href").replace(/\?toggle=.*/g, '');		
 		$(toggle).find('a').attr("href", theHref + "?toggle=off");
-  	maxmedia.gridview();
+  	gridview();
   }
   
   // Privat function
@@ -1119,16 +1135,9 @@
   }
   
   // Public functions
-  Arbeitsbeispiele.prototype.addBricks = function ()
+  Arbeitsbeispiele.prototype.infiniteScroll = function ()
   {
-  	if (restjson.length>0) {  		
-  		addBricks (restjson.slice(currentpage,currentpage+page), "#addBrickTemplate", "append");
-  		currentpage+=page+1;
-  		restjson=restjson.slice(currentpage,restjson.length);
-  		currentpage=0;
-  	}
-    
-    return false;
+    return infiniteScroll();
   }
   
   Arbeitsbeispiele.prototype.singleview = function ( url, id )
@@ -1203,39 +1212,22 @@ $("#spinner").bind("ajaxError", function() { $(this).hide(); });
 */
 
 
-var maxmedia;
+var tlf;
 var $ = jQuery.noConflict();
 $(document).ready(function() {
 	
   //$("#container").draggable({zIndex:-35});
   						
-  maxmedia = new Arbeitsbeispiele($);
-  maxmedia.reload(maxmedia);
-  maxmedia.ajax(maxmedia);
+  tlf = new Arbeitsbeispiele($);
+  tlf.reload(tlf);
+  tlf.ajax(tlf);
   
   window.scrollTo({ top: 0});
 
-	window.onscroll = function() {
-	  var d = document.documentElement;
-	  var offset = d.scrollTop + window.innerHeight;
-	  var height = d.offsetHeight;
-	  console.log('offset = ' + offset);
-	  console.log('height = ' + height);
-	  if (offset >= (height-50)) {
-	    console.log('at the bottom');
-	    maxmedia.addBricks();
-	  }
-	}
+  // bind the function to all needed events
+  $(window).on('scroll',tlf.infiniteScroll);
+  $(window).on('touchmove',tlf.infiniteScroll);
 
-/*
-  $(document).scroll(function () { 
-	   if ($(window).scrollTop() >= ($(document).height() - $(window).height() - 100) && ($(window).scrollTop()>10)) {   	
-	      console.log("Add something at the end of the page");
-	      console.log($(window).scrollTop());
-	      console.log($(document).height() - $(window).height() - 10);	      
-	   }
-	 });
-*/ 
      
   $("#footer").find("img").lazy({
 			scrollDirection: 'vertical',
