@@ -1215,7 +1215,7 @@ $(document).ready(function() {
   
   window.scrollTo({ top: 0});
 
-  $(window).scroll(function () { 
+  $(document).scroll(function () { 
 	   if ($(window).scrollTop() >= ($(document).height() - $(window).height() - 10) && ($(window).scrollTop()>10)) {   	
 	      console.log("Add something at the end of the page");
 	      console.log($(window).scrollTop());
