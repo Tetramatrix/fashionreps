@@ -352,11 +352,13 @@
 							cube.find(".back").css({
 								"transform": "rotateY(180deg) translateZ("+t+")",
 								"-ms-transform": "rotateY(180deg) translateZ("+t+")",
+								"-webkit-transform": "rotateY(180deg) translateZ("+t+")",
 							});
 							
 							cube.find(".right").css({
 								"transform": "rotateY(90deg) translateZ("+t+")",
-								"-ms-transform": "rotateY(90deg) translateZ("+t+")", 
+								"-ms-transform": "rotateY(90deg) translateZ("+t+")",
+								"-webkit-transform": "rotateY(90deg) translateZ("+t+")", 
 							});
 							
 							cube.find(".left").css({
@@ -702,6 +704,8 @@
 			  						} else if (!mycube.hasClass("rot360l")) {
 			  							mycube.addClass("rot360l");
 			  						}
+			  				} else if (mobile &&  ele.morepics.length === 0) {
+			  					 	showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele);
 			  				}			  				
 			  					
 		        		$(this).delay(dbstart).queue((next) => {

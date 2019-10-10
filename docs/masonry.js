@@ -309,7 +309,7 @@
 	        
 	         cube = brick.find(".cube");
 	         
-	        if (ele.morepics.length>1) {
+	        if ( ele.morepics.length>0) {
 	       		//for (const i of ele.morepics) {
 	        	//	img.append('<img data-src="https://'+i+'" />');
 	        	//}	
@@ -615,7 +615,7 @@
 							  console.log(xsDiff);
 							  
 							    // at least <offset> are a swipe
-		  					if (mobile && xsDiff > swipe_threshold && ele.morepics.length>1) {
+		  					if (mobile && xsDiff > swipe_threshold &&  ele.morepics.length>0) {
 		  						
 			  						// e.stopPropagation();			  						
 			  						console.log("swipe right");
@@ -661,7 +661,7 @@
 			  							mycube.addClass("rot360r");
 			  						}
 			  						
-			  				} else if (mobile && xsDiff < -swipe_threshold && ele.morepics.length>1) {
+			  				} else if (mobile && xsDiff < -swipe_threshold &&  ele.morepics.length>0) {
 			  					
 			  					  console.log("swipe left");				  					  
 			  						mycube=brick.find("div .cube");
@@ -704,6 +704,8 @@
 			  						} else if (!mycube.hasClass("rot360l")) {
 			  							mycube.addClass("rot360l");
 			  						}
+			  				} else if (mobile &&  ele.morepics.length === 0) {
+			  					 	showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele);
 			  				}			  				
 			  					
 		        		$(this).delay(dbstart).queue((next) => {
