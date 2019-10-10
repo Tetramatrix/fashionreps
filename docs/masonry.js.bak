@@ -1215,15 +1215,27 @@ $(document).ready(function() {
   
   window.scrollTo({ top: 0});
 
+	window.onscroll = function() {
+	  var d = document.documentElement;
+	  var offset = d.scrollTop + window.innerHeight;
+	  var height = d.offsetHeight;
+	  console.log('offset = ' + offset);
+	  console.log('height = ' + height);
+	  if (offset >= (height-20)) {
+	    console.log('at the bottom');
+	    maxmedia.addBricks();
+	  }
+	}
+
+/*
   $(document).scroll(function () { 
-	   if ($(window).scrollTop() >= ($(document).height() - $(window).height() - 10) && ($(window).scrollTop()>10)) {   	
+	   if ($(window).scrollTop() >= ($(document).height() - $(window).height() - 100) && ($(window).scrollTop()>10)) {   	
 	      console.log("Add something at the end of the page");
 	      console.log($(window).scrollTop());
-	      console.log($(document).height() - $(window).height() - 10);
-	      maxmedia.addBricks();
+	      console.log($(document).height() - $(window).height() - 10);	      
 	   }
 	 });
- 
+*/ 
      
   $("#footer").find("img").lazy({
 			scrollDirection: 'vertical',
