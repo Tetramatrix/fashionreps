@@ -35,6 +35,11 @@
   var long_press = 3500;
   let xsDown, ysDown, xsUp, ysUp;
   let swipe_threshold = 55; 
+  var restjson;
+  var deljson;
+  var startsWithBricks = 49;
+  const page = 24;
+  var currentpage = startsWithBricks+1; 
   
   function showinfo(container, brick, img, content, dbend, brick_stack, dspin, ele) {
   	
@@ -264,12 +269,11 @@
     });
   }
   
-  function addBricks(data, tmpl) {
+  function addBricks(data, tmpl, infinite) {
   	
-  		var container = $j('#tx-charbeitsbeispiele-pi1 #container');
-		  var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
-		  
-		   
+  		 var container = $j('#tx-charbeitsbeispiele-pi1 #container');
+		   var upd = $j("#tx-charbeitsbeispiele-pi1 #date");
+		  		   
 		   boxCount = data.length;
        counter = 0;
        var d = 0;
@@ -402,9 +406,11 @@
 							}
 				   });				  
 	        	        
-	        //console.log(brick);
-	        container.prepend(brick);
-	        //container.prepend(brick);   
+	        if (infinite == undefined) {
+	        	container.prepend(brick);
+	        } else {
+	        	container.append(brick); 
+	        }
 	        
 	        if (!mobile) 
 	        {
@@ -468,8 +474,7 @@
 								 container.masonry('reload');  
 							}							
 					});
-					
-						       
+											       
 	        brick.bind({
 	        	
 	        	// Bind animationend
@@ -717,9 +722,9 @@
 		        }
 	        });
 	        
-	    }); // each
+	    }); // each	    
 	    
-	    container.trigger("scroll");
+	    return false;
   }
   
   function ajax (self) {
@@ -786,7 +791,7 @@
 						window.scrollTo({ top: 0, behavior: 'smooth' });
 						          
 	          addBricks(arr, "#minusBrickTemplate");	    
-         
+         		container.trigger("scroll");
           } else //toggle 
           {
             $j.each(arr.reverse(), function(idx, ele)
@@ -818,7 +823,9 @@
     			$j.getJSON($j(this).find('a').attr('href'), function(json)
 		      {
 		        if (json && json.length)
-		        {
+		        {		        	
+		        	deljson = restjson = json;
+		        			        	
 		        	$j('#footer').remove();
 		        	 
 		          var container = $j('#tx-charbeitsbeispiele-pi1 #container');
@@ -837,11 +844,14 @@
 	            	// this changes the scrolling behavior to "smooth"
 								window.scrollTo({ top: 0, behavior: 'smooth' });
 								          
-			          addBricks(json);	    
-	           
+			          addBricks(json.slice(0, startsWithBricks));	    
+	            	container.trigger("scroll");
+	            	
 	            } else //toggle 
 	            {
-	              $j.each(json.reverse(), function(idx, ele)
+	            	restjson=[];
+	            	
+	              $j.each(deljson.reverse(), function(idx, ele)
 			          {
 			          	//var str = ele.Headline; 
 			          	//str = str.replace(/(['"])/g, "\\\\$1");
@@ -1053,6 +1063,8 @@
     // Start masonry animated
     if (response && response.length)
     {
+    	restjson = response;
+    	
     	// this changes the scrolling behavior to "smooth"
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 							
@@ -1073,8 +1085,8 @@
      	counter = 0;
      	var d = 0;
             
-			addBricks(response);        
-      
+			addBricks(response.slice(0, startsWithBricks));        
+      container.trigger("scroll");
       var reloadLink = $j("#tx-charbeitsbeispiele-pi1 #menu li:first");
       reloadLink.removeClass('ref_no').addClass('ref_act');
       var theHref = reloadLink.find('a').attr("href").replace(/\?toggle=.*/g, '');
@@ -1107,6 +1119,18 @@
   }
   
   // Public functions
+  Arbeitsbeispiele.prototype.addBricks = function ()
+  {
+  	if (restjson.length>0) {  		
+  		addBricks (restjson.slice(currentpage,currentpage+page), "#addBrickTemplate", "append");
+  		currentpage+=page+1;
+  		restjson=restjson.slice(currentpage,restjson.length);
+  		currentpage=0;
+  	}
+    
+    return false;
+  }
+  
   Arbeitsbeispiele.prototype.singleview = function ( url, id )
   {
     return singleview ( url, id );
@@ -1184,11 +1208,22 @@ var $ = jQuery.noConflict();
 $(document).ready(function() {
 	
   //$("#container").draggable({zIndex:-35});
-  
+  						
   maxmedia = new Arbeitsbeispiele($);
   maxmedia.reload(maxmedia);
   maxmedia.ajax(maxmedia);
-          
+  
+  window.scrollTo({ top: 0});
+  
+  $(window).scroll(function () { 
+	   if ($(window).scrollTop() >= ($(document).height() - $(window).height() - 10) && ($(window).scrollTop()>10)) {   	
+	      console.log("Add something at the end of the page");
+	      console.log($(window).scrollTop());
+	      console.log($(document).height() - $(window).height() - 10);
+	      maxmedia.addBricks();
+	   }
+	 });
+        
   $("#footer").find("img").lazy({
 			scrollDirection: 'vertical',
       effect: 'fadeIn',
