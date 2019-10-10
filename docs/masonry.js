@@ -43,7 +43,6 @@
   
   //infiniteScroll function
 	function infiniteScroll() {
-	    //if($j(window).scrollTop() >= $j(document).height() - $j(window).height()-100 && ($j(window).scrollTop()>10)) {
 			if( $j(window).scrollTop() + window.innerHeight >= document.body.scrollHeight-100) {
 	        console.log("Add something at the end of the page");
 	        console.log($j(window).scrollTop());
