@@ -1214,8 +1214,8 @@ $(document).ready(function() {
   maxmedia.ajax(maxmedia);
   
   window.scrollTo({ top: 0});
-  
-  $(window).scroll(function () { 
+
+  $(document).scroll(function () { 
 	   if ($(window).scrollTop() >= ($(document).height() - $(window).height() - 10) && ($(window).scrollTop()>10)) {   	
 	      console.log("Add something at the end of the page");
 	      console.log($(window).scrollTop());
@@ -1223,7 +1223,8 @@ $(document).ready(function() {
 	      maxmedia.addBricks();
 	   }
 	 });
-        
+ 
+     
   $("#footer").find("img").lazy({
 			scrollDirection: 'vertical',
       effect: 'fadeIn',
