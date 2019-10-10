@@ -43,7 +43,8 @@
   
   //infiniteScroll function
 	function infiniteScroll() {
-	    if($j(window).scrollTop() >= $j(document).height() - $j(window).height()-100 && ($j(window).scrollTop()>10)) {
+	    //if($j(window).scrollTop() >= $j(document).height() - $j(window).height()-100 && ($j(window).scrollTop()>10)) {
+			if( $j(window).scrollTop() + window.innerHeight >= document.body.scrollHeight) {
 	        console.log("Add something at the end of the page");
 	        console.log($j(window).scrollTop());
 	    		console.log($j(document).height() - $(window).height() - 10);	
@@ -257,29 +258,28 @@
       $j.getJSON(url,function(json) {      
         if (json)
         {
-        	 /* s.html(json); */
-
-          s.css({
-            "position": "absolute",
-            "top": "-600px",
-            "height": "600px",
-            "left" : navw,
-            "width" : svw
-          }).animate({
-            "opacity": "1.0",
-            "top": svh,
-            "left" : navw
-          }, 900, function() {
-            // Unset it here, this lets the button be clickable again
-            btn.data('running', false);
-          }).append($j("#singleviewTemplate").tmpl(json).css({
-            "visibility": "visible",
-            "position": "relative"
-          })
-          ).find("a").click(function(e) {
-          		e.stopPropagation();
-          		bbtn();
-          	});
+        	  /* s.html(json); */
+	          s.css({
+	            "position": "absolute",
+	            "top": "-600px",
+	            "height": "600px",
+	            "left" : navw+"px",
+	            "width" : svw+"px"
+	          }).animate({
+	            "opacity": "1.0",
+	            "top": svh+"px",
+	            "left" : navw+"px"
+	          }, 900, function() {
+	            // Unset it here, this lets the button be clickable again
+	            btn.data('running', false);
+	          }).append($j("#singleviewTemplate").tmpl(json).css({
+	            "visibility": "visible",
+	            "position": "relative"
+	          })
+	          ).find("#bbtn").click(function(e) {
+	          		e.stopPropagation();
+	          		bbtn();
+	          	});
         	}        
       });            
     });
@@ -1194,6 +1194,7 @@
       scrw = $(window).width()-brickw;
   		svw = $(window).width()-(navw+navw_mobi);
      	svh+=svh_mobi;
+     	
 		} else {
 			scrw = 0;
 			dbstart=0;
@@ -1229,7 +1230,7 @@ $(document).ready(function() {
   $(window).on('touchmove',tlf.infiniteScroll);
 
   $('html,body').bind('touchmove', function(e) { 
-    tlf.infiniteScroll
+    tlf.infiniteScroll;
 	});
      
   $("#footer").find("img").lazy({
