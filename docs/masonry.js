@@ -1228,6 +1228,9 @@ $(document).ready(function() {
   $(window).on('scroll',tlf.infiniteScroll);
   $(window).on('touchmove',tlf.infiniteScroll);
 
+  $('html,body').bind('touchmove', function(e) { 
+    tlf.infiniteScroll;
+	});
      
   $("#footer").find("img").lazy({
 			scrollDirection: 'vertical',

@@ -43,7 +43,7 @@
   
   //infiniteScroll function
 	function infiniteScroll() {
-	    if($j(window).scrollTop() >= $j(document).height() - $j(window).height()-10 && ($j(window).scrollTop()>10)) {
+	    if($j(window).scrollTop() >= $j(document).height() - $j(window).height()-100 && ($j(window).scrollTop()>10)) {
 	        console.log("Add something at the end of the page");
 	        console.log($j(window).scrollTop());
 	    		console.log($j(document).height() - $(window).height() - 10);	
@@ -1228,6 +1228,9 @@ $(document).ready(function() {
   $(window).on('scroll',tlf.infiniteScroll);
   $(window).on('touchmove',tlf.infiniteScroll);
 
+  $('html,body').bind('touchmove', function(e) { 
+    tlf.infiniteScroll
+	});
      
   $("#footer").find("img").lazy({
 			scrollDirection: 'vertical',
