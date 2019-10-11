@@ -43,7 +43,7 @@
   
   function resize(e) {
   	console.log("resize");	
-  	page=Math.floor($j("#container").width()/brickw);
+  	page=Math.floor($j("#container").width()/brickw)*2;
   	console.log(page);
   }
   

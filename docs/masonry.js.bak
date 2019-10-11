@@ -873,11 +873,10 @@
 		        	}		   
 		        	
 	            if (toggle)
-	            {		            	
-	            	// this changes the scrolling behavior to "smooth"
-								window.scrollTo({ top: 0, behavior: 'smooth' });
-							
+	            {		
 								if(startsWithBricks==39) {
+									// this changes the scrolling behavior to "smooth"
+									window.scrollTo({ top: 0, behavior: 'smooth' });
 			          	addBricks(json.slice(0, startsWithBricks));
 			        	}  else {
 			        		addBricks(json.slice(0, startsWithBricks), "#addBrickTemplate", "append");
