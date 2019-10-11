@@ -342,13 +342,14 @@
 						 var idx=0;
 						 var p;
 						 
-						 for (face in faces) {
+						 for (key in faces) {
 						 		if (ele.morepics[idx]!=undefined) {
-						 			p = new Object({"className": face,"pic": "https://"+ele.morepics[idx],"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
+						 			p = new Object({"className": faces[key],"pic": "https://"+ele.morepics[idx],"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
 						 		} else {
-						 			p = new Object({"className": face,"pic": "https://"+ele.Image,"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
+						 			p = new Object({"className": faces[key],"pic": "https://"+ele.Image,"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
 						 		}
 						 		cube.append($j("#cubeTemplate").tmpl(p));
+						 		++idx;
 						 }
 	        	        	     	 
 	        	 var t =(brickw+scrw)/2+"px";

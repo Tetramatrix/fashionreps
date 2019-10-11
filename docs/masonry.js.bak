@@ -349,10 +349,9 @@
 						 			p = new Object({"className": face,"pic": "https://"+ele.Image,"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
 						 		}
 						 		cube.append($j("#cubeTemplate").tmpl(p));
+						 		++idx;
 						 }
-	        	 
-	        	 cube.append($j("#cubeTemplate").tmpl(p));
-	        	     	 
+	        	        	     	 
 	        	 var t =(brickw+scrw)/2+"px";
 							
 							cube.css({
