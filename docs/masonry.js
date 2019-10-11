@@ -338,25 +338,19 @@
 	        	//	img.append('<img data-src="https://'+i+'" />');
 	        	//}	
 						
-						 var p = new Object({"className":"right","pic": "https://"+ele.morepics[0],"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
-
-	        	 cube.append($j("#cubeTemplate").tmpl(p));
-	        	 
-	        	 p = new Object({"className":"back","pic": "https://"+ele.morepics[1],"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
+						 var faces=["right","back","left"];
+						 var idx=0;
+						 var p;
 						 
-						 cube.append($j("#cubeTemplate").tmpl(p));
-						 							
-	        	 if (ele.morepics[2]!==undefined) {
-	        	 		
-	        	 		 p = new Object({"className":"left","pic":"https://"+ele.morepics[0],"width":(brickw+scrw)+"px","height":(brickw+scrw)+"px"});
-	        	 		 
-	        	 } else {
-	        	 	
-	 							 p = new Object({"className":"left", "pic": "https://"+ele.morepics[3],"width":(brickw+scrw)+"px","height":(brickw+scrw)+"px"});
-	        	 }
-	        	 
-	        	 cube.append($j("#cubeTemplate").tmpl(p));
-	        	     	 
+						 for (face in faces) {
+						 		if (ele.morepics[idx]!=undefined) {
+						 			p = new Object({"className": face,"pic": "https://"+ele.morepics[idx],"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
+						 		} else {
+						 			p = new Object({"className": face,"pic": "https://"+ele.Image,"width" : (brickw+scrw)+"px","height" : (brickw+scrw)+"px"});
+						 		}
+						 		cube.append($j("#cubeTemplate").tmpl(p));
+						 }
+	        	        	     	 
 	        	 var t =(brickw+scrw)/2+"px";
 							
 							cube.css({
