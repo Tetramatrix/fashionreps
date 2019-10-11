@@ -36,14 +36,15 @@
   let xsDown, ysDown, xsUp, ysUp;
   let swipe_threshold = 55; 
   var restjson;
-  var deljson;
-  var startsWithBricks = 49;
-  const page = 24;
-  var currentpage = startsWithBricks+1; 
+  var deljson=[];
+  var startsWithBricks = 39;
+  const page = 10;
+  var currentpage=startsWithBricks+1; 
   
   //infiniteScroll function
 	function infiniteScroll() {
-			if( $j(window).scrollTop() + window.innerHeight >= document.body.scrollHeight-100) {
+		  var param = document.body.scrollHeight-100;
+			if( $j(window).scrollTop() + window.innerHeight >= param && (!$j("#container").height() > param)) {
 	        console.log("Add something at the end of the page");
 	        console.log($j(window).scrollTop());
 	    		console.log($j(document).height() - $(window).height() - 10);	
@@ -275,7 +276,10 @@
 	            "visibility": "visible",
 	            "position": "relative"
 	          })
-	          )
+	          ).find("#bbtn").click(function(e) {
+	          		e.stopPropagation();
+	          		bbtn();
+	          	});
         	}        
       });            
     });
@@ -831,12 +835,17 @@
           }
     		 
     	} else {
-    		
-    			$j.getJSON($j(this).find('a').attr('href'), function(json)
+   		  
+    			$j.getJSON($j(this).find('a').attr('href'),function(json)
 		      {
 		        if (json && json.length)
 		        {		        	
-		        	deljson = restjson = json;
+		        	if (restjson.length === 0) {
+		        		deljson[this.url.substr(0,10)] = restjson = json;
+		        	} else {
+		        		restjson.push(...json);
+		        		deljson[this.url.substr(0,10)] = json;
+		        	}		        	
 		        			        	
 		        	$j('#footer').remove();
 		        	 
@@ -863,7 +872,7 @@
 	            {
 	            	restjson=[];
 	            	
-	              $j.each(deljson.reverse(), function(idx, ele)
+	              $j.each(deljson[this.url.substr(0,10)].reverse(), function(idx, ele)
 			          {
 			          	//var str = ele.Headline; 
 			          	//str = str.replace(/(['"])/g, "\\\\$1");
@@ -878,7 +887,7 @@
 
 		            });
 		            
-		            container.masonry('reload');           
+		           container.masonry('reload');           
 		      	 		
 		      	 		/*
 		      	 		$j('#container').after('<div id="footer"><a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>');
@@ -1004,7 +1013,7 @@
     
 		    $j.each(menu, function(idx, ele) {
 		      if ($j(ele).find('a').text() == n) {
-		       params += "&but="+n;
+		       params += "&btn="+n;
 		        $j(ele).removeClass('ref_no').addClass('ref_act');
 		        var theHref = $j(ele).find('a').attr("href").replace(/\?toggle=.*/g, '');
 		        $j(ele).find('a').attr("href", theHref + params);
