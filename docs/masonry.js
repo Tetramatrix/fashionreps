@@ -38,8 +38,14 @@
   var restjson;
   var deljson=[];
   var startsWithBricks = 39;
-  const page = 10;
+  var page = 10;
   var currentpage=startsWithBricks+1; 
+  
+  function resize(e) {
+  	console.log("resize");	
+  	page=Math.floor($j("#container").width()/brickw);
+  	console.log(page);
+  }
   
   //infiniteScroll function
 	function infiniteScroll(e) {
@@ -839,8 +845,7 @@
     			$j.getJSON($j(this).find('a').attr('href'),function(json)
 		      {
 		        if (json && json.length)
-		        {	   	
-		        			        	
+		        {		        	
 		        	$j('#footer').remove();
 		        	 
 		          var container = $j('#tx-charbeitsbeispiele-pi1 #container');
@@ -851,8 +856,13 @@
         			counter = 0;
         
 		          if (clrscreen) {
-		          	restjson=[];
-		          	container.empty();
+		          	delsjson=restjson=[];
+		          	container.empty();		          	
+		          }
+		          
+		          if(delsjson.length==0) {
+		          	startsWithBricks=39;
+		          	page=10;
 		          }
 
 							if (restjson.length === 0) {
@@ -1153,6 +1163,10 @@
   }
   
   // Public functions
+  Arbeitsbeispiele.prototype.resize = function (e)
+  {
+    return resize(e);
+  }
   Arbeitsbeispiele.prototype.infiniteScroll = function (e)
   {
     return infiniteScroll(e);
@@ -1212,7 +1226,9 @@
       scrw = $(window).width()-brickw;
   		svw = $(window).width()-(navw+navw_mobi);
      	svh+=svh_mobi;
-     	
+     	startsWithBricks=2;
+     	page=1;
+     	currentpage=startsWithBricks+1;
 		} else {
 			scrw = 0;
 			dbstart=0;
@@ -1247,6 +1263,7 @@ $(document).ready(function() {
   $(window).on('scroll', (e)=> {tlf.infiniteScroll(e)});
   $(window).on('touchmove', (e)=>{tlf.infiniteScroll(e)});
   $('html,body').bind('touchmove',(e)=>{tlf.infiniteScroll(e)});
+  $(window).on('resize',(e)=>{tlf.resize(e)});
      
   $("#footer").find("img").lazy({
 			scrollDirection: 'vertical',
