@@ -854,17 +854,17 @@
 		          var clrscreen = this.url.match(/screen=clear/g);
 		          boxCount = json.length;
         			counter = 0;
-        
+		                  
 		          if (clrscreen) {
-		          	delsjson=restjson=[];
+		          	deljson=restjson=[];
 		          	container.empty();		          	
 		          }
-		          
-		          if(delsjson.length==0) {
-		          	startsWithBricks=39;
-		          	page=10;
-		          }
 
+							if(Object.keys(deljson).length==0) {
+		          		startsWithBricks=39;
+		          		page=10;
+		          }
+		          
 							if (restjson.length === 0) {
 		        		deljson[this.url.substr(0,10)] = restjson = json;
 		        	} else {
@@ -873,11 +873,15 @@
 		        	}		   
 		        	
 	            if (toggle)
-	            {		            	
-	            	// this changes the scrolling behavior to "smooth"
-								window.scrollTo({ top: 0, behavior: 'smooth' });
-								          
-			          addBricks(json.slice(0, startsWithBricks));
+	            {		
+								if(startsWithBricks==39) {
+									// this changes the scrolling behavior to "smooth"
+									window.scrollTo({ top: 0, behavior: 'smooth' });
+			          	addBricks(json.slice(0, startsWithBricks));
+			        	}  else {
+			        		addBricks(json.slice(0, startsWithBricks), "#addBrickTemplate", "append");
+			        	}
+			          
 			          if (restjson.length>startsWithBricks) {
 			          	 restjson=restjson.slice(currentpage,restjson.length);
 			          	 currentpage=0;
