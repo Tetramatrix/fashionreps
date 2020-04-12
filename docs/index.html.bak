@@ -127,7 +127,11 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <h3 style="">${Headline}</h3>
                 <p class="subheadline">${Subheadline}</p>
                 <hr class="divider">
-                <p>${Text}</p><a class="arrow" style="text-align:right" href="javascript:void(0);">+</a>
+                <p>${Text}</p>
+                <p>
+	                <a class="arrow" style="text-align:right" href="javascript:void(0);">+</a>
+	                <a class="buy" target="_blank" style="float:right;margin-right:-10px" href="${wegobuy}">Wegobuy</a>
+                </p>
             </div>
             <div class="cube">
            	 <div class="front"><img class="img" src="loadingcube.gif" data-src="${Image}" width="${Width}" height="${Height}"/></div>            
@@ -194,7 +198,7 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 						    <li class="ref_no"><a href="300.json" class="refid">&yen;300-...</a></li>
 								<li class="ref_no"><a href="head.json" class="refid">Head</a></li>
 						    <li class="ref_no"><a href="body.json" class="refid">Body</a></li>
-						    <li class="ref_no"><a href="legs.json" class="refid">Legs</a></li>
+						    <li class="ref_no"><a href="leg.json" class="refid">Leg</a></li>
 						    <li class="ref_no"><a href="foot.json" class="refid">Foot</a></li>
 						    <li class="ref_no"><a href="xtr.json" class="refid">Extra</a></li>
 						    <li class="ref_no"><a href="other.json" class="refid">Other</a></li>
