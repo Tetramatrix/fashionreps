@@ -128,9 +128,11 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <p class="subheadline">${Subheadline}</p>
                 <hr class="divider">
                 <p>${Text}</p>
-                <p>
-	                <a class="arrow" style="text-align:right" href="javascript:void(0);">+</a>
-	                <a class="buy" target="_blank" style="float:right;margin-right:-10px" href="${wegobuy}">Wegobuy</a>
+ 								<p>
+                	<a class="arrow" style="text-align:right" href="javascript:void(0);">+</a>
+	                <a class="buy" target="_blank" style="float:right;margin-right:-13px" href="${superbuy}">Superbuy</a>
+                	<span style="float:right;margin-right:2px">|</span>
+                	<a class="buy" target="_blank" style="float:right;margin-right:2px" href="${wegobuy}">Wegobuy</a>
                 </p>
             </div>
             <div class="cube">
@@ -149,7 +151,8 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <p>${Text}</p>
                   <p>
 	                <a class="arrow" style="text-align:right" href="javascript:void(0);">-</a>
-	                <a class="buy" target="_blank" style="float:right;margin-right:-10px" href="${wegobuy}">Wegobuy</a>
+	                <a class="buy" target="_blank" style="float:right;margin-right:-13px" href="${superbuy}">Superbuy</a>
+	                <a class="buy" target="_blank" style="float:right;margin-right:2px" href="${wegobuy}">Wegobuy |</a>
                 </p>
             </div>
             <div class="cube">
