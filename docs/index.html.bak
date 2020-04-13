@@ -146,7 +146,11 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <h3>${Headline}</h3>
                 <p class="subheadline">${Subheadline}</p>
                 <hr class="divider">
-                <p>${Text}</p><a class="arrow" style="text-align:right" href="javascript:void(0);">-</a>
+                <p>${Text}</p>
+                  <p>
+	                <a class="arrow" style="text-align:right" href="javascript:void(0);">-</a>
+	                <a class="buy" target="_blank" style="float:right;margin-right:-10px" href="${wegobuy}">Wegobuy</a>
+                </p>
             </div>
             <div class="cube">
            	 <div class="front"><img class="img"  src="loadingcube.gif" data-src="${Image}" width="${Width}" height="${Height}"/></div>
