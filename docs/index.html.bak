@@ -129,10 +129,10 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <hr class="divider">
                 <p>${Text}</p>
  								<p>
-                	<a class="arrow" style="text-align:right" href="javascript:void(0);">+</a>
-	                <a class="buy" target="_blank" style="float:right;margin-right:-13px" href="${superbuy}">Superbuy</a>
+                	<a class="arrow" title="Add the item to my haul?" style="text-align:right" href="javascript:void(0);">+</a>
+	                <a class="buy" title="Buy with Superbuy? target="_blank" style="float:right;margin-right:-13px" href="${superbuy}">Superbuy</a>
                 	<span style="float:right;margin-right:2px">|</span>
-                	<a class="buy" target="_blank" style="float:right;margin-right:2px" href="${wegobuy}">Wegobuy</a>
+                	<a class="buy" title="Buy with Wegobuy?" target="_blank" style="float:right;margin-right:2px" href="${wegobuy}">Wegobuy</a>
                 </p>
             </div>
             <div class="cube">
@@ -150,8 +150,8 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
                 <hr class="divider">
                 <p>${Text}</p>
                   <p>
-	                <a class="arrow" style="text-align:right" href="javascript:void(0);">-</a>
- 									<a class="buy" target="_blank" style="float:right;margin-right:-13px" href="${superbuy}">Superbuy</a>
+	                <a class="arrow" title="Add the item to my haul?" style="text-align:right" href="javascript:void(0);">-</a>
+ 									<a class="buy" title="Buy with Superbuy? target="_blank" style="float:right;margin-right:-13px" href="${superbuy}">Superbuy</a>
                 	<span style="float:right;margin-right:2px">|</span>
                 	<a class="buy" target="_blank" style="float:right;margin-right:2px" href="${wegobuy}">Wegobuy</a>
                 </p>
@@ -190,7 +190,8 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 </script>
 
 <div id="tx-charbeitsbeispiele-pi1">
-			<div id="coupon"><a target="_blank" href="https://login.wegobuy.com/en/page/login/?partnercode=wZQcfG&type=register"><img src="wegobuy_coupon-3.png"></a></div>
+			<div id="coupon"><a target="_blank" href="https://login.wegobuy.com/en/page/login/?partnercode=wZQcfG&type=register"><img src="wegobuy_coupon-3.png"></a><br>
+		  	<a target="_blank" href="https://www.superbuy.com/en/page/login/?partnercode=wZQcfY&type=register"><img src="superbuy_coupon.png"></a></div>
 		  <div class="wrapper">
 		  	<div id="nav_mobi_bar" class="nav_hid nav_toggle"><a class="nav_mobi_hamburger" href="javascript:void(0);">&#9776;</a><h1 class="nav_logo">&nbsp;&nbsp;&nbsp;:: Taobao Live-Feed ::</h1>	</div>
 		  	
