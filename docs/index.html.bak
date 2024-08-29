@@ -51,6 +51,7 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 <meta name="referrer" content="origin-when-cross-origin" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, shrink-to-fit=no">
+<meta name="google-site-verification" content="pETgPUZdQjRlsCKUIPsVusPSGZtduaNKm09OOk69Oec" />
 
 <link rel="stylesheet" type="text/css" href="system.css">
 <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
@@ -178,11 +179,24 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
     </div>    
 </script>
 <script id="singleviewTemplate" type="text/html">
-    <div style="float:left;margin-top:0px">
-        <p>{{html bodytext}}</p>
-        <video loop="true" autoplay="true">
-					<source src="atwork.mp4" type="video/mp4">
-				</video>
+    <div class="container">
+        <div class="left-column">
+            <p>{{html bodytext}}</p>
+            <video loop autoplay>
+                <source src="atwork.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="right-column">
+            <h1>Spaceship</h1>
+            <img src="start.png" width="320" /><br /><br />
+            <img src="game.png" width="320" /><br /><br />
+            <p style="width:400px">
+                In the future the aliens are about to conquer the earth. You are a skilled spaceship pilot and the last hope of mankind.
+                Explore the asteroid belt between Mars and Jupiter and destroy all the aliens. Try to avoid the asteroids; they can destroy your spaceship. 
+                You have only one minute.<br><br>
+                Website: <a href="https://tetramatrix.github.io/spaceship/" target="_blank">Link</a>
+            </p>            
+        </div>
     </div>
     <div style="float:right;align:right"><a id="bbtn" class="bb" href="javascript:void(0);">[<b>X</b>] back</a></div>
 </script>
@@ -206,12 +220,12 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 						    <li class="ref_no"><a href="100_199.json" class="refid">&yen;100-199</a></li>
 						    <li class="ref_no"><a href="200_299.json" class="refid">&yen;200-299</a></li>
 						    <li class="ref_no"><a href="300.json" class="refid">&yen;300-...</a></li>
-								<li class="ref_no"><a href="head.json" class="refid">Head</a></li>
-						    <li class="ref_no"><a href="body.json" class="refid">Body</a></li>
-						    <li class="ref_no"><a href="leg.json" class="refid">Leg</a></li>
-						    <li class="ref_no"><a href="foot.json" class="refid">Foot</a></li>
-						    <li class="ref_no"><a href="xtr.json" class="refid">Extra</a></li>
-						    <li class="ref_no"><a href="other.json" class="refid">Other</a></li>
+						    <li class="ref_no"><a href="body.json" class="refid">Clothing</a></li>
+						    <li class="ref_no"><a href="head.json" class="refid">Hats</a></li>						    
+						    <li class="ref_no"><a href="leg.json" class="refid">Pants</a></li>
+						    <li class="ref_no"><a href="foot.json" class="refid">Shoes</a></li>
+						    <li class="ref_no"><a href="xtrs.json" class="refid">Extra</a></li>
+						    <li class="ref_no"><a href="other.json" class="refid">More</a></li>
 						    <li class="ref_no"><a href="links.json" class="refid">Links</a></li>
 						    <li class="ref_no"><a href="javascript:void(0);" class="refid">My haul</a></li>
 						</ul>
@@ -221,10 +235,10 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 						</p>
 						<p>
 							<!-- bbrb -->
-							<!--<ins class="adsbygoogle"
+							<ins class="adsbygoogle"
 							     style="display:inline-block;width:160px;height:600px"
 							     data-ad-client="ca-pub-6449563648591184"
-							     data-ad-slot="8910195152"></ins>-->
+							     data-ad-slot="8910195152"></ins>
 							</p>					
 					</div>		   		
 		  </div><!-- google_ad_section_start -->	    
@@ -234,14 +248,6 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 		<div id="footer">
 			<p>
 			<a href="https://info.flagcounter.com/4WNR"><img src="https://s01.flagcounter.com/count2/4WNR/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a>&nbsp;<iframe src="https://rcm-eu.amazon-adsystem.com/e/cm?o=3&p=48&l=ez&f=ifr&linkID={{link_id}}&t=tetramatrix-21&tracking_id=tetramatrix-21" width="728" height="90" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe></p>
-			<p>  <div style="width: 336px; text-align: center">
-     <a href="https://www.cfos.de/en/cfosspeed/cfosspeed.htm">
-      <img src="https://www.cfos.de/images/cfosspeed-affiliate-banner-dark.png" width="728" height="90" alt="cFosSpeed affiliate banner" title="Reduce your ping with cFosSpeed - the Internet accelerator!"/>
-     </a>
-     <a href="https://www.cfos.de/en/cfosspeed/cfosspeed.htm">
-      Reduce your ping with cFosSpeed - the Internet accelerator!
-     </a>
-  </div></p>
 		</div>
 	</div>
 	</div>
@@ -250,17 +256,17 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
 	<div class="fixed-ads">
 		<p style="margin:0px;padding:0px;margin-top:5px;">
 			<!-- bbrb1,1 -->
-			<!--<ins class="adsbygoogle"
+			<ins class="adsbygoogle"
 			     style="display:inline-block;width:300px;height:600px"
 			     data-ad-client="ca-pub-6449563648591184"
-			     data-ad-slot="1118485950"></ins>-->
+			     data-ad-slot="1118485950"></ins>
 			</p>
 			<p style="padding-top:5px;">
 				<!-- bbrb 1.5 -->
-				<!--<ins class="adsbygoogle"
+				<ins class="adsbygoogle"
 				     style="display:inline-block;width:160px;height:600px"
 				     data-ad-client="ca-pub-6449563648591184"
-				     data-ad-slot="4431879155"></ins>-->
+				     data-ad-slot="4431879155"></ins>
 			</p>
 	</div>
 </div>
