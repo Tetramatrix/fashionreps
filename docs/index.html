@@ -179,23 +179,24 @@ on "2004.03.28T15:41-0800" r (P 0 S 0 V 0 Com 0 Tol -1 Env -1 SF 0 Edu -2 Can 0 
     </div>    
 </script>
 <script id="singleviewTemplate" type="text/html">
-    <div style="float:left;margin-top:240px">
-        <p>{{html bodytext}}</p>
-        <video loop="true" autoplay="true">
-					<source src="atwork.mp4" type="video/mp4">
-				</video>
-    </div>
-    <div>
-			<p>
-				<h1>Spaceship</h1>
-			</p>
-				<img src="start.png" width="320" /><br /><br />
-				<img src="game.png" width="320" /><br /><br />
-
-			<p style="width:400px">In the future the aliens are about to conquer the earth. You are a skilled spaceship pilot and the last hope of mankind. Explore the asteroid belt between mars and jupiter and destroy all the aliens. Try to avoid the asteroids they can destroy your spaceship. You have only one minute.
-				
-				Website: <a href="https://tetramatrix.github.io/spaceship/" target="blank">Link</a>
-			</p>			
+    <div class="container">
+        <div class="left-column">
+            <p>{{html bodytext}}</p>
+            <video loop autoplay>
+                <source src="atwork.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="right-column">
+            <h1>Spaceship</h1>
+            <img src="start.png" width="320" /><br /><br />
+            <img src="game.png" width="320" /><br /><br />
+            <p style="width:400px">
+                In the future the aliens are about to conquer the earth. You are a skilled spaceship pilot and the last hope of mankind.
+                Explore the asteroid belt between Mars and Jupiter and destroy all the aliens. Try to avoid the asteroids; they can destroy your spaceship. 
+                You have only one minute.<br><br>
+                Website: <a href="https://tetramatrix.github.io/spaceship/" target="_blank">Link</a>
+            </p>            
+        </div>
     </div>
     <div style="float:right;align:right"><a id="bbtn" class="bb" href="javascript:void(0);">[<b>X</b>] back</a></div>
 </script>
